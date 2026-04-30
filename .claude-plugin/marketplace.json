@@ -1,0 +1,27 @@
+{
+  "name": "agent-plugins-marketplace",
+  "owner": {
+    "name": "VinhLTT",
+    "email": "vinhltt.dev@gmail.com"
+  },
+  "metadata": {
+    "description": "VinhLTT's personal agent plugin marketplace. A curated collection that combines plugins I develop myself with carefully selected plugins aggregated from across the community. Covers a wide range of use cases — web search, data analysis, developer tooling, and more — so you can browse, install, and mix first-party and third-party plugins from a single source to extend your agent's capabilities.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "claude-plugins-official",
+      "description": "External reference to Anthropic's official Claude Code plugin marketplace (100+ curated plugins). Use `/plugin marketplace add anthropics/claude-plugins-official` to browse/install plugins from there directly.",
+      "author": {
+        "name": "Anthropic",
+        "email": "support@anthropic.com"
+      },
+      "category": "external-marketplace",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/anthropics/claude-plugins-official.git"
+      },
+      "homepage": "https://github.com/anthropics/claude-plugins-official"
+    }
+  ]
+}

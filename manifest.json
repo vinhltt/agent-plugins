@@ -1,0 +1,30 @@
+{
+  "algorithm": "sha256",
+  "generated_at": "2026-04-30T06:20:08.119Z",
+  "marketplace": {
+    "version": "0.1.0",
+    "checksum": "43039abc8a6426138ed27b4eab52d8aa1ff5c70710d673b535e4acd1f2710c71"
+  },
+  "plugins": {},
+  "components": {},
+  "files": {
+    ".agent-plugins.json": "a9256e4107b88e6b2f1d219cc13528495d0ce1251b64a1991f8ed6565f742483",
+    ".claude-plugin/marketplace.json": "43039abc8a6426138ed27b4eab52d8aa1ff5c70710d673b535e4acd1f2710c71",
+    ".claude/settings.json": "0136ecc113f997e9b6dac9c90ae182a98a61ad99fab8c4ba571dc9d579a8575d",
+    ".claude/skills/agent-plugins-changelog/SKILL.md": "b34a6af6a6e590cee34318e906e6364a50627abd4dda5d284dfffedece0e4cff",
+    ".claude/skills/agent-plugins-changelog/scripts/checks/check-changelog-header.ts": "a1a6fed694ccbab697d4e166a7b13f0cdf68b71e58adeb19abf59226d2309313",
+    ".claude/skills/agent-plugins-changelog/scripts/checks/check-cross-consistency.ts": "e6172c1c54dc6b7604749472c40e0bc04e72f5e4ed5ca080ae438b2a7559ea8e",
+    ".claude/skills/agent-plugins-changelog/scripts/checks/check-marketplace-version.ts": "982f1325e56b13eb7f5d8bf313c9add99d1cbc9b85d74b7b5eef272e88819902",
+    ".claude/skills/agent-plugins-changelog/scripts/checks/check-plugin-versions.ts": "8ec604067f7d96e05903c69d428daa744b2f193a8a0c583b51b3d52797755d1a",
+    ".claude/skills/agent-plugins-changelog/scripts/checks/check-skill-versions.ts": "5d704e7dd7d2a59944406183c4f3ec5c35d2210b6fde7a9f749815486783bf74",
+    ".claude/skills/agent-plugins-changelog/scripts/checks/fs-helpers.ts": "19ed7ce3a4f5e18fe761a299d37c1699c5fae3775326d5ae7b6cc77c7e24ab3e",
+    ".claude/skills/agent-plugins-changelog/scripts/checks/types.ts": "ac8241eff22ee0335808e77764d4e125b7c94370c1bc8610f79ef9fe5d6da4d9",
+    ".claude/skills/agent-plugins-changelog/scripts/collect-diff-data.ts": "8e732a99f714c228c86d9a61fabf56ddd8c1cbe1a7ddae103ba8ca69dfc6dc5f",
+    ".claude/skills/agent-plugins-changelog/scripts/manifest.ts": "44b353b59cfcdb6d036bbab5f17361ceaa45740f8e0dca7952198d194c46fc91",
+    ".claude/skills/agent-plugins-changelog/scripts/tests/collect-diff-data.test.ts": "ade07a092999ac9a6d359b7743042d43d17c25ca25fe190f2d9091e8e2d15fb6",
+    ".claude/skills/agent-plugins-changelog/scripts/tests/manifest.test.ts": "8adc936ed8ef1091fc5b63fbad08a4c7fdc45629d981e5961549281552fa6219",
+    ".claude/skills/agent-plugins-changelog/scripts/tests/verify.test.ts": "0b9891087d9c5045b2e3e31351cbdf95f196c8a8ebb3d28778b8a0287d31b8a0",
+    ".claude/skills/agent-plugins-changelog/scripts/verify.ts": "35bb2896db6fdf9d6b0a25840870ebe8be86578e0b5683bd9267fbbd6ab1faa0",
+    "LICENSE": "05c3275b3133245fb474c341f5e7c89b25df27124b41d2639773ec0de03c3430"
+  }
+}
