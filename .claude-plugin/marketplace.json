@@ -1,12 +1,13 @@
 {
+  "$schema": "https://www.schemastore.org/claude-code-marketplace.json",
   "name": "agent-plugins-marketplace",
+  "description": "VinhLTT's personal agent plugin marketplace. A curated collection that combines plugins I develop myself with carefully selected plugins aggregated from across the community. Covers a wide range of use cases — web search, data analysis, developer tooling, and more — so you can browse, install, and mix first-party and third-party plugins from a single source to extend your agent's capabilities.",
   "owner": {
     "name": "VinhLTT",
     "email": "vinhltt.dev@gmail.com"
   },
   "metadata": {
-    "description": "VinhLTT's personal agent plugin marketplace. A curated collection that combines plugins I develop myself with carefully selected plugins aggregated from across the community. Covers a wide range of use cases — web search, data analysis, developer tooling, and more — so you can browse, install, and mix first-party and third-party plugins from a single source to extend your agent's capabilities.",
-    "version": "0.1.0"
+    "version": "0.2.1"
   },
   "plugins": [
     {
