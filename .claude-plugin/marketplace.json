@@ -7,22 +7,199 @@
     "email": "vinhltt.dev@gmail.com"
   },
   "metadata": {
-    "version": "0.2.1"
+    "version": "0.2.2"
   },
   "plugins": [
     {
-      "name": "claude-plugins-official",
-      "description": "External reference to Anthropic's official Claude Code plugin marketplace (100+ curated plugins). Use `/plugin marketplace add anthropics/claude-plugins-official` to browse/install plugins from there directly.",
-      "author": {
-        "name": "Anthropic",
-        "email": "support@anthropic.com"
+      "name": "code-simplifier",
+      "description": "Agent that simplifies and refines code for clarity, consistency, and maintainability while preserving functionality. Focuses on recently modified code.",
+      "author": { "name": "Anthropic", "email": "support@anthropic.com" },
+      "category": "productivity",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/anthropics/claude-plugins-official.git",
+        "path": "plugins/code-simplifier",
+        "ref": "main"
       },
-      "category": "external-marketplace",
+      "homepage": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/code-simplifier"
+    },
+    {
+      "name": "claude-code-setup",
+      "description": "Analyze codebases and recommend tailored Claude Code automations such as hooks, skills, MCP servers, and subagents.",
+      "author": { "name": "Anthropic", "email": "support@anthropic.com" },
+      "category": "productivity",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/anthropics/claude-plugins-official.git",
+        "path": "plugins/claude-code-setup",
+        "ref": "main"
+      },
+      "homepage": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/claude-code-setup"
+    },
+    {
+      "name": "skill-creator",
+      "description": "Create new skills, improve existing skills, and measure skill performance.",
+      "author": { "name": "Anthropic", "email": "support@anthropic.com" },
+      "category": "development",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/anthropics/claude-plugins-official.git",
+        "path": "plugins/skill-creator",
+        "ref": "main"
+      },
+      "homepage": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/skill-creator"
+    },
+    {
+      "name": "plugin-dev",
+      "description": "Comprehensive toolkit for developing Claude Code plugins. Includes expert skills covering hooks, MCP integration, commands, agents, and best practices.",
+      "author": { "name": "Anthropic", "email": "support@anthropic.com" },
+      "category": "development",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/anthropics/claude-plugins-official.git",
+        "path": "plugins/plugin-dev",
+        "ref": "main"
+      },
+      "homepage": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/plugin-dev"
+    },
+    {
+      "name": "hookify",
+      "description": "Easily create custom hooks to prevent unwanted behaviors by analyzing conversation patterns or from explicit instructions.",
+      "author": { "name": "Anthropic", "email": "support@anthropic.com" },
+      "category": "productivity",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/anthropics/claude-plugins-official.git",
+        "path": "plugins/hookify",
+        "ref": "main"
+      },
+      "homepage": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/hookify"
+    },
+    {
+      "name": "pyright-lsp",
+      "description": "Python language server (Pyright) for type checking and code intelligence.",
+      "author": { "name": "Anthropic", "email": "support@anthropic.com" },
+      "category": "development",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/anthropics/claude-plugins-official.git",
+        "path": "plugins/pyright-lsp",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "typescript-lsp",
+      "description": "TypeScript/JavaScript language server for enhanced code intelligence.",
+      "author": { "name": "Anthropic", "email": "support@anthropic.com" },
+      "category": "development",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/anthropics/claude-plugins-official.git",
+        "path": "plugins/typescript-lsp",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "pr-review-toolkit",
+      "description": "Comprehensive PR review agents specializing in comments, tests, error handling, type design, code quality, and code simplification.",
+      "author": { "name": "Anthropic", "email": "support@anthropic.com" },
+      "category": "productivity",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/anthropics/claude-plugins-official.git",
+        "path": "plugins/pr-review-toolkit",
+        "ref": "main"
+      },
+      "homepage": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/pr-review-toolkit"
+    },
+    {
+      "name": "claude-md-management",
+      "description": "Tools to maintain and improve CLAUDE.md files — audit quality, capture session learnings, and keep project memory current.",
+      "author": { "name": "Anthropic", "email": "support@anthropic.com" },
+      "category": "productivity",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/anthropics/claude-plugins-official.git",
+        "path": "plugins/claude-md-management",
+        "ref": "main"
+      },
+      "homepage": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/claude-md-management"
+    },
+    {
+      "name": "code-review",
+      "description": "Automated code review for pull requests using multiple specialized agents with confidence-based scoring to filter false positives.",
+      "author": { "name": "Anthropic", "email": "support@anthropic.com" },
+      "category": "productivity",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/anthropics/claude-plugins-official.git",
+        "path": "plugins/code-review",
+        "ref": "main"
+      },
+      "homepage": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/code-review"
+    },
+    {
+      "name": "commit-commands",
+      "description": "Commands for git commit workflows including commit, push, and PR creation.",
+      "author": { "name": "Anthropic", "email": "support@anthropic.com" },
+      "category": "productivity",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/anthropics/claude-plugins-official.git",
+        "path": "plugins/commit-commands",
+        "ref": "main"
+      },
+      "homepage": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/commit-commands"
+    },
+    {
+      "name": "security-guidance",
+      "description": "Security reminder hook that warns about potential security issues when editing files, including command injection, XSS, and unsafe code patterns.",
+      "author": { "name": "Anthropic", "email": "support@anthropic.com" },
+      "category": "security",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/anthropics/claude-plugins-official.git",
+        "path": "plugins/security-guidance",
+        "ref": "main"
+      },
+      "homepage": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/security-guidance"
+    },
+    {
+      "name": "session-report",
+      "description": "Generate an explorable HTML report of Claude Code session usage — tokens, cache efficiency, subagents, skills, and the most expensive prompts.",
+      "author": { "name": "Anthropic", "email": "support@anthropic.com" },
+      "category": "productivity",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/anthropics/claude-plugins-official.git",
+        "path": "plugins/session-report",
+        "ref": "main"
+      },
+      "homepage": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/session-report"
+    },
+    {
+      "name": "context7-plugin",
+      "description": "Upstash Context7 MCP server for up-to-date documentation lookup. Pull version-specific documentation and code examples directly from source repositories into your LLM context.",
+      "author": { "name": "Upstash" },
+      "category": "development",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/upstash/context7.git",
+        "path": "plugins/claude/context7",
+        "ref": "main"
+      },
+      "homepage": "https://github.com/upstash/context7"
+    },
+    {
+      "name": "chrome-devtools-mcp",
+      "description": "Control and inspect a live Chrome browser from your coding agent. Record performance traces, analyze network requests, check console messages, and automate browser actions with Puppeteer.",
+      "category": "development",
       "source": {
         "source": "url",
-        "url": "https://github.com/anthropics/claude-plugins-official.git"
+        "url": "https://github.com/ChromeDevTools/chrome-devtools-mcp.git",
+        "sha": "a1612be8e01401cf1711c64bc2ef5da5763ba956"
       },
-      "homepage": "https://github.com/anthropics/claude-plugins-official"
+      "homepage": "https://github.com/ChromeDevTools/chrome-devtools-mcp"
     }
   ]
 }
