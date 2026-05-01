@@ -7,7 +7,7 @@
     "email": "vinhltt.dev@gmail.com"
   },
   "metadata": {
-    "version": "0.2.2"
+    "version": "0.3.0"
   },
   "plugins": [
     {
@@ -187,6 +187,19 @@
         "url": "https://github.com/upstash/context7.git",
         "path": "plugins/claude/context7",
         "ref": "main"
+      },
+      "homepage": "https://github.com/upstash/context7"
+    },
+    {
+      "name": "context7-cli",
+      "description": "Context7 CLI tooling — bundles ctx7 CLI skill and find-docs skill from upstash/context7. Use for library documentation lookup and skill management via the ctx7 CLI without requiring the MCP server.",
+      "author": { "name": "VinhLTT", "email": "vinhltt.dev@gmail.com" },
+      "category": "development",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/vinhltt/agent-plugins.git",
+        "path": "plugins/context7-cli",
+        "ref": "master"
       },
       "homepage": "https://github.com/upstash/context7"
     },

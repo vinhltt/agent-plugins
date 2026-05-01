@@ -1,0 +1,16 @@
+{
+  "upstream": {
+    "owner": "upstash",
+    "repo": "context7",
+    "ref": "master",
+    "commit_sha": "795d5da720e16c417ae30a548a475672ae35e92f"
+  },
+  "synced_at": "2026-05-01T08:57:36.570Z",
+  "files": {
+    "context7-cli/SKILL.md": "b0d9548c6e8c42b29b99efdbca4762897efe713e",
+    "context7-cli/references/docs.md": "b7045f040dc35cbc2b19ba7346a744a898508645",
+    "context7-cli/references/setup.md": "d8dc5d8b05020cc0f570cf9c23f9bd168be62e33",
+    "context7-cli/references/skills.md": "0a21ee1253b6b5125f75e2c09d03d6bea66bbe8b",
+    "find-docs/SKILL.md": "e5c20dc5a4938480a444343feb73817ea13d5c30"
+  }
+}

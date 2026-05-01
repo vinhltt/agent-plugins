@@ -1,0 +1,10 @@
+{
+  "name": "context7-cli",
+  "version": "0.3.0",
+  "description": "Context7 CLI tooling — bundles ctx7 CLI skill and find-docs skill from upstash/context7. Use for library documentation lookup and skill management via the ctx7 CLI without requiring the MCP server.",
+  "author": {
+    "name": "VinhLTT",
+    "email": "vinhltt.dev@gmail.com"
+  },
+  "homepage": "https://github.com/upstash/context7"
+}
