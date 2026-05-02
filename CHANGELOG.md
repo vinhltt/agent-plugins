@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2026-05-02
+
+### Added
+
+- Skills/skill-bump: new skill — deterministic per-skill CHANGELOG.md + manifest.json generator; bumps SKILL.md version; includes scripts (bump-rules, changelog-writer, collect-diff-data, manifest, verify, run), lib helpers (changelog-helpers, default-excludes, frontmatter, git-helpers, known-abort), and full test suite (9 test files)
+- Marketplace: added `document-skills` plugin — document processing suite for Excel (xlsx), Word (docx), PowerPoint (pptx), and PDF via official Anthropic skills repo
+
 ## [0.3.0] - 2026-05-01
 
 ### Added

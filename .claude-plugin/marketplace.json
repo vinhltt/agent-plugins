@@ -7,7 +7,7 @@
     "email": "vinhltt.dev@gmail.com"
   },
   "metadata": {
-    "version": "0.3.0"
+    "version": "0.4.0"
   },
   "plugins": [
     {
@@ -213,6 +213,24 @@
         "sha": "a1612be8e01401cf1711c64bc2ef5da5763ba956"
       },
       "homepage": "https://github.com/ChromeDevTools/chrome-devtools-mcp"
+    },
+    {
+      "name": "document-skills",
+      "description": "Document processing suite for Excel (xlsx), Word (docx), PowerPoint (pptx), and PDF — official Anthropic skills.",
+      "author": { "name": "Anthropic", "email": "support@anthropic.com" },
+      "category": "productivity",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/anthropics/skills.git",
+        "ref": "main"
+      },
+      "skills": [
+        "./skills/xlsx",
+        "./skills/docx",
+        "./skills/pptx",
+        "./skills/pdf"
+      ],
+      "homepage": "https://github.com/anthropics/skills"
     }
   ]
 }

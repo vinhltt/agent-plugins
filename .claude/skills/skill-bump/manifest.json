@@ -1,0 +1,27 @@
+{
+  "version": "0.1.0",
+  "files": {
+    "scripts/bump-rules.ts": "d04bd1e7bc24265b4d5162bdbb3430682694d44411bd4917b8e724cc343507cc",
+    "scripts/changelog-writer.ts": "b12b7b1df41b84f374f257b0b01ef810a6a73afeecd3084e1e16814c5ea58985",
+    "scripts/collect-diff-data.ts": "e53a190fbd24c3d1ad04fe3941e9deb58c6643729d0ea085f220de443ce6db91",
+    "scripts/lib/changelog-helpers.ts": "0780ec2df51e71466cdec97e16e76ce2c6206925d4d299377a3a33657693a850",
+    "scripts/lib/default-excludes.ts": "22d9d2b5712d32f191ebc0684191a91b30ee45e55ad1369daa34363146ed41dd",
+    "scripts/lib/frontmatter.ts": "96e55583877b3a2af48c059d605cc95dad363599adb324293fb82452e526e1d6",
+    "scripts/lib/git-helpers.ts": "cf1c54d16cf8a766c5dfa6b7a79e5d271d1188c5b32185a0e80cc66420069c79",
+    "scripts/lib/known-abort.ts": "e09903ea2fa3df0c7ef571a09732e33ff40d8448476387c3b7434ad1250dc6a1",
+    "scripts/manifest.ts": "d35a162e9790c5e5c66f12fe4659aa20c273e46fb60e98a5e2788868b110edfb",
+    "scripts/run.ts": "d6698eff273be134ddca6c50bdd1f5534089c7a025272e72d162cfc06aa88296",
+    "scripts/verify.ts": "610451e3424f2ef011ca1ed08a9d20e57f9d0dbd8bc01d461e1011e55c53d7b1",
+    "SKILL.md": "f5ddde8fd42cfe07aae0ce16231e4cf6aaf9d5133837f10e78ca1b2e64c68c50",
+    "tests/bump-rules.test.ts": "940b61c10482278854debe86a7d42cb43dd174b160035966122db297c5fd6b4e",
+    "tests/changelog-writer.test.ts": "cc22a1a5523210e92c5fffd8a8029219b8ee218956bc87f38aa64fdaa5ff40ad",
+    "tests/collect-diff-data.test.ts": "1a4811447f77af9af3329bb7e41032c9cfa726798594f634d38ef57561a487ba",
+    "tests/concurrent.test.ts": "345373aeb3dee9c3572ccf37c00f4003e3323fa6ee885b22718d4edab23db3e4",
+    "tests/frontmatter.test.ts": "a7dd1d06e67cf9fd06688f2eff281697c3e684959f435fbbe2fea2b5a2c565be",
+    "tests/git-helpers.test.ts": "5688e2bb3a91fa6f2a78484a86c752ef9fb102fd4ee8a41cb44d6adc357dd3b3",
+    "tests/integration.test.ts": "e83d9c1dd2148c7d4a6bb48287edf8e7e3cdac45f6b2e0ee474004a63b6c0c3c",
+    "tests/manifest.test.ts": "dcc006e17e2718f9a88d91fae1090d87168c3574d621896f6694539845cac0de",
+    "tests/verify.test.ts": "043ed47e04bfd48588b4a16a9bc0e7e06e14f6513103b7bf6b2a4c86b8e39afc"
+  },
+  "generatedAt": "2026-05-02T10:23:21.657Z"
+}
