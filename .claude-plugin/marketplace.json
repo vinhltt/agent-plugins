@@ -7,7 +7,7 @@
     "email": "vinhltt.dev@gmail.com"
   },
   "metadata": {
-    "version": "0.4.0"
+    "version": "0.4.1"
   },
   "plugins": [
     {
@@ -231,6 +231,21 @@
         "./skills/pdf"
       ],
       "homepage": "https://github.com/anthropics/skills"
+    },
+    {
+      "name": "langfuse",
+      "description": "Interact with Langfuse LLM observability platform — query traces, scores, sessions, and prompts via CLI; instrument applications; access Langfuse documentation. Official skill from Langfuse.",
+      "author": { "name": "Langfuse" },
+      "category": "development",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/langfuse/skills.git",
+        "ref": "main"
+      },
+      "skills": [
+        "./skills/langfuse"
+      ],
+      "homepage": "https://github.com/langfuse/skills"
     }
   ]
 }
