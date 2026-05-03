@@ -12,6 +12,18 @@
         { "from": "skills/context7-cli", "to": "skills" },
         { "from": "skills/find-docs", "to": "skills" }
       ]
+    },
+    {
+      "name": "gh-official",
+      "upstream": {
+        "type": "github",
+        "owner": "github",
+        "repo": "awesome-copilot",
+        "ref": "main"
+      },
+      "sources": [
+        { "from": "skills/gh-cli", "to": "skills" }
+      ]
     }
   ]
 }

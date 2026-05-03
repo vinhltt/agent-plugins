@@ -1,0 +1,7 @@
+{
+  "name": "gh-official",
+  "version": "0.6.0",
+  "description": "Internal mirror of github/awesome-copilot/skills/gh-cli. Auto-synced staging area for upstream tracking — not published to marketplace, not user-installable. Reference source for gh-community refactor.",
+  "author": { "name": "VinhLTT", "email": "vinhltt.dev@gmail.com" },
+  "homepage": "https://github.com/github/awesome-copilot"
+}

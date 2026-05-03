@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0] - 2026-05-03
+
+### Added
+
+- gh-community: new plugin — topic-organized refactor of gh-cli from `github/awesome-copilot`; slim SKILL.md with decision tree + `references/` split by feature area (auth, repos, issues, PRs, releases, workflows, secrets, api-search, extras)
+- gh-official: new internal plugin — upstream mirror of `github/awesome-copilot/skills/gh-cli`; auto-synced staging area (not published to marketplace); reference source for gh-community refactor
+
+### Changed
+
+- Marketplace: added `gh-community` entry
+- scripts/ts: updated `sync.config.json` to include gh-official upstream sync
+
 ## [0.5.0] - 2026-05-03
 
 ### Added

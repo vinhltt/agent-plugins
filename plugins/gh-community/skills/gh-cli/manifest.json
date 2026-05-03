@@ -1,0 +1,16 @@
+{
+  "version": "0.1.0",
+  "files": {
+    "references/api-search.md": "58176df0e05e52cc845fe119835c17c4e47e76896c5b82fd4accb2a6340128a4",
+    "references/auth.md": "7264d9e4dd1c06b80340428040fddaf1b5897e13a7c3b78f04db8b052d1a9759",
+    "references/extras.md": "07938ac5d8fb19da75e53000fd051db752cef427aea2885d3daea36fdeb4ef91",
+    "references/issues.md": "2c8c1c87f30e6a7aa1d2d19aad6edea6e3053e0cf7e58ed22d742fbe4e176a18",
+    "references/pull-requests.md": "c43eda73af4983876ce7fa6cd08d32840b6e0e67ecf9f62ab19ccec8ed308ff7",
+    "references/releases.md": "8d9090822ab207c1f1f3ce94708e24db03b43c359a67c3e2c452bb909e806365",
+    "references/repos.md": "55cc56b6e4395713b3e87ecf00c4f0349e48ecac7c22dd7f61a2ee5a5d0cdb0b",
+    "references/secrets.md": "171655fe52753dc03673c6c652f222b0c48f777f815980ca600fd01c33781bd1",
+    "references/workflows.md": "6db8456fbd5297ee8ce6bb82f597a69d6d465681b81ab5570a334e700b974008",
+    "SKILL.md": "082683c4a00e2d0f2c9d34e346f73cf2566e2a6dd2172e2654435de7e743815d"
+  },
+  "generatedAt": "2026-05-03T04:45:39.707Z"
+}

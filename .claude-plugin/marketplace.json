@@ -7,7 +7,7 @@
     "email": "vinhltt.dev@gmail.com"
   },
   "metadata": {
-    "version": "0.5.0"
+    "version": "0.6.0"
   },
   "plugins": [
     {
@@ -202,6 +202,19 @@
         "ref": "master"
       },
       "homepage": "https://github.com/upstash/context7"
+    },
+    {
+      "name": "gh-community",
+      "description": "Custom topic-organized refactor of gh-cli skill from github/awesome-copilot. Slim SKILL.md + references/ split by GitHub feature area. Use for gh CLI workflows: repos, PRs, issues, releases, Actions, secrets, gists.",
+      "author": { "name": "VinhLTT", "email": "vinhltt.dev@gmail.com" },
+      "category": "development",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/vinhltt/agent-plugins.git",
+        "path": "plugins/gh-community",
+        "ref": "master"
+      },
+      "homepage": "https://github.com/vinhltt/agent-plugins/tree/master/plugins/gh-community"
     },
     {
       "name": "chrome-devtools-mcp",

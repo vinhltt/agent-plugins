@@ -1,9 +1,9 @@
 {
   "algorithm": "sha256",
-  "generated_at": "2026-05-03T02:53:10.887Z",
+  "generated_at": "2026-05-03T04:51:04.851Z",
   "marketplace": {
-    "version": "0.5.0",
-    "checksum": "fb7a97603a45b9187eb0a9b7ed5e751a444b3bcdf831e329c639c57220a9009a"
+    "version": "0.6.0",
+    "checksum": "1d2a23b5676d64f7c77b7549a3bc59df6b0b12f53fc5b789828d4bb818f16b94"
   },
   "plugins": {
     "context7-cli": {
@@ -21,12 +21,36 @@
           }
         }
       }
+    },
+    "gh-community": {
+      "version": "0.6.0",
+      "checksum": "9d20c75b2517175871c777a324a2fbd7e36413274b324db8e4875fb2fd433281",
+      "components": {
+        "skills": {
+          "gh-cli": {
+            "version": "0.1.0",
+            "checksum": "082683c4a00e2d0f2c9d34e346f73cf2566e2a6dd2172e2654435de7e743815d"
+          }
+        }
+      }
+    },
+    "gh-official": {
+      "version": "0.6.0",
+      "checksum": "eb6486b926453a4772cd6dcd55093c15630c383c9a983ff273a33bd719f4324d",
+      "components": {
+        "skills": {
+          "gh-cli": {
+            "version": "0.6.0",
+            "checksum": "936a4a0c1f1357a5778fa1d572b254bf5b35c15322f72a9056faff62e32220de"
+          }
+        }
+      }
     }
   },
   "components": {},
   "files": {
     ".agent-plugins.json": "4c1fefed64238aa27511d4f51a0a7efccbfa701e24ad87b7a3f153403f1a16da",
-    ".claude-plugin/marketplace.json": "fb7a97603a45b9187eb0a9b7ed5e751a444b3bcdf831e329c639c57220a9009a",
+    ".claude-plugin/marketplace.json": "1d2a23b5676d64f7c77b7549a3bc59df6b0b12f53fc5b789828d4bb818f16b94",
     ".claude/settings.json": "0136ecc113f997e9b6dac9c90ae182a98a61ad99fab8c4ba571dc9d579a8575d",
     ".claude/skills/agent-plugins-changelog/SKILL.md": "b34a6af6a6e590cee34318e906e6364a50627abd4dda5d284dfffedece0e4cff",
     ".claude/skills/agent-plugins-changelog/changelog.md": "f3f913bf095c3be6ee973ee1a01451cdf0107ed9e0351067eb1b80844f44f5d3",
@@ -67,7 +91,7 @@
     ".claude/skills/skill-bump/tests/integration.test.ts": "e83d9c1dd2148c7d4a6bb48287edf8e7e3cdac45f6b2e0ee474004a63b6c0c3c",
     ".claude/skills/skill-bump/tests/manifest.test.ts": "dcc006e17e2718f9a88d91fae1090d87168c3574d621896f6694539845cac0de",
     ".claude/skills/skill-bump/tests/verify.test.ts": "043ed47e04bfd48588b4a16a9bc0e7e06e14f6513103b7bf6b2a4c86b8e39afc",
-    "CHANGELOG.md": "821a46cf1237bbd8da017d64f35c2cff91b7a3eeace121981a671ad0c1a35e0e",
+    "CHANGELOG.md": "cc3d5a2cd46db66cf063524c9039130c1f7f83d964de3379c479504000d9c0b6",
     "LICENSE": "05c3275b3133245fb474c341f5e7c89b25df27124b41d2639773ec0de03c3430",
     "plugins/context7-cli/.claude-plugin/plugin.json": "0554560dea4f0e73658648e325485f9ddb57b564be077b3eca0c723361301b7b",
     "plugins/context7-cli/.sync-manifest.json": "0e1b597cfb8f45312c921383cb4c3b6d05ccd6a84274b3d24829a9576282a7bd",
@@ -76,8 +100,25 @@
     "plugins/context7-cli/skills/context7-cli/references/setup.md": "79530eb571b56f9846fd714d3b5e2759f2102042e590347501e43bf22a56a6e0",
     "plugins/context7-cli/skills/context7-cli/references/skills.md": "a31c9c56044424e07e764de7522fb542ce58b327259b582a1ba18223d13b26b5",
     "plugins/context7-cli/skills/find-docs/SKILL.md": "b3cddd0e1eae319c9a8fb7d6713a6ee45d5b908d47581cd355129c49630c01ed",
+    "plugins/gh-community/.claude-plugin/plugin.json": "9d20c75b2517175871c777a324a2fbd7e36413274b324db8e4875fb2fd433281",
+    "plugins/gh-community/README.md": "9c11a980a6d20f0cae899b1af10a90f14c341d393837ed73ec6154b7ff3184c2",
+    "plugins/gh-community/skills/gh-cli/CHANGELOG.md": "31274806cb9af3db256bf74fd33ec366ed5ecdf4cbeeae2e05522c6d8ab231bd",
+    "plugins/gh-community/skills/gh-cli/SKILL.md": "082683c4a00e2d0f2c9d34e346f73cf2566e2a6dd2172e2654435de7e743815d",
+    "plugins/gh-community/skills/gh-cli/manifest.json": "10664389e34f6504ae54432e309e39c74b244cde31ed8b5fe8c36147529119a9",
+    "plugins/gh-community/skills/gh-cli/references/api-search.md": "58176df0e05e52cc845fe119835c17c4e47e76896c5b82fd4accb2a6340128a4",
+    "plugins/gh-community/skills/gh-cli/references/auth.md": "7264d9e4dd1c06b80340428040fddaf1b5897e13a7c3b78f04db8b052d1a9759",
+    "plugins/gh-community/skills/gh-cli/references/extras.md": "07938ac5d8fb19da75e53000fd051db752cef427aea2885d3daea36fdeb4ef91",
+    "plugins/gh-community/skills/gh-cli/references/issues.md": "2c8c1c87f30e6a7aa1d2d19aad6edea6e3053e0cf7e58ed22d742fbe4e176a18",
+    "plugins/gh-community/skills/gh-cli/references/pull-requests.md": "c43eda73af4983876ce7fa6cd08d32840b6e0e67ecf9f62ab19ccec8ed308ff7",
+    "plugins/gh-community/skills/gh-cli/references/releases.md": "8d9090822ab207c1f1f3ce94708e24db03b43c359a67c3e2c452bb909e806365",
+    "plugins/gh-community/skills/gh-cli/references/repos.md": "55cc56b6e4395713b3e87ecf00c4f0349e48ecac7c22dd7f61a2ee5a5d0cdb0b",
+    "plugins/gh-community/skills/gh-cli/references/secrets.md": "171655fe52753dc03673c6c652f222b0c48f777f815980ca600fd01c33781bd1",
+    "plugins/gh-community/skills/gh-cli/references/workflows.md": "6db8456fbd5297ee8ce6bb82f597a69d6d465681b81ab5570a334e700b974008",
+    "plugins/gh-official/.claude-plugin/plugin.json": "eb6486b926453a4772cd6dcd55093c15630c383c9a983ff273a33bd719f4324d",
+    "plugins/gh-official/.sync-manifest.json": "8bd147f86d8e7c8b2e108e8fa7dd1e6fc8fa7d4e7e6d002301c2b04d829f21ad",
+    "plugins/gh-official/skills/gh-cli/SKILL.md": "936a4a0c1f1357a5778fa1d572b254bf5b35c15322f72a9056faff62e32220de",
     "scripts/ts/README.md": "83d35556c008dbaad9adfe661633c84fcb5b1bb1cfa3bce130dce319342c1d93",
-    "scripts/ts/sync.config.json": "670e0092956369f30a823766c5c29359986a0d07ce7a5d62c10a2e914b08ed6b",
+    "scripts/ts/sync.config.json": "8ee65f6cba85699953016bc919594e46678e9b2aa1a9de6a460bd11eb96bb15e",
     "scripts/ts/sync.ts": "f02a496c2f7577d9e419d76570bfc76dbc69a822f60cfaf204ac1499c9379638"
   }
 }

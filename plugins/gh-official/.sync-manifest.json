@@ -1,0 +1,12 @@
+{
+  "upstream": {
+    "owner": "github",
+    "repo": "awesome-copilot",
+    "ref": "main",
+    "commit_sha": "90921cc46f4e452ea379e70884d60ec25263f16a"
+  },
+  "synced_at": "2026-05-03T04:19:54.172Z",
+  "files": {
+    "gh-cli/SKILL.md": "6756f0b5d9b808add2f90962079dc381875a53c1"
+  }
+}
