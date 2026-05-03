@@ -1,14 +1,14 @@
 {
   "algorithm": "sha256",
-  "generated_at": "2026-05-02T14:28:43.433Z",
+  "generated_at": "2026-05-03T02:53:10.887Z",
   "marketplace": {
-    "version": "0.4.2",
-    "checksum": "25d371b4b49ca7a260ee9f261cbde2e0ecc135af33051da32017817810e927d6"
+    "version": "0.5.0",
+    "checksum": "fb7a97603a45b9187eb0a9b7ed5e751a444b3bcdf831e329c639c57220a9009a"
   },
   "plugins": {
     "context7-cli": {
-      "version": "0.3.0",
-      "checksum": "fb3bb9530f93bf0b6d71c2208fdd2069d7527dc72d381def1da001ad24084f47",
+      "version": "0.5.0",
+      "checksum": "0554560dea4f0e73658648e325485f9ddb57b564be077b3eca0c723361301b7b",
       "components": {
         "skills": {
           "context7-cli": {
@@ -26,7 +26,7 @@
   "components": {},
   "files": {
     ".agent-plugins.json": "4c1fefed64238aa27511d4f51a0a7efccbfa701e24ad87b7a3f153403f1a16da",
-    ".claude-plugin/marketplace.json": "25d371b4b49ca7a260ee9f261cbde2e0ecc135af33051da32017817810e927d6",
+    ".claude-plugin/marketplace.json": "fb7a97603a45b9187eb0a9b7ed5e751a444b3bcdf831e329c639c57220a9009a",
     ".claude/settings.json": "0136ecc113f997e9b6dac9c90ae182a98a61ad99fab8c4ba571dc9d579a8575d",
     ".claude/skills/agent-plugins-changelog/SKILL.md": "b34a6af6a6e590cee34318e906e6364a50627abd4dda5d284dfffedece0e4cff",
     ".claude/skills/agent-plugins-changelog/changelog.md": "f3f913bf095c3be6ee973ee1a01451cdf0107ed9e0351067eb1b80844f44f5d3",
@@ -67,15 +67,17 @@
     ".claude/skills/skill-bump/tests/integration.test.ts": "e83d9c1dd2148c7d4a6bb48287edf8e7e3cdac45f6b2e0ee474004a63b6c0c3c",
     ".claude/skills/skill-bump/tests/manifest.test.ts": "dcc006e17e2718f9a88d91fae1090d87168c3574d621896f6694539845cac0de",
     ".claude/skills/skill-bump/tests/verify.test.ts": "043ed47e04bfd48588b4a16a9bc0e7e06e14f6513103b7bf6b2a4c86b8e39afc",
-    "CHANGELOG.md": "90593917295013abcbe02201a24af4f508cbccab1463c7f70ceb2909af6d3f6f",
+    "CHANGELOG.md": "821a46cf1237bbd8da017d64f35c2cff91b7a3eeace121981a671ad0c1a35e0e",
     "LICENSE": "05c3275b3133245fb474c341f5e7c89b25df27124b41d2639773ec0de03c3430",
-    "plugins/context7-cli/.claude-plugin/plugin.json": "fb3bb9530f93bf0b6d71c2208fdd2069d7527dc72d381def1da001ad24084f47",
-    "plugins/context7-cli/.sync-manifest.json": "1d966c8bec34eac24da685d1f641c2da3150e65767292a878bc40cf470b65c84",
+    "plugins/context7-cli/.claude-plugin/plugin.json": "0554560dea4f0e73658648e325485f9ddb57b564be077b3eca0c723361301b7b",
+    "plugins/context7-cli/.sync-manifest.json": "0e1b597cfb8f45312c921383cb4c3b6d05ccd6a84274b3d24829a9576282a7bd",
     "plugins/context7-cli/skills/context7-cli/SKILL.md": "fe409c41c7aa683378a7c3d8d118ecc3db013b9632909b44b080cc5e7f6d8f4b",
     "plugins/context7-cli/skills/context7-cli/references/docs.md": "e6f92628d2c01e02a868bfd4a37bd23baffb13b726051e0de7bbc40d092d1577",
     "plugins/context7-cli/skills/context7-cli/references/setup.md": "79530eb571b56f9846fd714d3b5e2759f2102042e590347501e43bf22a56a6e0",
     "plugins/context7-cli/skills/context7-cli/references/skills.md": "a31c9c56044424e07e764de7522fb542ce58b327259b582a1ba18223d13b26b5",
     "plugins/context7-cli/skills/find-docs/SKILL.md": "b3cddd0e1eae319c9a8fb7d6713a6ee45d5b908d47581cd355129c49630c01ed",
-    "plugins/context7-cli/sync.ts": "f96279a959e0f9b759d6988bc64d6d20033ace07cc9a8e0be7cef56d234bf1e2"
+    "scripts/ts/README.md": "83d35556c008dbaad9adfe661633c84fcb5b1bb1cfa3bce130dce319342c1d93",
+    "scripts/ts/sync.config.json": "670e0092956369f30a823766c5c29359986a0d07ce7a5d62c10a2e914b08ed6b",
+    "scripts/ts/sync.ts": "f02a496c2f7577d9e419d76570bfc76dbc69a822f60cfaf204ac1499c9379638"
   }
 }

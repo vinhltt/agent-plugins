@@ -1,0 +1,17 @@
+{
+  "plugins": [
+    {
+      "name": "context7-cli",
+      "upstream": {
+        "type": "github",
+        "owner": "upstash",
+        "repo": "context7",
+        "ref": "master"
+      },
+      "sources": [
+        { "from": "skills/context7-cli", "to": "skills" },
+        { "from": "skills/find-docs", "to": "skills" }
+      ]
+    }
+  ]
+}

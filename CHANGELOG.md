@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2026-05-03
+
+### Added
+
+- scripts/ts: new shared plugin sync runner — generic Bun-native sync script (`sync.ts`) with config (`sync.config.json`) that pulls plugin source files from upstream GitHub repos; replaces the plugin-specific sync.ts previously bundled inside context7-cli
+
+### Changed
+
+- context7-cli: extracted `sync.ts` to `scripts/ts/`; updated `.sync-manifest.json`
+
 ## [0.4.2] - 2026-05-02
 
 ### Added
