@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0] - 2026-05-03
+
+### Added
+
+- gh-community/create-issue: new skill — capture brainstormed ideas as GitHub issues via `gh` CLI on configurable `--repo`; pre-flight `gh auth status` (no token handling); fixed 4-section body template (Summary / Use Case / Proposed Behavior / Open Questions); fail-fast on missing CLI, failed auth, unknown label, or 404 repo
+
 ## [0.6.0] - 2026-05-03
 
 ### Added

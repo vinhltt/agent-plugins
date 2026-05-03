@@ -1,9 +1,9 @@
 {
   "algorithm": "sha256",
-  "generated_at": "2026-05-03T04:51:04.851Z",
+  "generated_at": "2026-05-03T06:38:11.276Z",
   "marketplace": {
-    "version": "0.6.0",
-    "checksum": "1d2a23b5676d64f7c77b7549a3bc59df6b0b12f53fc5b789828d4bb818f16b94"
+    "version": "0.7.0",
+    "checksum": "65487d2107958f0b1d698eb31c78f1d11ef30457ae7f76ee87768f7b9bea0035"
   },
   "plugins": {
     "context7-cli": {
@@ -23,10 +23,14 @@
       }
     },
     "gh-community": {
-      "version": "0.6.0",
-      "checksum": "9d20c75b2517175871c777a324a2fbd7e36413274b324db8e4875fb2fd433281",
+      "version": "0.7.0",
+      "checksum": "fff53d940975b3ccc207d37a8f060e46aa3e653d9b4aca0ff7e2b7b41f1855fe",
       "components": {
         "skills": {
+          "create-issue": {
+            "version": "0.1.0",
+            "checksum": "091241eed5a60eb25962bd10360ad04b18c71c900975f817e68b6561c31f566f"
+          },
           "gh-cli": {
             "version": "0.1.0",
             "checksum": "082683c4a00e2d0f2c9d34e346f73cf2566e2a6dd2172e2654435de7e743815d"
@@ -50,7 +54,7 @@
   "components": {},
   "files": {
     ".agent-plugins.json": "4c1fefed64238aa27511d4f51a0a7efccbfa701e24ad87b7a3f153403f1a16da",
-    ".claude-plugin/marketplace.json": "1d2a23b5676d64f7c77b7549a3bc59df6b0b12f53fc5b789828d4bb818f16b94",
+    ".claude-plugin/marketplace.json": "65487d2107958f0b1d698eb31c78f1d11ef30457ae7f76ee87768f7b9bea0035",
     ".claude/settings.json": "0136ecc113f997e9b6dac9c90ae182a98a61ad99fab8c4ba571dc9d579a8575d",
     ".claude/skills/agent-plugins-changelog/SKILL.md": "b34a6af6a6e590cee34318e906e6364a50627abd4dda5d284dfffedece0e4cff",
     ".claude/skills/agent-plugins-changelog/changelog.md": "f3f913bf095c3be6ee973ee1a01451cdf0107ed9e0351067eb1b80844f44f5d3",
@@ -91,7 +95,7 @@
     ".claude/skills/skill-bump/tests/integration.test.ts": "e83d9c1dd2148c7d4a6bb48287edf8e7e3cdac45f6b2e0ee474004a63b6c0c3c",
     ".claude/skills/skill-bump/tests/manifest.test.ts": "dcc006e17e2718f9a88d91fae1090d87168c3574d621896f6694539845cac0de",
     ".claude/skills/skill-bump/tests/verify.test.ts": "043ed47e04bfd48588b4a16a9bc0e7e06e14f6513103b7bf6b2a4c86b8e39afc",
-    "CHANGELOG.md": "cc3d5a2cd46db66cf063524c9039130c1f7f83d964de3379c479504000d9c0b6",
+    "CHANGELOG.md": "6d5fd57de3656aeb1d721572ca99c20de8f84fe15a64eda57c38a762b0952e47",
     "LICENSE": "05c3275b3133245fb474c341f5e7c89b25df27124b41d2639773ec0de03c3430",
     "plugins/context7-cli/.claude-plugin/plugin.json": "0554560dea4f0e73658648e325485f9ddb57b564be077b3eca0c723361301b7b",
     "plugins/context7-cli/.sync-manifest.json": "0e1b597cfb8f45312c921383cb4c3b6d05ccd6a84274b3d24829a9576282a7bd",
@@ -100,8 +104,11 @@
     "plugins/context7-cli/skills/context7-cli/references/setup.md": "79530eb571b56f9846fd714d3b5e2759f2102042e590347501e43bf22a56a6e0",
     "plugins/context7-cli/skills/context7-cli/references/skills.md": "a31c9c56044424e07e764de7522fb542ce58b327259b582a1ba18223d13b26b5",
     "plugins/context7-cli/skills/find-docs/SKILL.md": "b3cddd0e1eae319c9a8fb7d6713a6ee45d5b908d47581cd355129c49630c01ed",
-    "plugins/gh-community/.claude-plugin/plugin.json": "9d20c75b2517175871c777a324a2fbd7e36413274b324db8e4875fb2fd433281",
+    "plugins/gh-community/.claude-plugin/plugin.json": "fff53d940975b3ccc207d37a8f060e46aa3e653d9b4aca0ff7e2b7b41f1855fe",
     "plugins/gh-community/README.md": "9c11a980a6d20f0cae899b1af10a90f14c341d393837ed73ec6154b7ff3184c2",
+    "plugins/gh-community/skills/create-issue/CHANGELOG.md": "e96242bd4c909ab8925bc3e50601214f62286cb658065ca6d8e68d4f2b10a950",
+    "plugins/gh-community/skills/create-issue/SKILL.md": "091241eed5a60eb25962bd10360ad04b18c71c900975f817e68b6561c31f566f",
+    "plugins/gh-community/skills/create-issue/manifest.json": "0e580d38827f028e8d6e3fa56a9d4b1fceff96cf8ed4ac6b83aa268358a4c21d",
     "plugins/gh-community/skills/gh-cli/CHANGELOG.md": "31274806cb9af3db256bf74fd33ec366ed5ecdf4cbeeae2e05522c6d8ab231bd",
     "plugins/gh-community/skills/gh-cli/SKILL.md": "082683c4a00e2d0f2c9d34e346f73cf2566e2a6dd2172e2654435de7e743815d",
     "plugins/gh-community/skills/gh-cli/manifest.json": "10664389e34f6504ae54432e309e39c74b244cde31ed8b5fe8c36147529119a9",

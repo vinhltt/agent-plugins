@@ -1,6 +1,6 @@
 {
   "name": "gh-community",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Custom topic-organized refactor of gh-cli skill from github/awesome-copilot. Slim SKILL.md + references/ split by GitHub feature area (auth, repos, issues, PRs, releases, workflows, secrets, gists). Use for GitHub CLI (gh) workflows.",
   "author": { "name": "VinhLTT", "email": "vinhltt.dev@gmail.com" },
   "homepage": "https://github.com/vinhltt/agent-plugins"
