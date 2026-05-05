@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.1.1",
   "files": {
     "scripts/checks/check-changelog-header.ts": "a1a6fed694ccbab697d4e166a7b13f0cdf68b71e58adeb19abf59226d2309313",
     "scripts/checks/check-cross-consistency.ts": "e6172c1c54dc6b7604749472c40e0bc04e72f5e4ed5ca080ae438b2a7559ea8e",
@@ -14,7 +14,7 @@
     "scripts/tests/manifest.test.ts": "8adc936ed8ef1091fc5b63fbad08a4c7fdc45629d981e5961549281552fa6219",
     "scripts/tests/verify.test.ts": "0b9891087d9c5045b2e3e31351cbdf95f196c8a8ebb3d28778b8a0287d31b8a0",
     "scripts/verify.ts": "35bb2896db6fdf9d6b0a25840870ebe8be86578e0b5683bd9267fbbd6ab1faa0",
-    "SKILL.md": "b34a6af6a6e590cee34318e906e6364a50627abd4dda5d284dfffedece0e4cff"
+    "SKILL.md": "67cb23972968250719ee8b750b549aae713e659915f8bf1b55f33691f7a875c3"
   },
-  "generatedAt": "2026-05-02T09:18:40.158Z"
+  "generatedAt": "2026-05-05T08:42:12.000Z"
 }

@@ -3,7 +3,7 @@ name: agent-plugins-changelog
 description: Generate Keep-a-Changelog entries for the agent-plugins repo. Auto-classifies changes by component, bumps versions across marketplace.json + plugin.json + SKILL.md + agent frontmatter + manifest.json. Bun-native, zero dependencies. Use when staging a release or summarizing what changed since last commit.
 metadata:
   authors: VinhLTT
-  version: 0.1.0
+  version: 0.1.1
 ---
 
 # agent-plugins-changelog
@@ -88,11 +88,14 @@ If two or more entries share a group (e.g., multiple files under `plugins/foo/`)
 Set `metadata.version` to `<new-version>` in `.claude-plugin/marketplace.json`.
 
 ### 10. Update plugin.json files
-For each affected plugin, bump `plugins/<name>/.claude-plugin/plugin.json.version` to `<new-version>` (or per-plugin semver if independent versioning is in use).
+For each affected plugin, apply the rule based on diff status:
+- **Status `A` (new plugin):** leave `plugin.json.version` as-is — it is the author's initial release version; do not overwrite.
+- **Status `M` or `R` (existing plugin modified):** bump `plugins/<name>/.claude-plugin/plugin.json.version` to `<new-version>`.
 
 ### 11. Update component frontmatter
-- For each affected skill: bump `skills/<name>/SKILL.md` `metadata.version`.
-- For each affected agent: bump `agents/<name>.md` `version`.
+For each affected skill/agent, apply the rule based on diff status:
+- **Status `A` (new skill/agent):** leave `SKILL.md`/agent frontmatter `version` as-is — it is the author's initial release version; do not overwrite.
+- **Status `M` or `R` (existing skill/agent modified):** bump `skills/<name>/SKILL.md` `metadata.version` (or `agents/<name>.md` `version`) to `<new-version>`.
 - Hooks (`hooks/<name>.json`) and commands (`commands/<name>.md`) are tracked by checksum only — no frontmatter version per design decision D5.
 
 ### 12. Re-compute manifest

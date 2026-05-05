@@ -7,7 +7,7 @@
     "email": "vinhltt.dev@gmail.com"
   },
   "metadata": {
-    "version": "0.8.0"
+    "version": "0.8.1"
   },
   "plugins": [
     {
@@ -195,12 +195,7 @@
       "description": "Context7 CLI tooling — bundles ctx7 CLI skill and find-docs skill from upstash/context7. Use for library documentation lookup and skill management via the ctx7 CLI without requiring the MCP server.",
       "author": { "name": "VinhLTT", "email": "vinhltt.dev@gmail.com" },
       "category": "development",
-      "source": {
-        "source": "git-subdir",
-        "url": "https://github.com/vinhltt/agent-plugins.git",
-        "path": "plugins/context7-cli",
-        "ref": "master"
-      },
+      "source": "./plugins/context7-cli",
       "homepage": "https://github.com/upstash/context7"
     },
     {
@@ -208,12 +203,7 @@
       "description": "Custom topic-organized refactor of gh-cli skill from github/awesome-copilot. Slim SKILL.md + references/ split by GitHub feature area. Use for gh CLI workflows: repos, PRs, issues, releases, Actions, secrets, gists.",
       "author": { "name": "VinhLTT", "email": "vinhltt.dev@gmail.com" },
       "category": "development",
-      "source": {
-        "source": "git-subdir",
-        "url": "https://github.com/vinhltt/agent-plugins.git",
-        "path": "plugins/gh-community",
-        "ref": "master"
-      },
+      "source": "./plugins/gh-community",
       "homepage": "https://github.com/vinhltt/agent-plugins/tree/master/plugins/gh-community"
     },
     {
@@ -221,12 +211,7 @@
       "description": "Claude Code utility toolkit. Currently bundles cc-ask — route Claude Code / Agent SDK / Anthropic API questions to the built-in claude-code-guide agent.",
       "author": { "name": "VinhLTT", "email": "vinhltt.dev@gmail.com" },
       "category": "productivity",
-      "source": {
-        "source": "git-subdir",
-        "url": "https://github.com/vinhltt/agent-plugins.git",
-        "path": "plugins/cc-toolkit",
-        "ref": "master"
-      },
+      "source": "./plugins/cc-toolkit",
       "homepage": "https://github.com/vinhltt/agent-plugins/tree/master/plugins/cc-toolkit"
     },
     {
