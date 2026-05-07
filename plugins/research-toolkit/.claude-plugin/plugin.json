@@ -1,0 +1,7 @@
+{
+  "name": "research-toolkit",
+  "version": "0.1.0",
+  "description": "Deep research toolkit. Bundles docs-seeker + research skills and researcher agent for systematic technical investigation across context7, GitHub MCP, WebFetch, WebSearch (optional Gemini CLI).",
+  "author": { "name": "VinhLTT", "email": "vinhltt.dev@gmail.com" },
+  "homepage": "https://github.com/vinhltt/agent-plugins/tree/master/plugins/research-toolkit"
+}

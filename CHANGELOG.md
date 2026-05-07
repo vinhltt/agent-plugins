@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.0] - 2026-05-07
+
+### Added
+
+- research-toolkit: new plugin — deep research toolkit bundling `docs-seeker` skill (routes doc queries across context7 MCP → GitHub MCP → WebFetch/WebSearch), `research` skill (technical investigation, architecture analysis, solution design), and `researcher` agent (multi-source research reports; Haiku model)
+
+### Changed
+
+- Marketplace: added `research-toolkit` entry
+
 ## [0.8.1] - 2026-05-05
 
 ### Changed

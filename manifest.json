@@ -1,9 +1,9 @@
 {
   "algorithm": "sha256",
-  "generated_at": "2026-05-05T08:56:32.917Z",
+  "generated_at": "2026-05-07T08:07:09.416Z",
   "marketplace": {
-    "version": "0.8.1",
-    "checksum": "c283d38b5b89de229f2674de07952a24a72d220d3f23578e4576379c4db56b38"
+    "version": "0.9.0",
+    "checksum": "efb7f076417887199a0055cd9d2584b5cf0daec3acc2e4c00d9923bfcd4fb48e"
   },
   "plugins": {
     "cc-toolkit": {
@@ -61,12 +61,39 @@
           }
         }
       }
+    },
+    "research-toolkit": {
+      "version": "0.1.0",
+      "checksum": "cb20af5bee12f24501e6e8556fd239ac219c4584d7feb3ec4551a204b02fb0b0",
+      "components": {
+        "skills": {
+          "docs-seeker": {
+            "version": "0.1.0",
+            "checksum": "a00d15200ba15a6d5a7b98ff9f5b31420f62f430ff6965e64bb339d3b5b6075c"
+          },
+          "research": {
+            "version": "0.1.0",
+            "checksum": "7041efffcefe4fd160ccdc1aafecd1817eaa5ca8b97d280ec1cb5f184f8a9cda"
+          }
+        },
+        "agents": {
+          "researcher": {
+            "version": "0.1.0",
+            "checksum": "43d4c433b13ca4e6a3be85e22dccb880985d3765f6cdffc8bcd7266f96e314c6"
+          }
+        },
+        "commands": {
+          "research": {
+            "checksum": "c3d1dc4c7161b405cd169be78ae1e0b5516546a14de06bbb02803e001707bdd0"
+          }
+        }
+      }
     }
   },
   "components": {},
   "files": {
     ".agent-plugins.json": "4c1fefed64238aa27511d4f51a0a7efccbfa701e24ad87b7a3f153403f1a16da",
-    ".claude-plugin/marketplace.json": "c283d38b5b89de229f2674de07952a24a72d220d3f23578e4576379c4db56b38",
+    ".claude-plugin/marketplace.json": "efb7f076417887199a0055cd9d2584b5cf0daec3acc2e4c00d9923bfcd4fb48e",
     ".claude/settings.json": "0136ecc113f997e9b6dac9c90ae182a98a61ad99fab8c4ba571dc9d579a8575d",
     ".claude/skills/agent-plugins-changelog/SKILL.md": "67cb23972968250719ee8b750b549aae713e659915f8bf1b55f33691f7a875c3",
     ".claude/skills/agent-plugins-changelog/changelog.md": "ee21e4ebb9c12db2b20e441593b708a3f797fcefec584e3e3c8826395db378e3",
@@ -75,7 +102,7 @@
     ".claude/skills/agent-plugins-changelog/scripts/checks/check-cross-consistency.ts": "e6172c1c54dc6b7604749472c40e0bc04e72f5e4ed5ca080ae438b2a7559ea8e",
     ".claude/skills/agent-plugins-changelog/scripts/checks/check-marketplace-version.ts": "982f1325e56b13eb7f5d8bf313c9add99d1cbc9b85d74b7b5eef272e88819902",
     ".claude/skills/agent-plugins-changelog/scripts/checks/check-plugin-versions.ts": "8ec604067f7d96e05903c69d428daa744b2f193a8a0c583b51b3d52797755d1a",
-    ".claude/skills/agent-plugins-changelog/scripts/checks/check-skill-versions.ts": "5d704e7dd7d2a59944406183c4f3ec5c35d2210b6fde7a9f749815486783bf74",
+    ".claude/skills/agent-plugins-changelog/scripts/checks/check-skill-versions.ts": "587ed7fc6a57952ca901a754a427fbcd3bd79718416aa30c573cd8907bc5eebe",
     ".claude/skills/agent-plugins-changelog/scripts/checks/fs-helpers.ts": "19ed7ce3a4f5e18fe761a299d37c1699c5fae3775326d5ae7b6cc77c7e24ab3e",
     ".claude/skills/agent-plugins-changelog/scripts/checks/types.ts": "ac8241eff22ee0335808e77764d4e125b7c94370c1bc8610f79ef9fe5d6da4d9",
     ".claude/skills/agent-plugins-changelog/scripts/collect-diff-data.ts": "8e732a99f714c228c86d9a61fabf56ddd8c1cbe1a7ddae103ba8ca69dfc6dc5f",
@@ -107,8 +134,9 @@
     ".claude/skills/skill-bump/tests/integration.test.ts": "e83d9c1dd2148c7d4a6bb48287edf8e7e3cdac45f6b2e0ee474004a63b6c0c3c",
     ".claude/skills/skill-bump/tests/manifest.test.ts": "dcc006e17e2718f9a88d91fae1090d87168c3574d621896f6694539845cac0de",
     ".claude/skills/skill-bump/tests/verify.test.ts": "043ed47e04bfd48588b4a16a9bc0e7e06e14f6513103b7bf6b2a4c86b8e39afc",
-    "CHANGELOG.md": "476af00b8b8718527d5ade8e1ef13017465d7e1788461b8a06f9fc30b6e6a2cb",
+    "CHANGELOG.md": "605548848608cdfced950ceefdc33f67cc39fdbb314ea7938f7c2d03e44644f7",
     "LICENSE": "05c3275b3133245fb474c341f5e7c89b25df27124b41d2639773ec0de03c3430",
+    "README.md": "698ce6dd1f5fc21bb44b6c815fc35d10d186f38a33b3ffdbdf6739b8e5c6d007",
     "plugins/cc-toolkit/.claude-plugin/plugin.json": "7c329994d080bb4d203780d82256f7fbd169e0d922d02ddcc074e5ce7b3ddb0a",
     "plugins/cc-toolkit/README.md": "ee9bf8cc75e3c3fd290e0fafda8616d14aea6130d27fff7d44e059c5b28be715",
     "plugins/cc-toolkit/skills/cc-ask/CHANGELOG.md": "e8da7d0a2f2449c683b17c03792737060e30c95f1871bf60c582d827206dd879",
@@ -141,6 +169,16 @@
     "plugins/gh-official/.claude-plugin/plugin.json": "eb6486b926453a4772cd6dcd55093c15630c383c9a983ff273a33bd719f4324d",
     "plugins/gh-official/.sync-manifest.json": "8bd147f86d8e7c8b2e108e8fa7dd1e6fc8fa7d4e7e6d002301c2b04d829f21ad",
     "plugins/gh-official/skills/gh-cli/SKILL.md": "936a4a0c1f1357a5778fa1d572b254bf5b35c15322f72a9056faff62e32220de",
+    "plugins/research-toolkit/.claude-plugin/plugin.json": "cb20af5bee12f24501e6e8556fd239ac219c4584d7feb3ec4551a204b02fb0b0",
+    "plugins/research-toolkit/README.md": "1c170eec374dacac8cc52305bfe600d27c0bad6aecc6d84ab9be39479c4f5e4d",
+    "plugins/research-toolkit/agents/researcher.md": "43d4c433b13ca4e6a3be85e22dccb880985d3765f6cdffc8bcd7266f96e314c6",
+    "plugins/research-toolkit/commands/research.md": "c3d1dc4c7161b405cd169be78ae1e0b5516546a14de06bbb02803e001707bdd0",
+    "plugins/research-toolkit/skills/docs-seeker/CHANGELOG.md": "2c712952a67296869adb835ad458d7ad92fbeaf137036ba9a7bbdc19edc35c4f",
+    "plugins/research-toolkit/skills/docs-seeker/SKILL.md": "a00d15200ba15a6d5a7b98ff9f5b31420f62f430ff6965e64bb339d3b5b6075c",
+    "plugins/research-toolkit/skills/docs-seeker/manifest.json": "0942f035910f9c93bd958ee10e79e568348474304d662d0bde5425b9481012be",
+    "plugins/research-toolkit/skills/research/CHANGELOG.md": "de4b3559bad1eed688ff1252d8fbee6309b8b0c7f433c854566242e162bea986",
+    "plugins/research-toolkit/skills/research/SKILL.md": "7041efffcefe4fd160ccdc1aafecd1817eaa5ca8b97d280ec1cb5f184f8a9cda",
+    "plugins/research-toolkit/skills/research/manifest.json": "b1160105de46d29bd71630c5471d91a23f40d97029879691c6a00af0c783e4ae",
     "scripts/ts/README.md": "83d35556c008dbaad9adfe661633c84fcb5b1bb1cfa3bce130dce319342c1d93",
     "scripts/ts/sync.config.json": "8ee65f6cba85699953016bc919594e46678e9b2aa1a9de6a460bd11eb96bb15e",
     "scripts/ts/sync.ts": "f02a496c2f7577d9e419d76570bfc76dbc69a822f60cfaf204ac1499c9379638"

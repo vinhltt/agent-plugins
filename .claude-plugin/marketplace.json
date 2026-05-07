@@ -7,7 +7,7 @@
     "email": "vinhltt.dev@gmail.com"
   },
   "metadata": {
-    "version": "0.8.1"
+    "version": "0.9.0"
   },
   "plugins": [
     {
@@ -272,6 +272,14 @@
         "./skills/find-skills"
       ],
       "homepage": "https://github.com/vercel-labs/skills"
+    },
+    {
+      "name": "research-toolkit",
+      "description": "Deep research toolkit. Bundles docs-seeker + research skills and researcher agent for systematic technical investigation across context7, GitHub MCP, WebFetch, WebSearch (optional Gemini CLI).",
+      "author": { "name": "VinhLTT", "email": "vinhltt.dev@gmail.com" },
+      "category": "research",
+      "source": "./plugins/research-toolkit",
+      "homepage": "https://github.com/vinhltt/agent-plugins/tree/master/plugins/research-toolkit"
     }
   ]
 }
