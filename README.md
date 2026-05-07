@@ -5,6 +5,12 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Marketplace](https://img.shields.io/badge/marketplace-v0.8.1-blue.svg)](./.claude-plugin/marketplace.json)
 
+---
+
+📖 [README](./README.md) &nbsp;·&nbsp; 📋 [Changelog](./CHANGELOG.md)
+
+---
+
 ## What is this?
 
 `agent-plugins` is **VinhLTT's personal Claude Code plugin marketplace**. It aggregates two kinds of plugins behind one marketplace endpoint:
