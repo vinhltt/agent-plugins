@@ -38,7 +38,9 @@ function readSkillVersion(absPath: string): string | null {
 
 function readAgentVersion(absPath: string): string | null {
   const fm = parseFrontmatter(readFileSync(absPath, "utf-8"));
-  return (fm?.version as string | undefined) ?? null;
+  if (!fm) return null;
+  const meta = fm.metadata as Record<string, unknown> | undefined;
+  return (meta?.version as string | undefined) ?? (fm.version as string | undefined) ?? null;
 }
 
 export function checkSkillVersions(opts: CheckOpts): CheckResult[] {

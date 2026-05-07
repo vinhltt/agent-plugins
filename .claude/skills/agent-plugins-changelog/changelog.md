@@ -4,6 +4,11 @@ All notable changes to this skill will be documented in this file.
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), Semver.
 
+## [0.1.2] - 2026-05-07
+
+### Changed
+- readAgentVersion now reads metadata.version (block-style frontmatter) with fallback to top-level version field
+
 ## [0.1.1] - 2026-05-05
 
 ### Changed

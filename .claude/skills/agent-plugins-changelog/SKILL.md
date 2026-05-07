@@ -3,7 +3,7 @@ name: agent-plugins-changelog
 description: Generate Keep-a-Changelog entries for the agent-plugins repo. Auto-classifies changes by component, bumps versions across marketplace.json + plugin.json + SKILL.md + agent frontmatter + manifest.json. Bun-native, zero dependencies. Use when staging a release or summarizing what changed since last commit.
 metadata:
   authors: VinhLTT
-  version: 0.1.1
+  version: 0.1.2
 ---
 
 # agent-plugins-changelog
