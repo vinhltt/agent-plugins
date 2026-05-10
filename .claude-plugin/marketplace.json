@@ -7,7 +7,7 @@
     "email": "vinhltt.dev@gmail.com"
   },
   "metadata": {
-    "version": "0.9.1"
+    "version": "0.10.0"
   },
   "plugins": [
     {
@@ -280,6 +280,14 @@
       "category": "research",
       "source": "./plugins/research-toolkit",
       "homepage": "https://github.com/vinhltt/agent-plugins/tree/master/plugins/research-toolkit"
+    },
+    {
+      "name": "plugins-toolkit",
+      "description": "Tooling for Claude Code plugin authors. Currently ships plugin-bump (per-plugin version + changelog + manifest).",
+      "author": { "name": "VinhLTT", "email": "vinhltt.dev@gmail.com" },
+      "category": "development",
+      "source": "./plugins/plugins-toolkit",
+      "homepage": "https://github.com/vinhltt/agent-plugins/tree/master/plugins/plugins-toolkit"
     }
   ]
 }

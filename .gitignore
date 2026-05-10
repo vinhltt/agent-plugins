@@ -1,0 +1,15 @@
+
+**/node_modules/
+
+# Bun
+.bun/
+
+# Env
+.env
+.env.*
+
+# Logs
+*.log
+
+# OS
+.DS_Store
