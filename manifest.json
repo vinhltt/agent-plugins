@@ -1,9 +1,9 @@
 {
   "algorithm": "sha256",
-  "generated_at": "2026-05-10T08:07:31.005Z",
+  "generated_at": "2026-05-10T12:26:50.700Z",
   "marketplace": {
-    "version": "0.10.0",
-    "checksum": "e509c9f725f6f665a833e827efdc036987ef16cd81c6ee47cac0cae95ba61aaa"
+    "version": "0.10.1",
+    "checksum": "3048d30533acf9f86afa47000c4ed710952201c7d515f2518e98b03b6147e209"
   },
   "plugins": {
     "cc-toolkit": {
@@ -75,13 +75,13 @@
       }
     },
     "research-toolkit": {
-      "version": "0.1.0",
-      "checksum": "cb20af5bee12f24501e6e8556fd239ac219c4584d7feb3ec4551a204b02fb0b0",
+      "version": "0.1.2",
+      "checksum": "4d64ab779223b43fdb65c4a8d8424997a1e64138bb9b794abe99f18309b2989b",
       "components": {
         "skills": {
           "docs-seeker": {
-            "version": "0.1.0",
-            "checksum": "a00d15200ba15a6d5a7b98ff9f5b31420f62f430ff6965e64bb339d3b5b6075c"
+            "version": "0.1.2",
+            "checksum": "98105803135a899960eb194363c7721127ffc043e9cfaf4d5f813b05116f04ff"
           },
           "research": {
             "version": "0.1.0",
@@ -105,7 +105,7 @@
   "components": {},
   "files": {
     ".agent-plugins.json": "4c1fefed64238aa27511d4f51a0a7efccbfa701e24ad87b7a3f153403f1a16da",
-    ".claude-plugin/marketplace.json": "e509c9f725f6f665a833e827efdc036987ef16cd81c6ee47cac0cae95ba61aaa",
+    ".claude-plugin/marketplace.json": "3048d30533acf9f86afa47000c4ed710952201c7d515f2518e98b03b6147e209",
     ".claude/settings.json": "0136ecc113f997e9b6dac9c90ae182a98a61ad99fab8c4ba571dc9d579a8575d",
     ".claude/skills/agent-plugins-changelog/SKILL.md": "59e23da97a0cffa39789734e271599671b4e72dfbf122516f3006fff325b016c",
     ".claude/skills/agent-plugins-changelog/changelog.md": "5251fd296a4b48bdfa287ca45a8abe6468070cb84b73ff16aecb4571ac6bf3fc",
@@ -147,7 +147,7 @@
     ".claude/skills/skill-bump/tests/manifest.test.ts": "dcc006e17e2718f9a88d91fae1090d87168c3574d621896f6694539845cac0de",
     ".claude/skills/skill-bump/tests/verify.test.ts": "043ed47e04bfd48588b4a16a9bc0e7e06e14f6513103b7bf6b2a4c86b8e39afc",
     ".gitignore": "b6b711ef6b253469f8f3c356036087be3c7bc7798af236b606ae195a7b4f8842",
-    "CHANGELOG.md": "b2d1d5d3a8cc9d0303205ce9d5df4f1e614e13bf042876ad5029fb0910c77fb7",
+    "CHANGELOG.md": "227a6331011465fb65dbab8d9beae5bb40589aa2661e0140956dd30f6a5c349a",
     "LICENSE": "05c3275b3133245fb474c341f5e7c89b25df27124b41d2639773ec0de03c3430",
     "README.md": "c9ec9c7a382774d836805f68582425db8bde844215b3dff7a2c0817217b9ed4c",
     "plugins/cc-toolkit/.claude-plugin/plugin.json": "7c329994d080bb4d203780d82256f7fbd169e0d922d02ddcc074e5ce7b3ddb0a",
@@ -217,13 +217,15 @@
     "plugins/plugins-toolkit/skills/plugin-bump/tests/verify.test.ts": "cbce33460fc0947dbd9900f7d568ef1be8ea34e752bd9bc2f79be02d93c6edfc",
     "plugins/plugins-toolkit/skills/plugin-bump/tests/version-cascade.test.ts": "16921db00c43ce5d6b8da73757dac209537e114389f0e07e99637f60ebd146fc",
     "plugins/plugins-toolkit/skills/plugin-bump/tsconfig.json": "c72203d2fe9a7913f270a6820a6395ac8e8785e46441b21f42ea83987afc617d",
-    "plugins/research-toolkit/.claude-plugin/plugin.json": "cb20af5bee12f24501e6e8556fd239ac219c4584d7feb3ec4551a204b02fb0b0",
-    "plugins/research-toolkit/README.md": "1c170eec374dacac8cc52305bfe600d27c0bad6aecc6d84ab9be39479c4f5e4d",
+    "plugins/research-toolkit/.claude-plugin/plugin.json": "4d64ab779223b43fdb65c4a8d8424997a1e64138bb9b794abe99f18309b2989b",
+    "plugins/research-toolkit/CHANGELOG.md": "1881ccdaf9961a28af226e579e894f068517b04e30feb32d11ec64e5d55a4226",
+    "plugins/research-toolkit/README.md": "f977cc782418cd9c24080e98dca68ce1a52ad4a52a0b6b665177118d3d55d7a6",
     "plugins/research-toolkit/agents/researcher.md": "43d4c433b13ca4e6a3be85e22dccb880985d3765f6cdffc8bcd7266f96e314c6",
     "plugins/research-toolkit/commands/research.md": "c3d1dc4c7161b405cd169be78ae1e0b5516546a14de06bbb02803e001707bdd0",
-    "plugins/research-toolkit/skills/docs-seeker/CHANGELOG.md": "2c712952a67296869adb835ad458d7ad92fbeaf137036ba9a7bbdc19edc35c4f",
-    "plugins/research-toolkit/skills/docs-seeker/SKILL.md": "a00d15200ba15a6d5a7b98ff9f5b31420f62f430ff6965e64bb339d3b5b6075c",
-    "plugins/research-toolkit/skills/docs-seeker/manifest.json": "0942f035910f9c93bd958ee10e79e568348474304d662d0bde5425b9481012be",
+    "plugins/research-toolkit/manifest.json": "77515abd33c4df8535d76bf6d5930e7f478a6ed87667ae5d2f2898e11e9c6c80",
+    "plugins/research-toolkit/skills/docs-seeker/CHANGELOG.md": "536c02e31e92ece0f690360448e7c72d6000127e7da521c40762911b0cbe80a5",
+    "plugins/research-toolkit/skills/docs-seeker/SKILL.md": "98105803135a899960eb194363c7721127ffc043e9cfaf4d5f813b05116f04ff",
+    "plugins/research-toolkit/skills/docs-seeker/manifest.json": "1302bebe608c55ba13b0389558507ef6ba1f98a3ccbaf72a546f4bb8fe1238a9",
     "plugins/research-toolkit/skills/research/CHANGELOG.md": "de4b3559bad1eed688ff1252d8fbee6309b8b0c7f433c854566242e162bea986",
     "plugins/research-toolkit/skills/research/SKILL.md": "7041efffcefe4fd160ccdc1aafecd1817eaa5ca8b97d280ec1cb5f184f8a9cda",
     "plugins/research-toolkit/skills/research/manifest.json": "b1160105de46d29bd71630c5471d91a23f40d97029879691c6a00af0c783e4ae",

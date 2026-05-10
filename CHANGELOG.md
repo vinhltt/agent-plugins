@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.1] - 2026-05-10
+
+### Changed
+
+- research-toolkit/docs-seeker: route library docs via `ctx7` CLI (delegates to `context7-cli` skill) instead of context7 MCP tools; trim verbose example workflows
+- research-toolkit: README documents context7-cli dependency and GitHub MCP optional fallback
+
+### Added
+
+- research-toolkit: per-plugin `CHANGELOG.md` and `manifest.json` tracking files
+
 ## [0.10.0] - 2026-05-10
 
 ### Added

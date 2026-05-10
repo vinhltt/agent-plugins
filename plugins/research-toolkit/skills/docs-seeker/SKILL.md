@@ -1,97 +1,59 @@
 ---
 name: docs-seeker
-description: Route documentation queries to the best tool — context7 MCP tools for library docs, GitHub MCP for repo files, WebFetch/WebSearch as fallback. Use for API docs, GitHub repository analysis, technical documentation lookup.
+description: Route library/framework docs queries (context7 docs) via ctx7 CLI — delegates to context7-cli skill. Falls back to GitHub MCP for repo files, WebFetch/WebSearch for last resort. Use for API docs, GitHub repository analysis, technical documentation lookup.
 metadata:
-  version: 0.1.0
+  version: 0.1.2
 ---
 
 # Documentation Seeker — Routing Guide
 
-Route documentation queries to the **best available tool** based on context.
+Route docs queries to the **best available tool** based on context.
 
 ## Tool Priority Chain
 
 ```
-1. context7 MCP tools  — Library/framework docs (React, Laravel, EF Core...)
-   ↓ not found / rate limit
-2. GitHub MCP           — README, docs/, llms.txt from any public repo
-   ↓ not available
-3. WebFetch             — Direct URL fetch (llms.txt, official docs, package registries)
+1. ctx7 CLI (via context7-cli skill) — Library/framework docs
+   ↓ no library indexed / network fail
+2. GitHub MCP                         — README, docs/, llms.txt from public repo
+   ↓ MCP not configured
+3. WebFetch                           — Direct URL (llms.txt, docs sites, registries)
    ↓ no URL known
-4. WebSearch            — Last resort, broad web search
+4. WebSearch                          — Last resort
 ```
 
-## 1. context7 MCP Tools (Primary)
+## 1. ctx7 CLI (Primary, via context7-cli skill)
 
-**When:** Need docs for any library/framework.
+Delegate to the `context7-cli` skill (invoke via `Skill` tool with `skill="context7-cli"`). It exposes the `ctx7` CLI:
+- `ctx7 library <name> <query>` — resolve library ID
+- `ctx7 docs <libraryId> <query>` — fetch docs (add `--research` for deep retry)
 
-Use MCP tools directly: `resolve-library-id` then `query-docs`. Provided by the context7 plugin — no CLI installation required.
-
-**Steps:**
-1. `resolve-library-id(libraryName, query)` — find the library ID
-2. `query-docs(libraryId, query)` — fetch relevant docs
+Fallback: `npx ctx7@latest <cmd>` if CLI not installed globally. If `context7-cli` plugin unavailable, skip to step 3 (WebFetch `https://context7.com/{org}/{repo}/llms.txt` — same data source).
 
 ## 2. GitHub MCP (Secondary)
 
-**When:** Need to read specific files from a GitHub repo (README, docs/, llms.txt, source code examples) that context7 doesn't index.
+Read specific files from a GitHub repo (README, docs/, llms.txt, source) that ctx7 doesn't index. Tools (read-only): `GetFileContents`, `SearchRepositories`, `SearchCode`, `GetRepositoryTree`, `ListCommits`, `ListBranches`, `ListTags`, `GetLatestRelease`.
 
-**Available tools (read-only):**
-- `GetFileContents` — Read any file from public repo
-- `SearchRepositories` — Find repos by keyword
-- `SearchCode` — Search code across GitHub
-- `GetRepositoryTree` — Browse repo file structure
-- `ListCommits`, `ListBranches`, `ListTags`, `GetLatestRelease`
+## 3. WebFetch (Fallback) / 4. WebSearch (Last Resort)
 
-**Example workflow:**
-```
-1. SearchRepositories("efcore entity framework")
-2. GetRepositoryTree(owner: "dotnet", repo: "efcore", branch: "main")
-3. GetFileContents(owner: "dotnet", repo: "efcore", path: "README.md")
-```
-
-## 3. WebFetch (Fallback)
-
-**When:** context7 not found + know the direct URL.
-
-```
-# llms.txt from context7.com directly (bypasses CLI rate limits)
-WebFetch(url: "https://context7.com/{org}/{repo}/llms.txt?topic=<keyword>")
-
-# Official docs sites with llms.txt
-WebFetch(url: "https://nextjs.org/llms.txt")
-WebFetch(url: "https://docs.astro.build/llms.txt")
-
-# Package registries for version info
-WebFetch(url: "https://www.nuget.org/packages/<package>")
-WebFetch(url: "https://www.npmjs.com/package/<package>")
-```
-
-## 4. WebSearch (Last Resort)
-
-**When:** All above fail.
-
-```
-WebSearch(query: "<library> documentation <topic>")
-WebSearch(query: "<library> llms.txt")
-```
+WebFetch direct URLs: `https://context7.com/{org}/{repo}/llms.txt?topic=<keyword>`, `https://nextjs.org/llms.txt`, `https://www.nuget.org/packages/<pkg>`, `https://www.npmjs.com/package/<pkg>`. If URL unknown, `WebSearch(query: "<library> documentation <topic>")`.
 
 ## Decision Matrix
 
 | Scenario | Tool |
 |----------|------|
-| Library/framework docs | context7 MCP tools |
+| Library/framework docs | ctx7 CLI (context7-cli skill) |
 | Specific file from GitHub repo | GitHub MCP `GetFileContents` |
 | Known doc URL or llms.txt | WebFetch |
 | Version/release check | WebFetch (NuGet, npm, PyPI) |
-| context7 rate limited | WebFetch `context7.com/{org}/{repo}/llms.txt` directly |
+| ctx7 rate limited | WebFetch `context7.com/{org}/{repo}/llms.txt` |
 | Unknown library, no URL | WebSearch |
 
 ## Error Handling
 
 | Error | Action |
 |-------|--------|
-| context7 returns empty | Try alternative names, then GitHub MCP `SearchRepositories` |
-| context7 rate limit (429) | WebFetch `context7.com/{org}/{repo}/llms.txt` directly |
+| ctx7 returns empty | Try alt names, then GitHub MCP `SearchRepositories` |
+| ctx7 rate limit (429) | Set `CONTEXT7_API_KEY` or run `ctx7 login`; else WebFetch llms.txt |
 | GitHub MCP not configured | Skip to WebFetch |
 | WebFetch 404 | Try WebSearch |
 | All tools fail | Report to user, suggest manual URL |

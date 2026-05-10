@@ -1,0 +1,16 @@
+{
+  "version": "0.1.2",
+  "files": {
+    ".claude-plugin/plugin.json": "4d64ab779223b43fdb65c4a8d8424997a1e64138bb9b794abe99f18309b2989b",
+    "agents/researcher.md": "43d4c433b13ca4e6a3be85e22dccb880985d3765f6cdffc8bcd7266f96e314c6",
+    "commands/research.md": "c3d1dc4c7161b405cd169be78ae1e0b5516546a14de06bbb02803e001707bdd0",
+    "README.md": "f977cc782418cd9c24080e98dca68ce1a52ad4a52a0b6b665177118d3d55d7a6",
+    "skills/docs-seeker/CHANGELOG.md": "536c02e31e92ece0f690360448e7c72d6000127e7da521c40762911b0cbe80a5",
+    "skills/docs-seeker/manifest.json": "1302bebe608c55ba13b0389558507ef6ba1f98a3ccbaf72a546f4bb8fe1238a9",
+    "skills/docs-seeker/SKILL.md": "98105803135a899960eb194363c7721127ffc043e9cfaf4d5f813b05116f04ff",
+    "skills/research/CHANGELOG.md": "de4b3559bad1eed688ff1252d8fbee6309b8b0c7f433c854566242e162bea986",
+    "skills/research/manifest.json": "b1160105de46d29bd71630c5471d91a23f40d97029879691c6a00af0c783e4ae",
+    "skills/research/SKILL.md": "7041efffcefe4fd160ccdc1aafecd1817eaa5ca8b97d280ec1cb5f184f8a9cda"
+  },
+  "generatedAt": "2026-05-10T12:16:18.772Z"
+}
