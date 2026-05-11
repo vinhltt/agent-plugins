@@ -62,14 +62,12 @@ test('3 parallel runs on sibling skills produce no conflicts', async () => {
     expect(r.code).toBe(0);
   }
 
-  const manifests = await Promise.all(
-    skills.map(d => Bun.file(`${d}/manifest.json`).json()),
-  );
-  // Each manifest's file set is disjoint by content (skill-N-impl.ts unique to N).
-  const sigs = new Set(manifests.map(m => JSON.stringify(Object.keys(m.files).sort())));
-  expect(sigs.size).toBe(3);
+  // Each skill bumped independently: CHANGELOG.md present, no manifest leak.
   for (let i = 0; i < skills.length; i++) {
-    const name = ['skill-a', 'skill-b', 'skill-c'][i]!;
-    expect(Object.keys(manifests[i].files).some(k => k.includes(name))).toBe(true);
+    const dir = skills[i]!;
+    expect(await Bun.file(`${dir}/CHANGELOG.md`).exists()).toBe(true);
+    expect(await Bun.file(`${dir}/manifest.json`).exists()).toBe(false);
+    const cl = await Bun.file(`${dir}/CHANGELOG.md`).text();
+    expect(cl).toContain('## [0.1.0]');
   }
 });

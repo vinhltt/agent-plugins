@@ -1,5 +1,6 @@
-// Hardcoded exclusions for diff filtering + manifest computation.
-// Brainstorm §4.2: gitignore is no-op on diff output; we filter by relative path.
+// Hardcoded exclusions for diff filtering.
+// Gitignore is no-op on diff output; we filter by relative path.
+// `manifest.json` retained as guard against stale orphans from pre-refactor state.
 
 export const DEFAULT_EXCLUDES = [
   'CHANGELOG.md',

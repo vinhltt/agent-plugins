@@ -51,7 +51,7 @@ afterEach(async () => {
 });
 
 describe('bootstrap', () => {
-  test('empty target → bootstrap → 0.1.0 + manifest + TODO placeholder', async () => {
+  test('empty target → bootstrap → 0.1.0 + no manifest + TODO placeholder', async () => {
     const skill = `${REPO}/skill`;
     await Bun.write(`${skill}/SKILL.md`, `---
 metadata:
@@ -66,15 +66,14 @@ body
     expect(r.code).toBe(0);
     expect(r.stdout).toContain('bootstrapped');
 
-    const manifest = await Bun.file(`${skill}/manifest.json`).json();
-    expect(manifest.version).toBe('0.1.0');
-    expect(Object.keys(manifest.files).sort()).toEqual(['SKILL.md', 'run.ts']);
+    // Regression guard: manifest.json must NEVER be written.
+    expect(await Bun.file(`${skill}/manifest.json`).exists()).toBe(false);
 
     const cl = await Bun.file(`${skill}/CHANGELOG.md`).text();
     expect(cl).toContain('## [0.1.0]');
     expect(cl).toContain('### Added');
     expect(cl).toContain('- TODO: describe');
-    // file paths must NOT appear — manifest.json owns the file list
+    // file paths must NOT appear — changelog is the meaning ledger, not the file list
     expect(cl).not.toContain('- run.ts');
     expect(cl).not.toContain('- SKILL.md');
   });
@@ -128,10 +127,13 @@ metadata:
     expect(r.code).toBe(0);
     expect(r.stdout).toContain('patch');
 
-    const manifest = await Bun.file(`${skill}/manifest.json`).json();
-    expect(manifest.version).toBe('0.1.1');
-    expect(Object.keys(manifest.files)).toContain('new.ts');
-    expect(Object.keys(manifest.files)).not.toContain('old.ts');
+    // Frontmatter is the single SoT for version.
+    const fm = await Bun.file(`${skill}/SKILL.md`).text();
+    expect(fm).toMatch(/version:\s*0\.1\.1/);
+    const cl = await Bun.file(`${skill}/CHANGELOG.md`).text();
+    expect(cl).toContain('## [0.1.1]');
+    // Regression guard.
+    expect(await Bun.file(`${skill}/manifest.json`).exists()).toBe(false);
   });
 });
 
@@ -144,8 +146,7 @@ name: test
 body
 `);
     await Bun.write(`${skill}/run.ts`, 'x');
-    // pre-stage manifest + changelog so it's NOT bootstrap
-    await Bun.write(`${skill}/manifest.json`, '{"version":"0.1.0","files":{},"generatedAt":"2026-05-02T00:00:00Z"}');
+    // pre-stage changelog so it's NOT bootstrap (presence of CHANGELOG.md alone signals existing skill)
     await Bun.write(`${skill}/CHANGELOG.md`, '# Changelog\n\n## [0.1.0] - 2026-05-02\n');
     await commitAll(REPO, 'init');
     await Bun.write(`${skill}/run.ts`, 'y');
@@ -173,8 +174,9 @@ body
     await commitAll(REPO, 'init');
     const r = await runSkill(skill, ['--auto']);
     expect(r.code).toBe(0);
-    const manifest = await Bun.file(`${skill}/manifest.json`).json();
-    expect(manifest.version).toBe('0.3.0');
+    const cl = await Bun.file(`${skill}/CHANGELOG.md`).text();
+    expect(cl).toContain('## [0.3.0]');
+    expect(await Bun.file(`${skill}/manifest.json`).exists()).toBe(false);
   });
 });
 
@@ -204,14 +206,16 @@ describe('idempotency', () => {
     expect(r1.code).toBe(0);
     await commitAll(REPO, 'bootstrap output');
 
-    const before = await Bun.file(`${skill}/manifest.json`).text();
+    const beforeFm = await Bun.file(`${skill}/SKILL.md`).text();
+    const beforeCl = await Bun.file(`${skill}/CHANGELOG.md`).text();
 
     const r2 = await runSkill(skill, ['--auto']);
     expect(r2.code).toBe(0);
     expect(r2.stdout).toContain('no changes');
 
-    const after = await Bun.file(`${skill}/manifest.json`).text();
-    expect(before).toBe(after);
+    expect(await Bun.file(`${skill}/SKILL.md`).text()).toBe(beforeFm);
+    expect(await Bun.file(`${skill}/CHANGELOG.md`).text()).toBe(beforeCl);
+    expect(await Bun.file(`${skill}/manifest.json`).exists()).toBe(false);
   });
 });
 

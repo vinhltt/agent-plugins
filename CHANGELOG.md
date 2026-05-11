@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2026-05-11
+
+### Changed
+
+- Skills/skill-bump: consolidated manifest logic into run workflow; simplified `verify.ts` and `run.ts`; minor updates to `collect-diff-data.ts`, `default-excludes.ts`, and test suite
+
+### Removed
+
+- Skills/agent-plugins-changelog: removed stale `manifest.json` snapshot file
+- Skills/skill-bump: removed standalone `scripts/manifest.ts` module and `tests/manifest.test.ts` (manifest logic consolidated)
+
 ## [0.10.1] - 2026-05-10
 
 ### Changed
@@ -20,7 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- plugins-toolkit: new plugin — tooling for Claude Code plugin authors; ships `plugin-bump` skill (per-plugin semver bumper; auto-derives bump level from git diff; cascades version to changed skills/agents/commands/hooks; generates CHANGELOG.md + manifest.json; verifies via 5-check DoD)
+- plugins-toolkit: new plugin - tooling for Claude Code plugin authors; ships `plugin-bump` skill (per-plugin semver bumper; auto-derives bump level from git diff; cascades version to changed skills/agents/commands/hooks; generates CHANGELOG.md + manifest.json; verifies via 5-check DoD)
 - General: added `.gitignore`
 
 ### Changed
@@ -37,7 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- research-toolkit: new plugin — deep research toolkit bundling `docs-seeker` skill (routes doc queries across context7 MCP → GitHub MCP → WebFetch/WebSearch), `research` skill (technical investigation, architecture analysis, solution design), and `researcher` agent (multi-source research reports; Haiku model)
+- research-toolkit: new plugin - deep research toolkit bundling `docs-seeker` skill (routes doc queries across context7 MCP → GitHub MCP → WebFetch/WebSearch), `research` skill (technical investigation, architecture analysis, solution design), and `researcher` agent (multi-source research reports; Haiku model)
 
 ### Changed
 
@@ -54,7 +65,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- cc-toolkit: new plugin — Claude Code utility toolkit; initial skill `cc-ask` routes Claude Code / Agent SDK / Anthropic API questions to the built-in `claude-code-guide` agent; thin router (no pre-processing, verbatim relay); designed to grow with more CC-related skills (settings, hooks, MCP, etc.)
+- cc-toolkit: new plugin - Claude Code utility toolkit; initial skill `cc-ask` routes Claude Code / Agent SDK / Anthropic API questions to the built-in `claude-code-guide` agent; thin router (no pre-processing, verbatim relay); designed to grow with more CC-related skills (settings, hooks, MCP, etc.)
 
 ### Changed
 
@@ -64,14 +75,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- gh-community/create-issue: new skill — capture brainstormed ideas as GitHub issues via `gh` CLI on configurable `--repo`; pre-flight `gh auth status` (no token handling); fixed 4-section body template (Summary / Use Case / Proposed Behavior / Open Questions); fail-fast on missing CLI, failed auth, unknown label, or 404 repo
+- gh-community/create-issue: new skill - capture brainstormed ideas as GitHub issues via `gh` CLI on configurable `--repo`; pre-flight `gh auth status` (no token handling); fixed 4-section body template (Summary / Use Case / Proposed Behavior / Open Questions); fail-fast on missing CLI, failed auth, unknown label, or 404 repo
 
 ## [0.6.0] - 2026-05-03
 
 ### Added
 
-- gh-community: new plugin — topic-organized refactor of gh-cli from `github/awesome-copilot`; slim SKILL.md with decision tree + `references/` split by feature area (auth, repos, issues, PRs, releases, workflows, secrets, api-search, extras)
-- gh-official: new internal plugin — upstream mirror of `github/awesome-copilot/skills/gh-cli`; auto-synced staging area (not published to marketplace); reference source for gh-community refactor
+- gh-community: new plugin - topic-organized refactor of gh-cli from `github/awesome-copilot`; slim SKILL.md with decision tree + `references/` split by feature area (auth, repos, issues, PRs, releases, workflows, secrets, api-search, extras)
+- gh-official: new internal plugin - upstream mirror of `github/awesome-copilot/skills/gh-cli`; auto-synced staging area (not published to marketplace); reference source for gh-community refactor
 
 ### Changed
 
@@ -82,7 +93,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- scripts/ts: new shared plugin sync runner — generic Bun-native sync script (`sync.ts`) with config (`sync.config.json`) that pulls plugin source files from upstream GitHub repos; replaces the plugin-specific sync.ts previously bundled inside context7-cli
+- scripts/ts: new shared plugin sync runner - generic Bun-native sync script (`sync.ts`) with config (`sync.config.json`) that pulls plugin source files from upstream GitHub repos; replaces the plugin-specific sync.ts previously bundled inside context7-cli
 
 ### Changed
 
@@ -92,26 +103,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Marketplace: added `vercel-labs` plugin — curated skills from Vercel Labs, bundles `find-skills` for discovering and installing agent skills from the open agent-skills ecosystem
+- Marketplace: added `vercel-labs` plugin - curated skills from Vercel Labs, bundles `find-skills` for discovering and installing agent skills from the open agent-skills ecosystem
 
 ## [0.4.1] - 2026-05-02
 
 ### Added
 
-- Marketplace: added `langfuse` plugin — LLM observability platform integration for querying traces, scores, sessions, and prompts via CLI; official skill from Langfuse
+- Marketplace: added `langfuse` plugin - LLM observability platform integration for querying traces, scores, sessions, and prompts via CLI; official skill from Langfuse
 
 ## [0.4.0] - 2026-05-02
 
 ### Added
 
-- Skills/skill-bump: new skill — deterministic per-skill CHANGELOG.md + manifest.json generator; bumps SKILL.md version; includes scripts (bump-rules, changelog-writer, collect-diff-data, manifest, verify, run), lib helpers (changelog-helpers, default-excludes, frontmatter, git-helpers, known-abort), and full test suite (9 test files)
-- Marketplace: added `document-skills` plugin — document processing suite for Excel (xlsx), Word (docx), PowerPoint (pptx), and PDF via official Anthropic skills repo
+- Skills/skill-bump: new skill - deterministic per-skill CHANGELOG.md + manifest.json generator; bumps SKILL.md version; includes scripts (bump-rules, changelog-writer, collect-diff-data, manifest, verify, run), lib helpers (changelog-helpers, default-excludes, frontmatter, git-helpers, known-abort), and full test suite (9 test files)
+- Marketplace: added `document-skills` plugin - document processing suite for Excel (xlsx), Word (docx), PowerPoint (pptx), and PDF via official Anthropic skills repo
 
 ## [0.3.0] - 2026-05-01
 
 ### Added
 
-- context7-cli: new plugin — Context7 CLI tooling bundling `ctx7-cli` and `find-docs` skills from upstash/context7
+- context7-cli: new plugin - Context7 CLI tooling bundling `ctx7-cli` and `find-docs` skills from upstash/context7
   - `skills/context7-cli`: ctx7 CLI integration for library docs lookup and skill management via the ctx7 CLI
   - `skills/find-docs`: up-to-date documentation retrieval for libraries, frameworks, and SDKs
 

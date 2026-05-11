@@ -1,8 +1,8 @@
 ---
 name: skill-bump
-description: Generate per-skill CHANGELOG.md + manifest.json, bump SKILL.md version. Run on a single skill folder; orchestrate N skills via Task tool fan-out.
+description: Generate per-skill CHANGELOG.md and bump SKILL.md frontmatter version. Run on a single skill folder; orchestrate N skills via Task tool fan-out.
 metadata:
-  version: 0.1.0
+  version: 1.0.0
   author: vinhltt
   scope: per-skill
 ---
@@ -36,9 +36,7 @@ bun .claude/skills/skill-bump/scripts/run.ts \
 
 This skill is meant to be invoked by an agent (Claude/subagent) that just edited the target skill. **You — the agent — are the one with full context of what changed and why.** Pass that meaning into the changelog via `--added`, `--changed`, `--removed`.
 
-The split is deliberate:
-- **`manifest.json`** is the file ledger — every tracked file + content hash. Source of truth for "what files exist at this version".
-- **`CHANGELOG.md`** is the meaning ledger — semantic prose describing what shipped. Source of truth for "what a human/AI reader needs to know".
+The single source of truth is `SKILL.md` frontmatter `metadata.version`; `CHANGELOG.md` is the human-readable history of what shipped.
 
 If you don't pass any descriptions, the skill still bumps the version + writes the changelog, but each section that has diff entries gets a single `- TODO: describe` placeholder so the human editor sees there is unfinished work. Never leave `TODO: describe` in a committed changelog.
 
@@ -48,16 +46,16 @@ If you don't pass any descriptions, the skill still bumps the version + writes t
 bun .../run.ts --target=/path/to/some-skill --auto \
   --changed="Switch frontmatter parser to block-style validation, reject flow form" \
   --changed="Tighten dirty-tree gate so --auto only bypasses with WARN" \
-  --added="New verify step (c): top-of-file changelog version === manifest.version"
+  --added="New verify step: frontmatter version === changelog top header"
 ```
 
 What appears in `CHANGELOG.md`:
 
 ```markdown
-## [0.2.0] - 2026-05-02
+## [0.2.0] - 2026-05-11
 
 ### Added
-- New verify step (c): top-of-file changelog version === manifest.version
+- New verify step: frontmatter version === changelog top header
 
 ### Changed
 - Switch frontmatter parser to block-style validation, reject flow form
@@ -101,10 +99,9 @@ Max-wins across all changed files.
 
 ## Verify (DoD)
 
-After write, 3 checks must pass for exit 0:
-- (a) on-disk `manifest.json` matches expected AND recompute hashes match expected
-- (b) `manifest.version` === SKILL.md frontmatter `metadata.version`
-- (c) changelog top header version === `manifest.version`
+After write, a single check must pass for exit 0:
+
+- SKILL.md frontmatter `metadata.version` === CHANGELOG.md top header version (`## [x.y.z]`)
 
 ## Exit codes
 
@@ -112,23 +109,16 @@ After write, 3 checks must pass for exit 0:
 |------|---------|
 | 0 | OK |
 | 2 | Missing files / dirty tree (no `--auto`) / `metadata.version` missing on incremental |
-| 4 | Verify failed (a/b/c) |
-| 5 | `manifest.json` schema corruption |
+| 4 | Verify failed (frontmatter ≠ changelog top) |
 | 99 | Unexpected error |
 
 ## Recovery from partial state
 
-Writes are non-atomic (only `SKILL.md` uses temp+rename). On verify failure:
+`SKILL.md` uses temp+rename (atomic). `CHANGELOG.md` append is non-atomic. On verify failure:
 
 ```bash
 git checkout <target>
 ```
-
-## What ends up in the manifest
-
-`manifest.files` hashes ALL `git ls-files <target>` entries except `DEFAULT_EXCLUDES` (`CHANGELOG.md`, `manifest.json`, `.git/**`, `node_modules/**`). Test files ARE part of the release surface — modifying a test triggers a patch bump.
-
-The changelog NEVER lists file paths — that would duplicate the manifest. Use the `--added`/`--changed`/`--removed` flags to describe meaning instead.
 
 ## YAML frontmatter constraints
 

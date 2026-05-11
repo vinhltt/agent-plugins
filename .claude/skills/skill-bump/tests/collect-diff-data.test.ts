@@ -37,13 +37,6 @@ describe('detectBootstrap', () => {
     expect(await detectBootstrap(skill)).toBe(true);
   });
 
-  test('manifest.json present → not bootstrap', async () => {
-    const skill = `${TMP}/skill`;
-    await Bun.write(`${skill}/SKILL.md`, '---\n---\n');
-    await Bun.write(`${skill}/manifest.json`, '{}');
-    expect(await detectBootstrap(skill)).toBe(false);
-  });
-
   test('CHANGELOG.md present → not bootstrap', async () => {
     const skill = `${TMP}/skill`;
     await Bun.write(`${skill}/CHANGELOG.md`, '# Changelog');

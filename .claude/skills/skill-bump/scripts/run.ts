@@ -1,8 +1,7 @@
 // CLI entrypoint. Strict zero node:* — manual argv parser inline.
-// Workflow: brainstorm §4.4 Steps 0-7 + Step 2.5 short-circuit + C2 write order.
+// Write order: frontmatter bump → changelog → verify. No manifest artifact (Single SoT).
 
 import { applyBump, inferBump, type DiffStatus } from './bump-rules';
-import { computeManifest } from './manifest';
 import { detectBootstrap, collectDiff } from './collect-diff-data';
 import { appendEntry, type ChangelogEntry } from './changelog-writer';
 import {
@@ -98,20 +97,12 @@ function classifyEntries(entries: DiffEntry[]): {
 
 const todayIso = () => new Date().toISOString().slice(0, 10);
 
-// Shared C2 write order: changelog → manifest → verify. Frontmatter bumped beforehand.
+// Write order: frontmatter (bumped beforehand) → changelog → verify.
 async function writeAndVerify(
-  target: string, cwd: string, version: string, entry: ChangelogEntry,
+  target: string, entry: ChangelogEntry,
 ): Promise<number> {
   await appendEntry(`${target}/CHANGELOG.md`, entry);
-  // gitLsFiles returns repo-relative paths; convert to target-relative for computeManifest.
-  const tracked = await gitLsFiles(target, cwd);
-  const targetRel = toRepoRelative(target, cwd);
-  const visible = tracked
-    .map(rel => stripTargetPrefix(rel, targetRel))
-    .filter(rel => rel && !isExcluded(rel));
-  const expected = await computeManifest(target, visible, version);
-  await Bun.write(`${target}/manifest.json`, JSON.stringify(expected, null, 2));
-  const v = await verifyTarget(target, expected);
+  const v = await verifyTarget(target);
   if (!v.ok) {
     console.error(formatVerifyError(v, target));
     return 4;
@@ -148,7 +139,7 @@ async function runIncremental(args: Args, cwd: string): Promise<number> {
   }
   await writeFrontmatterVersion(`${args.target}/SKILL.md`, newVersion);
   const entry: ChangelogEntry = { version: newVersion, date: todayIso(), ...entryBullets };
-  const code = await writeAndVerify(args.target, cwd, newVersion, entry);
+  const code = await writeAndVerify(args.target, entry);
   if (code === 0) {
     console.log(`[skill-changelog] OK — ${fm.version} → ${newVersion} (${bumpType}), verified.`);
   }
@@ -179,7 +170,7 @@ async function runBootstrap(args: Args, cwd: string): Promise<number> {
     await writeFrontmatterVersion(`${args.target}/SKILL.md`, baseVersion);
   }
   const entry: ChangelogEntry = { version: baseVersion, date: todayIso(), ...entryBullets };
-  const code = await writeAndVerify(args.target, cwd, baseVersion, entry);
+  const code = await writeAndVerify(args.target, entry);
   if (code === 0) {
     console.log(`[skill-changelog] OK — bootstrapped at ${baseVersion}, verified.`);
   }
