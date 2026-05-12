@@ -45,6 +45,19 @@ export async function gitDiffNameStatus(
   return parseDiffOutput(stdout, targetRel);
 }
 
+export async function gitDiffStagedNameStatus(
+  targetDir: string,
+  cwd: string,
+): Promise<DiffEntry[]> {
+  const { stdout, stderr, code } = await spawnGit(
+    ['diff', '--cached', '--name-status', '--end-of-options', '--', targetDir],
+    cwd,
+  );
+  if (code !== 0) throw new GitError(`git diff --cached failed: ${stderr.trim()}`);
+  const targetRel = toRepoRelative(targetDir, cwd);
+  return parseDiffOutput(stdout, targetRel);
+}
+
 export function toRepoRelative(target: string, repoRoot: string): string {
   const rr = repoRoot.replace(/\/$/, '');
   if (target.startsWith(rr + '/')) return target.slice(rr.length + 1);

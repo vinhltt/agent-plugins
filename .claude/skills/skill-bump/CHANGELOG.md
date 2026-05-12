@@ -4,6 +4,12 @@ All notable changes to this skill will be documented in this file.
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), Semver.
 
+## [1.0.1] - 2026-05-12
+
+### Changed
+- Add gitDiffStagedNameStatus to git-helpers to detect staged (--cached) changes
+- Merge committed + staged diff entries in collectDiff; severity-based conflict resolution (D > A/R/C > M)
+
 ## [1.0.0] - 2026-05-11
 
 ### Changed

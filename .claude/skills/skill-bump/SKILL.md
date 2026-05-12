@@ -2,7 +2,7 @@
 name: skill-bump
 description: Generate per-skill CHANGELOG.md and bump SKILL.md frontmatter version. Run on a single skill folder; orchestrate N skills via Task tool fan-out.
 metadata:
-  version: 1.0.0
+  version: 1.0.1
   author: vinhltt
   scope: per-skill
 ---
