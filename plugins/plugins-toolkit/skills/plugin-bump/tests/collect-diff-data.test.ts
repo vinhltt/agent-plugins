@@ -40,13 +40,6 @@ describe('detectBootstrap', () => {
     expect(await detectBootstrap(plugin)).toBe(true);
   });
 
-  test('manifest.json present → not bootstrap', async () => {
-    const plugin = `${TMP}/plugin`;
-    await Bun.write(`${plugin}/SKILL.md`, '---\n---\n');
-    await Bun.write(`${plugin}/manifest.json`, '{}');
-    expect(await detectBootstrap(plugin)).toBe(false);
-  });
-
   test('CHANGELOG.md present → not bootstrap', async () => {
     const plugin = `${TMP}/plugin`;
     await Bun.write(`${plugin}/CHANGELOG.md`, '# Changelog');

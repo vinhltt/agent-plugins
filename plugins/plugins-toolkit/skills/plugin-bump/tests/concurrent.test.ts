@@ -100,28 +100,26 @@ test('3 parallel runs on sibling plugins produce no conflicts', async () => {
     expect(r.stderr).not.toContain('index.lock');
   }
 
-  // Each plugin has its own manifest with distinct file sets
-  const manifests = await Promise.all(
+  // Each plugin's plugin.json version was independently bumped (no cross-contamination)
+  const pluginJsons = await Promise.all(
     pluginRoots.map(root =>
-      Bun.file(`${root}/manifest.json`).json() as Promise<{ version: string; files: Record<string, string> }>,
+      Bun.file(`${root}/.claude-plugin/plugin.json`).json() as Promise<{ version: string }>,
     ),
   );
-
-  // All manifests updated (version bumped from 0.1.0)
-  for (const m of manifests) {
-    expect(m.version).not.toBe('0.1.0');
+  for (const pj of pluginJsons) {
+    expect(pj.version).not.toBe('0.1.0');
   }
 
-  // Each manifest's file keys are unique to its plugin (disjoint impl files)
-  const fileSets = manifests.map(m => new Set(Object.keys(m.files)));
+  // Each plugin keeps its own CHANGELOG (proves disjoint writes — no shared file mutation)
+  const changelogs = await Promise.all(
+    pluginRoots.map(root => Bun.file(`${root}/CHANGELOG.md`).text()),
+  );
   for (let i = 0; i < pluginNames.length; i++) {
-    const name = pluginNames[i]!;
-    // impl file for this plugin appears in its manifest
-    expect([...fileSets[i]!].some(k => k.includes(name))).toBe(true);
-    // impl file does NOT appear in other plugins' manifests
-    for (let j = 0; j < pluginNames.length; j++) {
-      if (i === j) continue;
-      expect([...fileSets[j]!].some(k => k.includes(name) && k.includes('impl'))).toBe(false);
-    }
+    expect(changelogs[i]).toContain('## [');
+  }
+
+  // plugin-bump must NOT generate a per-plugin manifest.json
+  for (const root of pluginRoots) {
+    expect(await Bun.file(`${root}/manifest.json`).exists()).toBe(false);
   }
 });

@@ -1,10 +1,9 @@
-// New test: verify — tests for scripts/verify.ts
+// Test: verify — tests for scripts/verify.ts (4-check DoD)
 // Uses real git repos so captureHeadSnapshot (gitShowHead) works correctly.
 
 import { test, expect, describe, beforeEach, afterEach } from 'bun:test';
 import { verify, captureHeadSnapshot } from '../scripts/verify';
 import { cascadeVersion } from '../scripts/version-cascade';
-import { computeManifest } from '../scripts/manifest';
 import { appendEntry } from '../scripts/changelog-writer';
 import type { DiscoveredComponent } from '../scripts/lib/component-discovery';
 
@@ -44,31 +43,22 @@ function makeSkillComp(name: string, pluginRoot: string): DiscoveredComponent {
   };
 }
 
-// Writes a full valid plugin state at version v and commits it.
-// Returns the list of component relative paths tracked.
+// Writes initial plugin state at version v and commits it.
 async function writeAndCommitPlugin(
   pluginRoot: string,
   repo: string,
   version: string,
   components: DiscoveredComponent[],
-): Promise<string[]> {
-  // plugin.json
+): Promise<void> {
   await Bun.write(`${pluginRoot}/.claude-plugin/plugin.json`, JSON.stringify({ name: 'test', version }, null, 2) + '\n');
-  // component files
   for (const comp of components) {
     await Bun.write(comp.absPath, `---\nmetadata:\n  version: ${version}\n---\n\nbody\n`);
   }
-  // manifest
-  const relPaths = components.map(c => c.pluginRelPath);
-  const manifest = await computeManifest(pluginRoot, relPaths, version);
-  await Bun.write(`${pluginRoot}/manifest.json`, JSON.stringify(manifest, null, 2) + '\n');
-  // changelog
   await appendEntry(`${pluginRoot}/CHANGELOG.md`, {
     version, date: '2026-05-09',
     added: ['initial'], changed: [], removed: [],
   });
   await commitAll(repo, `state v${version}`);
-  return relPaths;
 }
 
 beforeEach(async () => {
@@ -81,12 +71,11 @@ afterEach(async () => {
 });
 
 describe('verify', () => {
-  test('happy path (all 5 checks pass) → ok=true', async () => {
+  test('happy path (all 4 checks pass) → ok=true', async () => {
     const skillA = makeSkillComp('skill-a', PLUGIN);
     const skillB = makeSkillComp('skill-b', PLUGIN);
     const components = [skillA, skillB];
 
-    // Write initial state at 0.1.0
     await writeAndCommitPlugin(PLUGIN, REPO, '0.1.0', components);
 
     // Modify skillA (it's in the diff)
@@ -96,20 +85,14 @@ describe('verify', () => {
     const diffPaths = new Set([skillA.pluginRelPath]);
     const preRunSnapshot = await captureHeadSnapshot(components, PLUGIN, REPO, diffPaths);
 
-    // Now cascade to 0.2.0
     await cascadeVersion({ pluginRoot: PLUGIN, newVersion: '0.2.0', components, diffPaths });
-
-    // Rewrite manifest + changelog for 0.2.0
-    const relPaths = components.map(c => c.pluginRelPath);
-    const manifest = await computeManifest(PLUGIN, relPaths, '0.2.0');
-    await Bun.write(`${PLUGIN}/manifest.json`, JSON.stringify(manifest, null, 2) + '\n');
     await appendEntry(`${PLUGIN}/CHANGELOG.md`, {
       version: '0.2.0', date: '2026-05-09',
       added: [], changed: ['skill-a'], removed: [],
     });
 
     const result = await verify({
-      pluginRoot: PLUGIN, cwd: REPO,
+      pluginRoot: PLUGIN,
       expectedVersion: '0.2.0',
       components, diffPaths, preRunSnapshot,
     });
@@ -118,37 +101,33 @@ describe('verify', () => {
     expect(result.failures).toHaveLength(0);
   });
 
-  test('corrupt plugin.json version → check (b) fails', async () => {
+  test('corrupt plugin.json version → check (a) fails', async () => {
     const comp = makeSkillComp('skill-a', PLUGIN);
     await writeAndCommitPlugin(PLUGIN, REPO, '0.1.0', [comp]);
 
     const diffPaths = new Set([comp.pluginRelPath]);
     const preRunSnapshot = await captureHeadSnapshot([comp], PLUGIN, REPO, diffPaths);
 
-    // Cascade + rebuild manifest + changelog for 0.2.0
     await cascadeVersion({ pluginRoot: PLUGIN, newVersion: '0.2.0', components: [comp], diffPaths });
-    const manifest = await computeManifest(PLUGIN, [comp.pluginRelPath], '0.2.0');
-    await Bun.write(`${PLUGIN}/manifest.json`, JSON.stringify(manifest, null, 2) + '\n');
     await appendEntry(`${PLUGIN}/CHANGELOG.md`, {
       version: '0.2.0', date: '2026-05-09',
       added: [], changed: ['skill-a'], removed: [],
     });
 
-    // Corrupt plugin.json version
+    // Corrupt plugin.json version (cascade wrote 0.2.0 — overwrite with bad value)
     await Bun.write(`${PLUGIN}/.claude-plugin/plugin.json`, JSON.stringify({ name: 'test', version: '9.9.9' }, null, 2) + '\n');
 
     const result = await verify({
-      pluginRoot: PLUGIN, cwd: REPO,
+      pluginRoot: PLUGIN,
       expectedVersion: '0.2.0',
       components: [comp], diffPaths, preRunSnapshot,
     });
 
     expect(result.ok).toBe(false);
-    const bFail = result.failures.find(f => f.check === 'b');
-    expect(bFail).toBeDefined();
+    expect(result.failures.find(f => f.check === 'a')).toBeDefined();
   });
 
-  test('CHANGELOG.md wrong top version → check (c) fails', async () => {
+  test('CHANGELOG.md wrong top version → check (b) fails', async () => {
     const comp = makeSkillComp('skill-a', PLUGIN);
     await writeAndCommitPlugin(PLUGIN, REPO, '0.1.0', [comp]);
 
@@ -156,54 +135,47 @@ describe('verify', () => {
     const preRunSnapshot = await captureHeadSnapshot([comp], PLUGIN, REPO, diffPaths);
 
     await cascadeVersion({ pluginRoot: PLUGIN, newVersion: '0.2.0', components: [comp], diffPaths });
-    const manifest = await computeManifest(PLUGIN, [comp.pluginRelPath], '0.2.0');
-    await Bun.write(`${PLUGIN}/manifest.json`, JSON.stringify(manifest, null, 2) + '\n');
 
     // Write changelog with wrong top version
     await Bun.write(`${PLUGIN}/CHANGELOG.md`, `# Changelog\n\n## [9.9.9] - 2026-05-09\n\n### Changed\n- skill-a\n`);
 
     const result = await verify({
-      pluginRoot: PLUGIN, cwd: REPO,
+      pluginRoot: PLUGIN,
       expectedVersion: '0.2.0',
       components: [comp], diffPaths, preRunSnapshot,
     });
 
     expect(result.ok).toBe(false);
-    const cFail = result.failures.find(f => f.check === 'c');
-    expect(cFail).toBeDefined();
+    expect(result.failures.find(f => f.check === 'b')).toBeDefined();
   });
 
-  test('component in diff has wrong version on disk → check (d) fails', async () => {
+  test('component in diff has wrong version on disk → check (c) fails', async () => {
     const comp = makeSkillComp('skill-a', PLUGIN);
     await writeAndCommitPlugin(PLUGIN, REPO, '0.1.0', [comp]);
 
     const diffPaths = new Set([comp.pluginRelPath]);
     const preRunSnapshot = await captureHeadSnapshot([comp], PLUGIN, REPO, diffPaths);
 
-    // Cascade
     await cascadeVersion({ pluginRoot: PLUGIN, newVersion: '0.2.0', components: [comp], diffPaths });
-    const manifest = await computeManifest(PLUGIN, [comp.pluginRelPath], '0.2.0');
-    await Bun.write(`${PLUGIN}/manifest.json`, JSON.stringify(manifest, null, 2) + '\n');
     await appendEntry(`${PLUGIN}/CHANGELOG.md`, {
       version: '0.2.0', date: '2026-05-09',
       added: [], changed: ['skill-a'], removed: [],
     });
 
-    // Overwrite the component file back to old version (simulating partial write failure)
+    // Overwrite component file back to old version (simulating partial write failure)
     await Bun.write(comp.absPath, `---\nmetadata:\n  version: 0.1.0\n---\n\nbody\n`);
 
     const result = await verify({
-      pluginRoot: PLUGIN, cwd: REPO,
+      pluginRoot: PLUGIN,
       expectedVersion: '0.2.0',
       components: [comp], diffPaths, preRunSnapshot,
     });
 
     expect(result.ok).toBe(false);
-    const dFail = result.failures.find(f => f.check === 'd');
-    expect(dFail).toBeDefined();
+    expect(result.failures.find(f => f.check === 'c')).toBeDefined();
   });
 
-  test('component NOT in diff has version changed → check (e) fails', async () => {
+  test('component NOT in diff has version changed → check (d) fails', async () => {
     const skillA = makeSkillComp('skill-a', PLUGIN);
     const skillB = makeSkillComp('skill-b', PLUGIN);
     const components = [skillA, skillB];
@@ -215,8 +187,6 @@ describe('verify', () => {
     const preRunSnapshot = await captureHeadSnapshot(components, PLUGIN, REPO, diffPaths);
 
     await cascadeVersion({ pluginRoot: PLUGIN, newVersion: '0.2.0', components, diffPaths });
-    const manifest = await computeManifest(PLUGIN, components.map(c => c.pluginRelPath), '0.2.0');
-    await Bun.write(`${PLUGIN}/manifest.json`, JSON.stringify(manifest, null, 2) + '\n');
     await appendEntry(`${PLUGIN}/CHANGELOG.md`, {
       version: '0.2.0', date: '2026-05-09',
       added: [], changed: ['skill-a'], removed: [],
@@ -226,13 +196,12 @@ describe('verify', () => {
     await Bun.write(skillB.absPath, `---\nmetadata:\n  version: 0.2.0\n---\n\nbody\n`);
 
     const result = await verify({
-      pluginRoot: PLUGIN, cwd: REPO,
+      pluginRoot: PLUGIN,
       expectedVersion: '0.2.0',
       components, diffPaths, preRunSnapshot,
     });
 
     expect(result.ok).toBe(false);
-    const eFail = result.failures.find(f => f.check === 'e');
-    expect(eFail).toBeDefined();
+    expect(result.failures.find(f => f.check === 'd')).toBeDefined();
   });
 });

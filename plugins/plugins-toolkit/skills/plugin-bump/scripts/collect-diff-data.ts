@@ -11,9 +11,8 @@ import {
 import { isExcluded } from './lib/default-excludes';
 
 export async function detectBootstrap(target: string): Promise<boolean> {
-  const hasManifest = await Bun.file(`${target}/manifest.json`).exists();
   const hasChangelog = await Bun.file(`${target}/CHANGELOG.md`).exists();
-  return !hasManifest && !hasChangelog;
+  return !hasChangelog;
 }
 
 export async function collectDiff(

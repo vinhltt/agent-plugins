@@ -1,12 +1,10 @@
-// 5-check Definition of Done. Read-only. Any failure → ok=false + full report.
-// Called by run.ts AFTER cascade + manifest + changelog writes.
+// 4-check Definition of Done. Read-only. Any failure → ok=false + full report.
+// Called by run.ts AFTER cascade + changelog writes.
 
-import { computeManifest, manifestsEqualIgnoringTimestamp, type Manifest } from './manifest';
 import { gitShowHead, toRepoRelative } from './lib/git-helpers';
-import { KnownAbort } from './lib/known-abort';
 import type { DiscoveredComponent } from './lib/component-discovery';
 
-export type VerifyCheckId = 'a' | 'b' | 'c' | 'd' | 'e';
+export type VerifyCheckId = 'a' | 'b' | 'c' | 'd';
 
 export interface VerifyFailure {
   check: VerifyCheckId;
@@ -21,7 +19,6 @@ export interface VerifyResult {
 
 export interface VerifyInput {
   pluginRoot: string;
-  cwd: string; // git repo root
   expectedVersion: string;
   components: DiscoveredComponent[];
   diffPaths: Set<string>; // plugin-relative paths
@@ -91,42 +88,13 @@ export async function captureHeadSnapshot(
   return snapshot;
 }
 
-// ── manifest helpers ──
-
-async function readManifestFromDisk(target: string): Promise<Manifest | null> {
-  const f = Bun.file(`${target}/manifest.json`);
-  if (!(await f.exists())) return null;
-  const parsed = JSON.parse(await f.text());
-  if (typeof parsed !== 'object' || parsed === null) throw new KnownAbort('manifest.json: not an object', 5);
-  if (typeof parsed.version !== 'string') throw new KnownAbort('manifest.json: missing version', 5);
-  if (!parsed.files || typeof parsed.files !== 'object') throw new KnownAbort('manifest.json: missing files map', 5);
-  if (Object.keys(parsed.files).length > 10000) throw new KnownAbort('manifest.json: too many entries', 5);
-  for (const k of Object.keys(parsed.files)) {
-    if (k === '__proto__' || k === 'constructor') throw new KnownAbort('manifest.json: forbidden key', 5);
-  }
-  return parsed as Manifest;
-}
-
 // ── verify ──
 
 export async function verify(input: VerifyInput): Promise<VerifyResult> {
-  const { pluginRoot, cwd, expectedVersion, components, diffPaths, preRunSnapshot } = input;
+  const { pluginRoot, expectedVersion, components, diffPaths, preRunSnapshot } = input;
   const failures: VerifyFailure[] = [];
 
-  // (a) on-disk manifest matches expected + recomputed hashes
-  const diskManifest = await readManifestFromDisk(pluginRoot);
-  if (!diskManifest) {
-    failures.push({ check: 'a', reason: 'manifest.json not found on disk' });
-  } else if (!manifestsEqualIgnoringTimestamp(diskManifest, { version: expectedVersion, files: diskManifest.files, generatedAt: '' })) {
-    failures.push({ check: 'a', reason: `manifest.version mismatch: expected ${expectedVersion}, got ${diskManifest.version}` });
-  } else {
-    const recomputed = await computeManifest(pluginRoot, Object.keys(diskManifest.files), diskManifest.version);
-    if (!manifestsEqualIgnoringTimestamp(recomputed, diskManifest)) {
-      failures.push({ check: 'a', reason: 'recomputed file hashes differ from manifest.json (partial write or file changed)' });
-    }
-  }
-
-  // (b) plugin.json.version === manifest.version
+  // (a) plugin.json.version === expectedVersion
   const pluginJsonPath = `${pluginRoot}/.claude-plugin/plugin.json`;
   let pluginJsonVer: string | null = null;
   try {
@@ -134,28 +102,28 @@ export async function verify(input: VerifyInput): Promise<VerifyResult> {
     pluginJsonVer = (JSON.parse(raw) as Record<string, unknown>).version as string ?? null;
   } catch { /* fall through — null triggers failure below */ }
   if (pluginJsonVer !== expectedVersion) {
-    failures.push({ check: 'b', reason: `plugin.json version=${pluginJsonVer} != expected ${expectedVersion}` });
+    failures.push({ check: 'a', reason: `plugin.json version=${pluginJsonVer} != expected ${expectedVersion}` });
   }
 
-  // (c) CHANGELOG.md top header version === expectedVersion
+  // (b) CHANGELOG.md top header version === expectedVersion
   const clPath = `${pluginRoot}/CHANGELOG.md`;
   const clText = await Bun.file(clPath).exists() ? await Bun.file(clPath).text() : '';
   const clMatch = clText.match(/^##\s*\[([^\]]+)\]/m);
   const clVer = clMatch ? clMatch[1]! : null;
   if (clVer !== expectedVersion) {
-    failures.push({ check: 'c', reason: `CHANGELOG.md top=[${clVer}] != expected ${expectedVersion}` });
+    failures.push({ check: 'b', reason: `CHANGELOG.md top=[${clVer}] != expected ${expectedVersion}` });
   }
 
-  // (d) every component in diff has new version on disk
+  // (c) every component in diff has new version on disk
   for (const comp of components) {
     if (!diffPaths.has(comp.pluginRelPath)) continue;
     const ver = await readOnDiskComponentVersion(comp);
     if (ver !== expectedVersion) {
-      failures.push({ check: 'd', reason: `version=${ver} != expected ${expectedVersion}`, path: comp.pluginRelPath });
+      failures.push({ check: 'c', reason: `version=${ver} != expected ${expectedVersion}`, path: comp.pluginRelPath });
     }
   }
 
-  // (e) every component NOT in diff has version unchanged from HEAD snapshot
+  // (d) every component NOT in diff has version unchanged from HEAD snapshot
   for (const comp of components) {
     if (diffPaths.has(comp.pluginRelPath)) continue;
     const snapshotVer = preRunSnapshot.get(comp.pluginRelPath);
@@ -163,7 +131,7 @@ export async function verify(input: VerifyInput): Promise<VerifyResult> {
     const diskVer = await readOnDiskComponentVersion(comp);
     if (diskVer !== snapshotVer) {
       failures.push({
-        check: 'e',
+        check: 'd',
         reason: `version changed from ${snapshotVer} to ${diskVer} but path not in diff`,
         path: comp.pluginRelPath,
       });

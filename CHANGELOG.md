@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-05-11
+
+### Changed
+
+- plugins-toolkit/plugin-bump: consolidated manifest logic into run workflow (parity with v1.0.0 `Skills/skill-bump` refactor); simplified `verify.ts` and `run.ts`; minor updates to `collect-diff-data.ts`, `default-excludes.ts`, and test suite
+- plugins-toolkit: bumped plugin version and added plugin-internal CHANGELOG
+
+### Removed
+
+- plugins-toolkit/plugin-bump: removed standalone `scripts/manifest.ts`, `tests/manifest.test.ts`, and stale `manifest.json` snapshot (internal refactor; no marketplace-consumer API affected — bump kept at minor per explicit override of deterministic D=major rule)
+
 ## [1.0.0] - 2026-05-11
 
 ### Changed

@@ -1,8 +1,8 @@
 ---
 name: plugin-bump
-description: Per-plugin version bumper. Targets 1 plugin folder, auto-derives semver from git diff (max-wins D=major A=minor M/R/C=patch), cascades version to changed components only (skills/agents/commands/hooks), generates CHANGELOG.md + manifest.json, verifies via 5-check DoD.
+description: Per-plugin version bumper. Targets 1 plugin folder, auto-derives semver from git diff (max-wins D=major A=minor M/R/C=patch), cascades version to changed components only (skills/agents/commands/hooks), generates CHANGELOG.md, verifies via 4-check DoD.
 metadata:
-  version: 0.1.0
+  version: 1.1.0
   author: vinhltt
   scope: per-plugin
 ---
@@ -60,19 +60,17 @@ Max-wins across all changed files in the plugin diff. A single deleted file → 
 | `commands/<n>.md` `version` | Only if in diff | Component in diff |
 | `hooks/<n>.json` `version` | Only if in diff | Component in diff |
 | `CHANGELOG.md` | Yes | Every run |
-| `manifest.json` | Yes | Every run |
 
 Components NOT in the diff are left byte-identical.
 
-## Verify (5-check DoD)
+## Verify (4-check DoD)
 
 After every write, the skill auto-verifies:
 
-- **(a)** On-disk `manifest.json` matches recomputed file hashes
-- **(b)** `plugin.json.version === manifest.version`
-- **(c)** `CHANGELOG.md` top entry version === manifest.version
-- **(d)** Every component in diff has new version
-- **(e)** Every component NOT in diff has version unchanged from HEAD snapshot
+- **(a)** `plugin.json.version` matches the new expected version
+- **(b)** `CHANGELOG.md` top entry version === expected version
+- **(c)** Every component in diff has new version
+- **(d)** Every component NOT in diff has version unchanged from HEAD snapshot
 
 Any failure → exit 4 + detailed message per failing check.
 
@@ -82,8 +80,7 @@ Any failure → exit 4 + detailed message per failing check.
 |---|---|
 | 0 | OK — all writes + verify passed |
 | 2 | Precondition failed (dirty tree without --auto, missing SKILL.md, empty diff, invalid ref) |
-| 4 | Verify failed (one or more of a/b/c/d/e) |
-| 5 | manifest.json schema corruption |
+| 4 | Verify failed (one or more of a/b/c/d) |
 | 99 | Unexpected error |
 
 ## Self-bump
@@ -93,7 +90,7 @@ When `plugins-toolkit` itself is updated, use the 3-tier flow:
 ```
 1. Edit skill files in plugins-toolkit/skills/plugin-bump/
 2. skill-bump  --target=plugins/plugins-toolkit/skills/plugin-bump --auto   # per-skill CHANGELOG + manifest
-3. plugin-bump --target=plugins/plugins-toolkit --auto                        # per-plugin CHANGELOG + manifest + plugin.json cascade
+3. plugin-bump --target=plugins/plugins-toolkit --auto                        # per-plugin CHANGELOG + plugin.json cascade
 4. agent-plugins-changelog (separate run)                                     # marketplace.json bump
 ```
 
@@ -103,5 +100,5 @@ Step 2 uses `skill-bump` (different scope). Step 3 uses this skill. They don't r
 
 - One plugin per run. Fan-out across plugins is the caller's job (parallel Task tool spawns).
 - Components must follow standard layout: `skills/<n>/SKILL.md`, `agents/<n>.md`, `commands/<n>.md`, `hooks/<n>.json`.
-- Nested skills layout (`skills/<n>/scripts/*.ts`) is tracked by manifest hash but NOT a versioned component.
+- Nested skills layout (`skills/<n>/scripts/*.ts`) is NOT a versioned component — only the SKILL.md entry-point version is cascaded.
 - Hooks `version` field: written to top-level JSON key. If Claude Code schema rejects it, fallback is checksum-only (see Limitations note in scripts/version-cascade.ts).

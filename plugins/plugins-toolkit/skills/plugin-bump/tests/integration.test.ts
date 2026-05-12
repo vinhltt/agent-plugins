@@ -178,7 +178,7 @@ describe('integration: basic bump pipeline', () => {
       `---\nmetadata:\n  version: 0.1.0\n---\n\nbody v2\n`);
     await commitAll(REPO, 'touch skill-a');
 
-    // Run once to bootstrap (first run creates changelog/manifest)
+    // Run once to bootstrap (first run creates changelog)
     const r1 = await sh(['bun', RUN_TS, `--target=${plugin.root}`, '--auto']);
     expect(r1.code).toBe(0);
 

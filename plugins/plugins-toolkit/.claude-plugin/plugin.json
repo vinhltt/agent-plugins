@@ -1,7 +1,10 @@
 {
   "name": "plugins-toolkit",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "description": "Tooling for Claude Code plugin authors. Currently ships plugin-bump (per-plugin version + changelog + manifest).",
-  "author": { "name": "VinhLTT", "email": "vinhltt.dev@gmail.com" },
+  "author": {
+    "name": "VinhLTT",
+    "email": "vinhltt.dev@gmail.com"
+  },
   "homepage": "https://github.com/vinhltt/agent-plugins/tree/master/plugins/plugins-toolkit"
 }

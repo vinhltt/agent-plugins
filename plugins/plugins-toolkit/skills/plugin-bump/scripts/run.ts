@@ -1,15 +1,13 @@
 // CLI entrypoint for plugin-bump. Zero node:* imports, Bun-native.
-// Pipeline: parse → validate → collect-diff → bump → discover → snapshot → cascade → manifest → changelog → verify
+// Pipeline: parse → validate → collect-diff → bump → discover → snapshot → cascade → changelog → verify
 
 import { applyBump, inferBump, type DiffStatus } from './bump-rules';
-import { computeManifest } from './manifest';
 import { collectDiff } from './collect-diff-data';
 import { appendEntry, type ChangelogEntry } from './changelog-writer';
 import {
   assertInGitRepo, assertRefExists, isWorkingTreeDirty,
-  repoCwdOf, gitLsFiles, toRepoRelative, stripTargetPrefix, type DiffEntry,
+  repoCwdOf, type DiffEntry,
 } from './lib/git-helpers';
-import { isExcluded } from './lib/default-excludes';
 import { discoverComponents } from './lib/component-discovery';
 import { cascadeVersion } from './version-cascade';
 import { verify, captureHeadSnapshot } from './verify';
@@ -173,16 +171,6 @@ async function main(argv: string[]): Promise<number> {
     await cascadeVersion({ pluginRoot: args.target, newVersion: newVer, components, diffPaths });
     console.log(`[plugin-bump] cascade: done`);
 
-    // Compute + write manifest (all tracked plugin files minus excludes)
-    const tracked = await gitLsFiles(args.target, cwd);
-    const pluginPrefix = toRepoRelative(args.target, cwd);
-    const visibleFiles = tracked
-      .map(rel => stripTargetPrefix(rel, pluginPrefix))
-      .filter(rel => rel && !isExcluded(rel));
-    const manifest = await computeManifest(args.target, visibleFiles, newVer);
-    await Bun.write(`${args.target}/manifest.json`, JSON.stringify(manifest, null, 2) + '\n');
-    console.log(`[plugin-bump] manifest: ${visibleFiles.length} files hashed`);
-
     // Write changelog
     const entry: ChangelogEntry = {
       version: newVer,
@@ -194,14 +182,14 @@ async function main(argv: string[]): Promise<number> {
     await appendEntry(`${args.target}/CHANGELOG.md`, entry);
     console.log(`[plugin-bump] changelog: appended ${newVer}`);
 
-    // 5-check verify
-    const result = await verify({ pluginRoot: args.target, cwd, expectedVersion: newVer, components, diffPaths, preRunSnapshot });
+    // 4-check verify
+    const result = await verify({ pluginRoot: args.target, expectedVersion: newVer, components, diffPaths, preRunSnapshot });
     if (!result.ok) {
       console.error(`[plugin-bump] verify FAILED (${result.failures.length} check(s)). State may be partial.`);
       return 4;
     }
 
-    console.log(`[plugin-bump] OK — ${currentVer} → ${newVer} (${bumpType}), all 5 checks passed.`);
+    console.log(`[plugin-bump] OK — ${currentVer} → ${newVer} (${bumpType}), all 4 checks passed.`);
     return 0;
 
   } catch (e) {
