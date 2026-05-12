@@ -1,6 +1,6 @@
 {
   "name": "research-toolkit",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Deep research toolkit. Bundles docs-seeker + research skills and researcher agent for systematic technical investigation via ctx7 CLI (delegates to context7-cli plugin), GitHub MCP, WebFetch, WebSearch (optional Gemini CLI).",
   "author": {
     "name": "VinhLTT",

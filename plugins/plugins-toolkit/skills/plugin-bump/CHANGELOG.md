@@ -1,3 +1,9 @@
+## [1.1.1] - 2026-05-12
+
+### Changed
+- Add Post-run section: stage-only policy after successful run
+- Remove Execution Protocol section — staged changes now detected automatically via git diff --cached
+
 ## [1.0.0] - 2026-05-11
 
 ### Changed

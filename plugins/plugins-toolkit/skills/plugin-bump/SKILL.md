@@ -2,7 +2,7 @@
 name: plugin-bump
 description: Per-plugin version bumper. Targets 1 plugin folder, auto-derives semver from git diff (max-wins D=major A=minor M/R/C=patch), cascades version to changed components only (skills/agents/commands/hooks), generates CHANGELOG.md, verifies via 4-check DoD.
 metadata:
-  version: 1.1.0
+  version: 1.2.0
   author: vinhltt
   scope: per-plugin
 ---
@@ -82,6 +82,10 @@ Any failure → exit 4 + detailed message per failing check.
 | 2 | Precondition failed (dirty tree without --auto, missing SKILL.md, empty diff, invalid ref) |
 | 4 | Verify failed (one or more of a/b/c/d) |
 | 99 | Unexpected error |
+
+## Post-run
+
+After a successful run (exit 0), the script leaves modified files unstaged. `git add` only the files plugin-bump wrote (`plugin.json`, `CHANGELOG.md`, changed components). **NEVER run `git commit`** — leave that to the user.
 
 ## Self-bump
 

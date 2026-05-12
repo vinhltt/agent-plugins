@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-05-12
+
+### Changed
+
+- Skills/skill-bump: merge committed + staged diff entries (`gitDiffStagedNameStatus` added to `git-helpers.ts`); most-severe-status wins on path collision
+- plugins-toolkit/plugin-bump: parity with Skills/skill-bump — staged diff support in `collect-diff-data.ts` and `git-helpers.ts`
+- research-toolkit/researcher: added `research`, `context7-cli`, `find-docs` to skills list; migrated version field from `metadata.version` to top-level `version` frontmatter
+
+### Removed
+
+- research-toolkit: removed `manifest.json` snapshot file
+
 ## [1.1.0] - 2026-05-11
 
 ### Changed
