@@ -11,6 +11,28 @@ import {
 } from './lib/git-helpers';
 import { isExcluded } from './lib/default-excludes';
 
+// Expands diffPaths: any file under skills/<name>/<subdir>/* adds skills/<name>/SKILL.md.
+// Returns expanded set + cascade map for logging. Pure function — no I/O.
+export function expandSkillSubdirPaths(paths: Set<string>): {
+  expanded: Set<string>;
+  cascades: Map<string, string[]>;
+} {
+  const expanded = new Set(paths);
+  const cascades = new Map<string, string[]>();
+  for (const p of paths) {
+    const m = p.match(/^(skills\/[^/]+)\/(.+)$/);
+    if (!m || m[2] === 'SKILL.md') continue;
+    const skillPath = `${m[1]}/SKILL.md`;
+    if (!paths.has(skillPath)) {
+      expanded.add(skillPath);
+      const list = cascades.get(skillPath) ?? [];
+      list.push(p);
+      cascades.set(skillPath, list);
+    }
+  }
+  return { expanded, cascades };
+}
+
 export async function detectBootstrap(target: string): Promise<boolean> {
   const hasChangelog = await Bun.file(`${target}/CHANGELOG.md`).exists();
   return !hasChangelog;

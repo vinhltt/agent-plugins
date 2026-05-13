@@ -2,7 +2,7 @@
 // Pipeline: parse → validate → collect-diff → bump → discover → snapshot → cascade → changelog → verify
 
 import { applyBump, inferBump, type DiffStatus } from './bump-rules';
-import { collectDiff } from './collect-diff-data';
+import { collectDiff, expandSkillSubdirPaths } from './collect-diff-data';
 import { appendEntry, type ChangelogEntry } from './changelog-writer';
 import {
   assertInGitRepo, assertRefExists, isWorkingTreeDirty,
@@ -148,7 +148,8 @@ async function main(argv: string[]): Promise<number> {
 
     // Discover components
     const components = await discoverComponents(args.target);
-    const diffPaths = new Set(diff.entries.map(e => e.path));
+    const rawDiffPaths = new Set(diff.entries.map(e => e.path));
+    const { expanded: diffPaths, cascades } = expandSkillSubdirPaths(rawDiffPaths);
 
     if (args.dryRun) {
       console.log(JSON.stringify({
@@ -158,6 +159,7 @@ async function main(argv: string[]): Promise<number> {
         components: components.map(c => ({ kind: c.kind, path: c.pluginRelPath })),
         willUpdate: components.filter(c => diffPaths.has(c.pluginRelPath)).map(c => c.pluginRelPath),
         willSkip: components.filter(c => !diffPaths.has(c.pluginRelPath)).map(c => c.pluginRelPath),
+        subdirCascades: Object.fromEntries(cascades),
       }, null, 2));
       return 0;
     }
@@ -170,6 +172,11 @@ async function main(argv: string[]): Promise<number> {
     // Cascade version to plugin.json + changed components
     await cascadeVersion({ pluginRoot: args.target, newVersion: newVer, components, diffPaths });
     console.log(`[plugin-bump] cascade: done`);
+    for (const [skillPath, subPaths] of cascades) {
+      const preview = subPaths.slice(0, 3).join(', ');
+      const more = subPaths.length > 3 ? ` (+${subPaths.length - 3} more)` : '';
+      console.log(`[plugin-bump] cascade: ${skillPath} bumped via subdir change(s): ${preview}${more}`);
+    }
 
     // Write changelog
     const entry: ChangelogEntry = {

@@ -201,3 +201,51 @@ describe('integration: basic bump pipeline', () => {
     expect(r.stderr).toContain('plugin.json missing');
   });
 });
+
+describe('integration: subdir cascade', () => {
+  test('cascades skill version when references/ file changes (bug 260513)', async () => {
+    const plugin = await makeFakePlugin({
+      name: 'subdir-plugin',
+      skills: ['foo'],
+      existingRepo: REPO,
+    });
+
+    // Add subdir file under skills/foo/references/ inline
+    const refPath = `${plugin.root}/skills/foo/references/api.md`;
+    await Bun.write(refPath, '# initial\n');
+    await commitAll(REPO, 'add references baseline');
+
+    // Modify subdir file (bug-triggering scenario)
+    await Bun.write(refPath, '# updated content\n');
+    await commitAll(REPO, 'modify references');
+
+    const r = await sh(['bun', RUN_TS, `--target=${plugin.root}`, '--auto']);
+    expect(r.code).toBe(0);
+
+    const pluginJson = JSON.parse(
+      await Bun.file(`${plugin.root}/.claude-plugin/plugin.json`).text(),
+    ) as Record<string, unknown>;
+    expect(pluginJson.version).not.toBe('0.1.0');
+
+    // Bug-fix assertion: SKILL.md must be bumped even though only references/ changed
+    const skillText = await Bun.file(`${plugin.root}/skills/foo/SKILL.md`).text();
+    expect(skillText).toContain(`version: ${pluginJson.version}`);
+
+    // Cascade log emitted
+    expect(r.stdout).toMatch(/\[plugin-bump\] cascade: skills\/foo\/SKILL\.md bumped via subdir change/);
+  });
+
+  test('cascades skill version when tests/ file changes', async () => {
+    const plugin = await makeFakePlugin({ name: 'p2', skills: ['bar'], existingRepo: REPO });
+    await Bun.write(`${plugin.root}/skills/bar/tests/x.test.ts`, '// stub\n');
+    await commitAll(REPO, 'add test stub');
+    await Bun.write(`${plugin.root}/skills/bar/tests/x.test.ts`, '// updated\n');
+    await commitAll(REPO, 'update test');
+
+    const r = await sh(['bun', RUN_TS, `--target=${plugin.root}`, '--auto']);
+    expect(r.code).toBe(0);
+    const skillText = await Bun.file(`${plugin.root}/skills/bar/SKILL.md`).text();
+    const pj = JSON.parse(await Bun.file(`${plugin.root}/.claude-plugin/plugin.json`).text());
+    expect(skillText).toContain(`version: ${pj.version}`);
+  });
+});

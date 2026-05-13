@@ -2,7 +2,7 @@
 // Port date: 2026-05-09. Adjust import paths only; keep test logic identical.
 
 import { test, expect, describe, beforeEach, afterEach } from 'bun:test';
-import { detectBootstrap, collectDiff } from '../scripts/collect-diff-data';
+import { detectBootstrap, collectDiff, expandSkillSubdirPaths } from '../scripts/collect-diff-data';
 
 let TMP: string;
 
@@ -86,5 +86,43 @@ describe('collectDiff', () => {
     await runGit(['commit', '-q', '-m', 'edit'], TMP);
     const result = await collectDiff(plugin, undefined, TMP);
     expect(result.since).toMatch(/HEAD~1\.\.HEAD|[a-f0-9]+\.\.HEAD/);
+  });
+});
+
+describe('expandSkillSubdirPaths', () => {
+  test('A — subdir path adds SKILL.md + cascade entry', () => {
+    const r = expandSkillSubdirPaths(new Set(['skills/foo/references/x.md']));
+    expect(r.expanded).toEqual(new Set(['skills/foo/references/x.md', 'skills/foo/SKILL.md']));
+    expect(r.cascades.get('skills/foo/SKILL.md')).toEqual(['skills/foo/references/x.md']);
+  });
+
+  test('B — direct SKILL.md, no cascade entry', () => {
+    const r = expandSkillSubdirPaths(new Set(['skills/foo/SKILL.md']));
+    expect(r.expanded).toEqual(new Set(['skills/foo/SKILL.md']));
+    expect(r.cascades.size).toBe(0);
+  });
+
+  test('C — non-skill paths pass through unchanged', () => {
+    const r = expandSkillSubdirPaths(new Set(['agents/foo.md', 'commands/bar.md', 'README.md', '.claude-plugin/plugin.json']));
+    expect(r.expanded.size).toBe(4);
+    expect(r.cascades.size).toBe(0);
+  });
+
+  test('D — multi-skill multi-subdir grouped correctly', () => {
+    const r = expandSkillSubdirPaths(new Set([
+      'skills/foo/references/a.md',
+      'skills/foo/scripts/b.ts',
+      'skills/bar/assets/c.png',
+    ]));
+    expect(r.expanded.has('skills/foo/SKILL.md')).toBe(true);
+    expect(r.expanded.has('skills/bar/SKILL.md')).toBe(true);
+    expect(r.cascades.get('skills/foo/SKILL.md')!.sort()).toEqual(['skills/foo/references/a.md', 'skills/foo/scripts/b.ts']);
+    expect(r.cascades.get('skills/bar/SKILL.md')).toEqual(['skills/bar/assets/c.png']);
+  });
+
+  test('E — mixed direct + subdir, no cascade dup when SKILL.md already present', () => {
+    const r = expandSkillSubdirPaths(new Set(['skills/foo/SKILL.md', 'skills/foo/refs/x.md']));
+    expect(r.expanded.size).toBe(2);
+    expect(r.cascades.size).toBe(0); // SKILL.md already direct → no cascade record
   });
 });

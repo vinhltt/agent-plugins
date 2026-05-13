@@ -2,7 +2,7 @@
 name: plugin-bump
 description: Per-plugin version bumper. Targets 1 plugin folder, auto-derives semver from git diff (max-wins D=major A=minor M/R/C=patch), cascades version to changed components only (skills/agents/commands/hooks), generates CHANGELOG.md, verifies via 4-check DoD.
 metadata:
-  version: 1.2.0
+  version: 1.2.2
   author: vinhltt
   scope: per-plugin
 ---
@@ -104,5 +104,5 @@ Step 2 uses `skill-bump` (different scope). Step 3 uses this skill. They don't r
 
 - One plugin per run. Fan-out across plugins is the caller's job (parallel Task tool spawns).
 - Components must follow standard layout: `skills/<n>/SKILL.md`, `agents/<n>.md`, `commands/<n>.md`, `hooks/<n>.json`.
-- Nested skills layout (`skills/<n>/scripts/*.ts`) is NOT a versioned component — only the SKILL.md entry-point version is cascaded.
+- Skill folder = ownership unit. Any file change in `skills/<n>/` (scripts/, references/, tests/, etc.) cascades to `skills/<n>/SKILL.md metadata.version` automatically (subdir cascade).
 - Hooks `version` field: written to top-level JSON key. If Claude Code schema rejects it, fallback is checksum-only (see Limitations note in scripts/version-cascade.ts).

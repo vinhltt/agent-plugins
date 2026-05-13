@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.2] - 2026-05-13
+
+### Changed
+
+- plugins-toolkit/plugin-bump: added `expandSkillSubdirPaths()` — any file changed under `skills/<n>/` (scripts/, tests/, references/, etc.) now auto-cascades to `skills/<n>/SKILL.md`; updated `run.ts` to use expansion with cascade logging in dry-run output; added unit tests; updated SKILL.md docs
+
 ## [1.2.1] - 2026-05-12
 
 ### Changed
