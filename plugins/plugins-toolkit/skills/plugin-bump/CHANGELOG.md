@@ -1,3 +1,20 @@
+## [1.2.5] - 2026-05-19
+
+### Changed
+- Add 'Changelog Bullets (REQUIRED)' section to SKILL.md: mandatory pre-run steps forcing Claude to inspect diff and pass semantic --added/--changed/--removed flags
+- Refactor buildBullets signature from boolean to string[] for cleaner intent; restore TODO_PLACEHOLDER constant
+
+## [1.2.4] - 2026-05-19
+
+### Changed
+- Add mandatory pre-run section requiring Claude to analyze diff and pass semantic changelog bullets via --added/--changed/--removed flags
+- Revert diff-paths fallback in buildBullets; keep TODO:describe placeholder as reminder for missing descriptions
+
+## [1.2.3] - 2026-05-19
+
+### Changed
+- scripts/run.ts: default changelog bullets now use diff paths instead of TODO placeholder
+
 ## [1.1.1] - 2026-05-12
 
 ### Changed

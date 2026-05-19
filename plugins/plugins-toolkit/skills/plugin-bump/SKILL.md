@@ -2,7 +2,7 @@
 name: plugin-bump
 description: Per-plugin version bumper. Targets 1 plugin folder, auto-derives semver from git diff (max-wins D=major A=minor M/R/C=patch), cascades version to changed components only (skills/agents/commands/hooks), generates CHANGELOG.md, verifies via 4-check DoD.
 metadata:
-  version: 1.2.2
+  version: 1.2.5
   author: vinhltt
   scope: per-plugin
 ---
@@ -16,6 +16,22 @@ Per-plugin changelog + version cascader. One run = one plugin.
 - Author touched files inside `<repo>/plugins/<plugin>/` and wants plugin.json + component versions + changelog updated.
 - CI/release pipeline needs deterministic semver bump per plugin.
 - Caller (Claude/agent) wants to bump N plugins in parallel without coordination (each is an independent run).
+
+## Changelog Bullets (REQUIRED — Claude must do this before running)
+
+The script cannot generate semantic descriptions. If `--added`/`--changed`/`--removed` are not passed, the changelog gets a `TODO: describe` placeholder.
+
+**Before running the script, Claude MUST:**
+
+1. Inspect the diff: `git diff <since>..HEAD -- <plugin-folder>` + `git diff --cached -- <plugin-folder>`
+2. For each logical change, derive a semantic bullet describing WHAT changed and WHY
+3. Pass the bullets as `--added=...`, `--changed=...`, or `--removed=...` flags
+
+**Format rules:**
+- Describe the intent/effect, NOT the file name
+- ❌ Bad: `scripts/run.ts`
+- ✅ Good: `Fix changelog bullets to use semantic descriptions instead of file paths`
+- One bullet per logical change (not per file)
 
 ## CLI
 

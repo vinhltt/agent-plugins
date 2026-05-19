@@ -2,7 +2,7 @@
 name: skill-bump
 description: Generate per-skill CHANGELOG.md and bump SKILL.md frontmatter version. Run on a single skill folder; orchestrate N skills via Task tool fan-out.
 metadata:
-  version: 1.0.1
+  version: 1.0.3
   author: vinhltt
   scope: per-skill
 ---
@@ -32,13 +32,25 @@ bun .claude/skills/skill-bump/scripts/run.ts \
 
 `--added`, `--changed`, `--removed` are repeatable. Each occurrence becomes one bullet under the matching Keep-a-Changelog section.
 
-## Describing changes (CRITICAL for callers)
+## Describing changes (REQUIRED — Claude must do this before running)
 
-This skill is meant to be invoked by an agent (Claude/subagent) that just edited the target skill. **You — the agent — are the one with full context of what changed and why.** Pass that meaning into the changelog via `--added`, `--changed`, `--removed`.
+This skill is meant to be invoked by an agent (Claude/subagent) that just edited the target skill. The script cannot generate semantic descriptions — only Claude can.
+
+**Before running the script, Claude MUST:**
+
+1. Inspect the diff: `git diff <since>..HEAD -- <skill-folder>` + `git diff --cached -- <skill-folder>`
+2. For each logical change, derive a semantic bullet describing WHAT changed and WHY
+3. Pass the bullets as `--added=...`, `--changed=...`, or `--removed=...` flags
+
+**Format rules:**
+- Describe the intent/effect, NOT the file name
+- ❌ Bad: `scripts/run.ts`
+- ✅ Good: `Fix changelog bullets to use semantic descriptions instead of file paths`
+- One bullet per logical change (not per file)
 
 The single source of truth is `SKILL.md` frontmatter `metadata.version`; `CHANGELOG.md` is the human-readable history of what shipped.
 
-If you don't pass any descriptions, the skill still bumps the version + writes the changelog, but each section that has diff entries gets a single `- TODO: describe` placeholder so the human editor sees there is unfinished work. Never leave `TODO: describe` in a committed changelog.
+If you don't pass any descriptions, the skill writes a `- TODO: describe` placeholder. Never leave `TODO: describe` in a committed changelog.
 
 **Example (the agent calls):**
 

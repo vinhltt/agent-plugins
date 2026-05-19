@@ -23,8 +23,6 @@ interface Args {
   removed: string[];
 }
 
-const TODO_PLACEHOLDER = 'TODO: describe';
-
 function parseArgsOrExit(): Args {
   const argv = Bun.argv.slice(2);
   let target = '';
@@ -51,11 +49,11 @@ function parseArgsOrExit(): Args {
   return { target, since, auto, dryRun, added, changed, removed };
 }
 
-// Bullets shown in changelog. User descriptions win; otherwise TODO placeholder
-// when the diff bucket is non-empty so the editor knows something is missing.
-function buildBullets(hasDiff: boolean, userDesc: string[]): string[] {
+const TODO_PLACEHOLDER = 'TODO: describe';
+
+function buildBullets(diffPaths: string[], userDesc: string[]): string[] {
   if (userDesc.length > 0) return userDesc;
-  if (hasDiff) return [TODO_PLACEHOLDER];
+  if (diffPaths.length > 0) return [TODO_PLACEHOLDER];
   return [];
 }
 
@@ -124,9 +122,9 @@ async function runIncremental(args: Args, cwd: string): Promise<number> {
   }
   const newVersion = applyBump(fm.version, bumpType);
   const entryBullets = {
-    added: buildBullets(dA.length > 0, args.added),
-    changed: buildBullets(dC.length > 0, args.changed),
-    removed: buildBullets(dR.length > 0, args.removed),
+    added: buildBullets(dA, args.added),
+    changed: buildBullets(dC, args.changed),
+    removed: buildBullets(dR, args.removed),
   };
   if (args.dryRun) {
     console.log(JSON.stringify({
@@ -155,9 +153,9 @@ async function runBootstrap(args: Args, cwd: string): Promise<number> {
     .map(rel => stripTargetPrefix(rel, targetRel))
     .filter(rel => rel && !isExcluded(rel));
   const entryBullets = {
-    added: buildBullets(visible.length > 0, args.added),
-    changed: buildBullets(false, args.changed),
-    removed: buildBullets(false, args.removed),
+    added: buildBullets(visible, args.added),
+    changed: buildBullets([], args.changed),
+    removed: buildBullets([], args.removed),
   };
   if (args.dryRun) {
     console.log(JSON.stringify({

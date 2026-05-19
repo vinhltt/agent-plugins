@@ -100,9 +100,11 @@ function classifyEntries(entries: DiffEntry[]): {
   return { added, changed, removed, statuses };
 }
 
-function buildBullets(hasDiff: boolean, userDesc: string[]): string[] {
+const TODO_PLACEHOLDER = 'TODO: describe';
+
+function buildBullets(diffPaths: string[], userDesc: string[]): string[] {
   if (userDesc.length > 0) return userDesc;
-  if (hasDiff) return ['TODO: describe'];
+  if (diffPaths.length > 0) return [TODO_PLACEHOLDER];
   return [];
 }
 
@@ -182,9 +184,9 @@ async function main(argv: string[]): Promise<number> {
     const entry: ChangelogEntry = {
       version: newVer,
       date: todayIso(),
-      added: buildBullets(dA.length > 0, args.added),
-      changed: buildBullets(dC.length > 0, args.changed),
-      removed: buildBullets(dR.length > 0, args.removed),
+      added: buildBullets(dA, args.added),
+      changed: buildBullets(dC, args.changed),
+      removed: buildBullets(dR, args.removed),
     };
     await appendEntry(`${args.target}/CHANGELOG.md`, entry);
     console.log(`[plugin-bump] changelog: appended ${newVer}`);

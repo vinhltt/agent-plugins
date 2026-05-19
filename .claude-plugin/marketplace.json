@@ -342,6 +342,19 @@
       "homepage": "https://github.com/vinhltt/agent-plugins/tree/master/plugins/research-toolkit"
     },
     {
+      "name": "document-converter",
+      "description": "Document format conversion skills: XLSX to CSV, and more",
+      "author": {
+        "name": "VinhLTT",
+        "email": "vinhltt.dev@gmail.com"
+      },
+      "category": "productivity",
+      "source": "./plugins/document-converter",
+      "skills": [
+        "./skills/xlsx-to-csv"
+      ]
+    },
+    {
       "name": "plugins-toolkit",
       "description": "Tooling for Claude Code plugin authors. Currently ships plugin-bump (per-plugin version + changelog + manifest).",
       "author": {

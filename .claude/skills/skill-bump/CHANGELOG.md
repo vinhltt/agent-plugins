@@ -4,6 +4,18 @@ All notable changes to this skill will be documented in this file.
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), Semver.
 
+## [1.0.3] - 2026-05-19
+
+### Changed
+- Strengthen pre-run instructions with mandatory step-by-step diff analysis and semantic bullet requirements
+- Add format rules with bad/good examples to prevent file-path-only changelog entries
+- Revert buildBullets diff-paths fallback; keep TODO:describe placeholder as reminder for missing descriptions
+
+## [1.0.2] - 2026-05-19
+
+### Changed
+- Refactor buildBullets to accept diffPaths array instead of hasDiff boolean, passing actual path lists to call sites
+
 ## [1.0.1] - 2026-05-12
 
 ### Changed
