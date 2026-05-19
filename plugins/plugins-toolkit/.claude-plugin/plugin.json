@@ -1,6 +1,6 @@
 {
   "name": "plugins-toolkit",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Tooling for Claude Code plugin authors. Currently ships plugin-bump (per-plugin version + changelog + manifest).",
   "author": {
     "name": "VinhLTT",

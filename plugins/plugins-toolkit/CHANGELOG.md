@@ -4,6 +4,11 @@ All notable changes to this plugin will be documented in this file.
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), Semver.
 
+## [1.2.6] - 2026-05-19
+
+### Changed
+- plugin-bump 1.2.6: require changelog bullets to include bumped component version; add bad/good format examples
+
 ## [1.2.5] - 2026-05-19
 
 ### Changed

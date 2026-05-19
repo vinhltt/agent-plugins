@@ -1,3 +1,8 @@
+## [1.2.6] - 2026-05-19
+
+### Changed
+- Require changelog bullets to include bumped component version; add bad/good format examples
+
 ## [1.2.5] - 2026-05-19
 
 ### Changed

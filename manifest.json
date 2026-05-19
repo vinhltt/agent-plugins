@@ -1,9 +1,9 @@
 {
   "algorithm": "sha256",
-  "generated_at": "2026-05-13T05:23:50.982Z",
+  "generated_at": "2026-05-19T10:28:49.034Z",
   "marketplace": {
-    "version": "1.2.2",
-    "checksum": "683269a18f6241df98d859503864e87c6481ae0bf50c37f6cc344c8bf3a7a405"
+    "version": "1.2.3",
+    "checksum": "ef05f9d4fde72d070a1e7da34a17d10639d5bfaeaca8a83e87ace1cc837c9f63"
   },
   "plugins": {
     "cc-toolkit": {
@@ -63,13 +63,13 @@
       }
     },
     "plugins-toolkit": {
-      "version": "1.2.2",
-      "checksum": "812e0633d6701131109f48c4162b1f997312dd73cfeeb024eaae1096df7302a9",
+      "version": "1.2.6",
+      "checksum": "103e836e1e4ce0b04ca6f9e833a771ccae9965b393becf9ad6b6d2fbb605d5cc",
       "components": {
         "skills": {
           "plugin-bump": {
-            "version": "1.2.2",
-            "checksum": "2bebaf943ea77fec75e9bab61e2b4c3ec5581ff8a186f1bc0cd34efab29daa85"
+            "version": "1.2.6",
+            "checksum": "f4f4e8fc9d1e594ae964f94dab4974e23a4868d61258c4cba646effc4d58b3b9"
           }
         }
       }
@@ -105,7 +105,7 @@
   "components": {},
   "files": {
     ".agent-plugins.json": "4c1fefed64238aa27511d4f51a0a7efccbfa701e24ad87b7a3f153403f1a16da",
-    ".claude-plugin/marketplace.json": "683269a18f6241df98d859503864e87c6481ae0bf50c37f6cc344c8bf3a7a405",
+    ".claude-plugin/marketplace.json": "ef05f9d4fde72d070a1e7da34a17d10639d5bfaeaca8a83e87ace1cc837c9f63",
     ".claude/settings.json": "0136ecc113f997e9b6dac9c90ae182a98a61ad99fab8c4ba571dc9d579a8575d",
     ".claude/skills/agent-plugins-changelog/SKILL.md": "59e23da97a0cffa39789734e271599671b4e72dfbf122516f3006fff325b016c",
     ".claude/skills/agent-plugins-changelog/changelog.md": "5251fd296a4b48bdfa287ca45a8abe6468070cb84b73ff16aecb4571ac6bf3fc",
@@ -122,8 +122,8 @@
     ".claude/skills/agent-plugins-changelog/scripts/tests/manifest.test.ts": "8adc936ed8ef1091fc5b63fbad08a4c7fdc45629d981e5961549281552fa6219",
     ".claude/skills/agent-plugins-changelog/scripts/tests/verify.test.ts": "0b9891087d9c5045b2e3e31351cbdf95f196c8a8ebb3d28778b8a0287d31b8a0",
     ".claude/skills/agent-plugins-changelog/scripts/verify.ts": "35bb2896db6fdf9d6b0a25840870ebe8be86578e0b5683bd9267fbbd6ab1faa0",
-    ".claude/skills/skill-bump/CHANGELOG.md": "a50f6b2b0fc310c299eb1e0e42c54f0bf27b65d7b37de31b95bdbe5292ebfc57",
-    ".claude/skills/skill-bump/SKILL.md": "86a5deccbb07d282b35c0db6e8fc05f0cc371a15b8870b5e14786abb1ad777c3",
+    ".claude/skills/skill-bump/CHANGELOG.md": "111cc9f2dec230634a8c7a9c1852c31d6c63404f8a4e2e4608b2b033af7d183d",
+    ".claude/skills/skill-bump/SKILL.md": "78c2f96263f2eb7aa0cb678344034ee11f275555ad78806e7477e9b05d48b2ba",
     ".claude/skills/skill-bump/scripts/bump-rules.ts": "d04bd1e7bc24265b4d5162bdbb3430682694d44411bd4917b8e724cc343507cc",
     ".claude/skills/skill-bump/scripts/changelog-writer.ts": "b12b7b1df41b84f374f257b0b01ef810a6a73afeecd3084e1e16814c5ea58985",
     ".claude/skills/skill-bump/scripts/collect-diff-data.ts": "4c6c04de17850d0f1bb3ae0011b6148a38f9080c7877445a0420653fd84ef458",
@@ -132,7 +132,7 @@
     ".claude/skills/skill-bump/scripts/lib/frontmatter.ts": "96e55583877b3a2af48c059d605cc95dad363599adb324293fb82452e526e1d6",
     ".claude/skills/skill-bump/scripts/lib/git-helpers.ts": "c6a421d48c45fac3e8847272fe9bd821ddfbea91238a8dc7b579a162f86a4725",
     ".claude/skills/skill-bump/scripts/lib/known-abort.ts": "e09903ea2fa3df0c7ef571a09732e33ff40d8448476387c3b7434ad1250dc6a1",
-    ".claude/skills/skill-bump/scripts/run.ts": "55bc4dc2da730e0ef2b734372227ba12156f9a6f378ea6ded44e9cdb257aceb8",
+    ".claude/skills/skill-bump/scripts/run.ts": "2c1098ee3b8dbdcab8a08ca9b25fcd902e45eff315efef8dfbdf5fb08da97e6a",
     ".claude/skills/skill-bump/scripts/verify.ts": "ea490ce5fb11a3d56a15c902362dfcb594ccecac041e1b1efa0392b85cbb5180",
     ".claude/skills/skill-bump/tests/bump-rules.test.ts": "940b61c10482278854debe86a7d42cb43dd174b160035966122db297c5fd6b4e",
     ".claude/skills/skill-bump/tests/changelog-writer.test.ts": "cc22a1a5523210e92c5fffd8a8029219b8ee218956bc87f38aa64fdaa5ff40ad",
@@ -143,7 +143,7 @@
     ".claude/skills/skill-bump/tests/integration.test.ts": "1818a9685d057837264af672863a0631791e693fc6359922aadb35bc85b549ce",
     ".claude/skills/skill-bump/tests/verify.test.ts": "626ad0d79a628e9f6b2b992db83f185cc420228c417f3223449421ac83c5f59d",
     ".gitignore": "b6b711ef6b253469f8f3c356036087be3c7bc7798af236b606ae195a7b4f8842",
-    "CHANGELOG.md": "ece6ea56f8a2b2a645b74e9ec13f87910ff8cb3cfb25fe3fb2c27b9616600d6f",
+    "CHANGELOG.md": "9ac6d0241dae1e4f7a0c59da51f77b2fcbc69d947f6b0a1f82ffe7ed0e91ded6",
     "LICENSE": "05c3275b3133245fb474c341f5e7c89b25df27124b41d2639773ec0de03c3430",
     "README.md": "c9ec9c7a382774d836805f68582425db8bde844215b3dff7a2c0817217b9ed4c",
     "plugins/cc-toolkit/.claude-plugin/plugin.json": "7c329994d080bb4d203780d82256f7fbd169e0d922d02ddcc074e5ce7b3ddb0a",
@@ -178,11 +178,11 @@
     "plugins/gh-official/.claude-plugin/plugin.json": "eb6486b926453a4772cd6dcd55093c15630c383c9a983ff273a33bd719f4324d",
     "plugins/gh-official/.sync-manifest.json": "8bd147f86d8e7c8b2e108e8fa7dd1e6fc8fa7d4e7e6d002301c2b04d829f21ad",
     "plugins/gh-official/skills/gh-cli/SKILL.md": "936a4a0c1f1357a5778fa1d572b254bf5b35c15322f72a9056faff62e32220de",
-    "plugins/plugins-toolkit/.claude-plugin/plugin.json": "812e0633d6701131109f48c4162b1f997312dd73cfeeb024eaae1096df7302a9",
-    "plugins/plugins-toolkit/CHANGELOG.md": "1005cea7f589962efa63cdfcb37e6a4d55efb0cb7ef47332d3b9105151b381d3",
+    "plugins/plugins-toolkit/.claude-plugin/plugin.json": "103e836e1e4ce0b04ca6f9e833a771ccae9965b393becf9ad6b6d2fbb605d5cc",
+    "plugins/plugins-toolkit/CHANGELOG.md": "34aa69fd0f702df79768bd534b25db48d1f613a8eeb503e0b913953776628a15",
     "plugins/plugins-toolkit/README.md": "612e04eb3ce8ace94bb48103a3fee675ab5498dda80eaac6880c6fc9db45b436",
-    "plugins/plugins-toolkit/skills/plugin-bump/CHANGELOG.md": "d25479617ab389095691a9090405206fb789b71d671e3bf7f632abc921537880",
-    "plugins/plugins-toolkit/skills/plugin-bump/SKILL.md": "2bebaf943ea77fec75e9bab61e2b4c3ec5581ff8a186f1bc0cd34efab29daa85",
+    "plugins/plugins-toolkit/skills/plugin-bump/CHANGELOG.md": "e62c1a28b0047ec9132388814c36b3069e1bf167daf3f3ce30fc493a4f8e9b9f",
+    "plugins/plugins-toolkit/skills/plugin-bump/SKILL.md": "f4f4e8fc9d1e594ae964f94dab4974e23a4868d61258c4cba646effc4d58b3b9",
     "plugins/plugins-toolkit/skills/plugin-bump/bun.lock": "26056c1cba9df69805efea87958fedd5d8701e2fb71b83df89ddf05315b9a69b",
     "plugins/plugins-toolkit/skills/plugin-bump/package.json": "e7c94d678043c887021a98b1a5733102eb7a6bc07932043e11cca7aabc124bc4",
     "plugins/plugins-toolkit/skills/plugin-bump/scripts/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -196,7 +196,7 @@
     "plugins/plugins-toolkit/skills/plugin-bump/scripts/lib/frontmatter.ts": "1b837c0f0316e948f13a0ed7a134dbe08f3198cf952caf70018d3dfa6755827c",
     "plugins/plugins-toolkit/skills/plugin-bump/scripts/lib/git-helpers.ts": "c5e83fe98c1fed0eaff9f709102cae89d2b1c4c1edc825f1bf8ba5cc7fa619fb",
     "plugins/plugins-toolkit/skills/plugin-bump/scripts/lib/known-abort.ts": "3091a854da4cf4594d466d656728eada087b6f215977c50cf5d7b0c0109a46ef",
-    "plugins/plugins-toolkit/skills/plugin-bump/scripts/run.ts": "12c6d611fba98bc18557d3b5571007ee0faa9b87b9851b6adb9f2cab3c727c90",
+    "plugins/plugins-toolkit/skills/plugin-bump/scripts/run.ts": "2aecc005bb05bc198006d66634cd348e658a096601af14250a9d85e0b8eb69bc",
     "plugins/plugins-toolkit/skills/plugin-bump/scripts/verify.ts": "b4adc03a091909d2645038b322bb07afa960ccf68b416257b52a01113b577c9f",
     "plugins/plugins-toolkit/skills/plugin-bump/scripts/version-cascade.ts": "d95ac40f01f541e0f87167ae0c323771a203e5e1e7e2b823d05d170dc8b91f22",
     "plugins/plugins-toolkit/skills/plugin-bump/tests/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",

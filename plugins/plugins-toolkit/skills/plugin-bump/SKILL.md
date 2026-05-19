@@ -2,7 +2,7 @@
 name: plugin-bump
 description: Per-plugin version bumper. Targets 1 plugin folder, auto-derives semver from git diff (max-wins D=major A=minor M/R/C=patch), cascades version to changed components only (skills/agents/commands/hooks), generates CHANGELOG.md, verifies via 4-check DoD.
 metadata:
-  version: 1.2.5
+  version: 1.2.6
   author: vinhltt
   scope: per-plugin
 ---
@@ -32,6 +32,9 @@ The script cannot generate semantic descriptions. If `--added`/`--changed`/`--re
 - ❌ Bad: `scripts/run.ts`
 - ✅ Good: `Fix changelog bullets to use semantic descriptions instead of file paths`
 - One bullet per logical change (not per file)
+- Include the bumped component version when a skill/agent/command/hook is added or changed
+- ❌ Bad: `Add xlsx-to-csv skill: converts XLSX to CSV`
+- ✅ Good: `Add xlsx-to-csv skill v0.1.0: converts XLSX to CSV with auto-detect and multi-sheet support`
 
 ## CLI
 
