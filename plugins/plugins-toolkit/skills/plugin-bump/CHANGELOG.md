@@ -1,3 +1,8 @@
+## [1.2.7] - 2026-05-19
+
+### Changed
+- Expand Post-run section to numbered checklist with explicit placeholder-check step before staging files
+
 ## [1.2.6] - 2026-05-19
 
 ### Changed

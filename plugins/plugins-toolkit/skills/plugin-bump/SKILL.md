@@ -2,7 +2,7 @@
 name: plugin-bump
 description: Per-plugin version bumper. Targets 1 plugin folder, auto-derives semver from git diff (max-wins D=major A=minor M/R/C=patch), cascades version to changed components only (skills/agents/commands/hooks), generates CHANGELOG.md, verifies via 4-check DoD.
 metadata:
-  version: 1.2.6
+  version: 1.2.7
   author: vinhltt
   scope: per-plugin
 ---
@@ -104,7 +104,10 @@ Any failure → exit 4 + detailed message per failing check.
 
 ## Post-run
 
-After a successful run (exit 0), the script leaves modified files unstaged. `git add` only the files plugin-bump wrote (`plugin.json`, `CHANGELOG.md`, changed components). **NEVER run `git commit`** — leave that to the user.
+After a successful run (exit 0):
+
+1. **Check for placeholders**: `grep "TODO: describe" plugins/<plugin>/CHANGELOG.md` — if found, inspect the diff and replace each placeholder with a semantic bullet before staging.
+2. **Stage files**: `git add` only the files plugin-bump wrote (`plugin.json`, `CHANGELOG.md`, changed components). **NEVER run `git commit`** — leave that to the user.
 
 ## Self-bump
 

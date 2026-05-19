@@ -4,6 +4,11 @@ All notable changes to this plugin will be documented in this file.
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), Semver.
 
+## [1.2.7] - 2026-05-19
+
+### Changed
+- plugin-bump skill v1.2.7: expand Post-run section to numbered checklist with explicit placeholder-check step before staging files
+
 ## [1.2.6] - 2026-05-19
 
 ### Changed
