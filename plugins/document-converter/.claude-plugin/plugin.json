@@ -1,0 +1,10 @@
+{
+  "name": "document-converter",
+  "version": "0.1.0",
+  "description": "Document conversion utilities.",
+  "author": {
+    "name": "VinhLTT",
+    "email": "vinhltt.dev@gmail.com"
+  },
+  "homepage": "https://github.com/vinhltt/agent-plugins/tree/master/plugins/document-converter"
+}

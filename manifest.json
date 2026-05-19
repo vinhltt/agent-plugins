@@ -1,9 +1,9 @@
 {
   "algorithm": "sha256",
-  "generated_at": "2026-05-19T10:43:06.699Z",
+  "generated_at": "2026-05-19T10:48:44.974Z",
   "marketplace": {
-    "version": "1.2.4",
-    "checksum": "56f908c371637a98305c93f9e7667f16ee96fd141c707e82d7fef6afdfbaa34b"
+    "version": "1.2.5",
+    "checksum": "908231c10e8bad3c88009b58f417fccd80fa930896615426adebed3a0865f373"
   },
   "plugins": {
     "cc-toolkit": {
@@ -30,6 +30,18 @@
           "find-docs": {
             "version": "0.3.0",
             "checksum": "b3cddd0e1eae319c9a8fb7d6713a6ee45d5b908d47581cd355129c49630c01ed"
+          }
+        }
+      }
+    },
+    "document-converter": {
+      "version": "0.1.0",
+      "checksum": "abb1532373af7587dbc3db8c46631e1911e3765b0e2c6a646ccdad0d7aedbed4",
+      "components": {
+        "skills": {
+          "xlsx-to-csv": {
+            "version": "0.1.0",
+            "checksum": "49f28cc1a5cb6458bed4307e3cc448cc665e6ed184adf6b253ad328a103da041"
           }
         }
       }
@@ -105,7 +117,7 @@
   "components": {},
   "files": {
     ".agent-plugins.json": "4c1fefed64238aa27511d4f51a0a7efccbfa701e24ad87b7a3f153403f1a16da",
-    ".claude-plugin/marketplace.json": "56f908c371637a98305c93f9e7667f16ee96fd141c707e82d7fef6afdfbaa34b",
+    ".claude-plugin/marketplace.json": "908231c10e8bad3c88009b58f417fccd80fa930896615426adebed3a0865f373",
     ".claude/settings.json": "0136ecc113f997e9b6dac9c90ae182a98a61ad99fab8c4ba571dc9d579a8575d",
     ".claude/skills/agent-plugins-changelog/SKILL.md": "59e23da97a0cffa39789734e271599671b4e72dfbf122516f3006fff325b016c",
     ".claude/skills/agent-plugins-changelog/changelog.md": "5251fd296a4b48bdfa287ca45a8abe6468070cb84b73ff16aecb4571ac6bf3fc",
@@ -143,7 +155,7 @@
     ".claude/skills/skill-bump/tests/integration.test.ts": "1818a9685d057837264af672863a0631791e693fc6359922aadb35bc85b549ce",
     ".claude/skills/skill-bump/tests/verify.test.ts": "626ad0d79a628e9f6b2b992db83f185cc420228c417f3223449421ac83c5f59d",
     ".gitignore": "b6b711ef6b253469f8f3c356036087be3c7bc7798af236b606ae195a7b4f8842",
-    "CHANGELOG.md": "2ca7c51c08c367cf332714242e37f0df4175f423661c9ba1560dcd4ae77ecf62",
+    "CHANGELOG.md": "e569bc6b1d3104e1c038cfaac4aecc352474de06922b5b7e382deabe931405ad",
     "LICENSE": "05c3275b3133245fb474c341f5e7c89b25df27124b41d2639773ec0de03c3430",
     "README.md": "c9ec9c7a382774d836805f68582425db8bde844215b3dff7a2c0817217b9ed4c",
     "plugins/cc-toolkit/.claude-plugin/plugin.json": "7c329994d080bb4d203780d82256f7fbd169e0d922d02ddcc074e5ce7b3ddb0a",
@@ -158,6 +170,10 @@
     "plugins/context7-cli/skills/context7-cli/references/setup.md": "79530eb571b56f9846fd714d3b5e2759f2102042e590347501e43bf22a56a6e0",
     "plugins/context7-cli/skills/context7-cli/references/skills.md": "a31c9c56044424e07e764de7522fb542ce58b327259b582a1ba18223d13b26b5",
     "plugins/context7-cli/skills/find-docs/SKILL.md": "b3cddd0e1eae319c9a8fb7d6713a6ee45d5b908d47581cd355129c49630c01ed",
+    "plugins/document-converter/.claude-plugin/plugin.json": "abb1532373af7587dbc3db8c46631e1911e3765b0e2c6a646ccdad0d7aedbed4",
+    "plugins/document-converter/CHANGELOG.md": "676615f482fa2aed71e2f14eada8ec93f3ea5e5bb062ab8ae50fb4d713f45445",
+    "plugins/document-converter/skills/xlsx-to-csv/SKILL.md": "49f28cc1a5cb6458bed4307e3cc448cc665e6ed184adf6b253ad328a103da041",
+    "plugins/document-converter/skills/xlsx-to-csv/scripts/xlsx-to-csv-convert.py": "0055b75ac2c4a6f4145fbe38bec721b09d3cbd5cf8b20e89c66b3b6c8c818d75",
     "plugins/gh-community/.claude-plugin/plugin.json": "fff53d940975b3ccc207d37a8f060e46aa3e653d9b4aca0ff7e2b7b41f1855fe",
     "plugins/gh-community/README.md": "9c11a980a6d20f0cae899b1af10a90f14c341d393837ed73ec6154b7ff3184c2",
     "plugins/gh-community/skills/create-issue/CHANGELOG.md": "e96242bd4c909ab8925bc3e50601214f62286cb658065ca6d8e68d4f2b10a950",
