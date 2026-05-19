@@ -1,9 +1,9 @@
 {
   "algorithm": "sha256",
-  "generated_at": "2026-05-19T10:48:44.974Z",
+  "generated_at": "2026-05-19T13:52:43.697Z",
   "marketplace": {
-    "version": "1.2.5",
-    "checksum": "908231c10e8bad3c88009b58f417fccd80fa930896615426adebed3a0865f373"
+    "version": "1.2.6",
+    "checksum": "bacf01e3e35c99f470556c1d9c70f010e8a2b03463cc95c262432a5ba7aadaee"
   },
   "plugins": {
     "cc-toolkit": {
@@ -117,7 +117,7 @@
   "components": {},
   "files": {
     ".agent-plugins.json": "4c1fefed64238aa27511d4f51a0a7efccbfa701e24ad87b7a3f153403f1a16da",
-    ".claude-plugin/marketplace.json": "908231c10e8bad3c88009b58f417fccd80fa930896615426adebed3a0865f373",
+    ".claude-plugin/marketplace.json": "bacf01e3e35c99f470556c1d9c70f010e8a2b03463cc95c262432a5ba7aadaee",
     ".claude/settings.json": "0136ecc113f997e9b6dac9c90ae182a98a61ad99fab8c4ba571dc9d579a8575d",
     ".claude/skills/agent-plugins-changelog/SKILL.md": "59e23da97a0cffa39789734e271599671b4e72dfbf122516f3006fff325b016c",
     ".claude/skills/agent-plugins-changelog/changelog.md": "5251fd296a4b48bdfa287ca45a8abe6468070cb84b73ff16aecb4571ac6bf3fc",
@@ -155,9 +155,9 @@
     ".claude/skills/skill-bump/tests/integration.test.ts": "1818a9685d057837264af672863a0631791e693fc6359922aadb35bc85b549ce",
     ".claude/skills/skill-bump/tests/verify.test.ts": "626ad0d79a628e9f6b2b992db83f185cc420228c417f3223449421ac83c5f59d",
     ".gitignore": "b6b711ef6b253469f8f3c356036087be3c7bc7798af236b606ae195a7b4f8842",
-    "CHANGELOG.md": "e569bc6b1d3104e1c038cfaac4aecc352474de06922b5b7e382deabe931405ad",
+    "CHANGELOG.md": "7f2abb76b41c8e556c346d0db7e85d0c032ebd57020ffcdf7692875b4ada02bb",
     "LICENSE": "05c3275b3133245fb474c341f5e7c89b25df27124b41d2639773ec0de03c3430",
-    "README.md": "c9ec9c7a382774d836805f68582425db8bde844215b3dff7a2c0817217b9ed4c",
+    "README.md": "c7be63c17b25c3d970089c36f860d98233f14c8a090c512af787c559660b3db5",
     "plugins/cc-toolkit/.claude-plugin/plugin.json": "7c329994d080bb4d203780d82256f7fbd169e0d922d02ddcc074e5ce7b3ddb0a",
     "plugins/cc-toolkit/README.md": "ee9bf8cc75e3c3fd290e0fafda8616d14aea6130d27fff7d44e059c5b28be715",
     "plugins/cc-toolkit/skills/cc-ask/CHANGELOG.md": "e8da7d0a2f2449c683b17c03792737060e30c95f1871bf60c582d827206dd879",

@@ -43,7 +43,7 @@ Example:
 
 ## Available Plugins
 
-_Last synced: 2026-05-07 — source of truth: [`./.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json)_
+_Last synced: 2026-05-19 — source of truth: [`./.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json)_
 
 ### First-Party (built & maintained here)
 
@@ -64,6 +64,7 @@ _Last synced: 2026-05-07 — source of truth: [`./.claude-plugin/marketplace.jso
 | `hookify` | productivity | Create custom hooks to prevent unwanted behaviors by analyzing conversation patterns. |
 | `pyright-lsp` | development | Python language server (Pyright) for type checking and code intelligence. |
 | `typescript-lsp` | development | TypeScript/JavaScript language server for enhanced code intelligence. |
+| `csharp-lsp` | development | C# language server (OmniSharp/Roslyn) for code intelligence in .NET projects. |
 | `pr-review-toolkit` | productivity | PR review agents specialized in comments, tests, error handling, type design, code quality, simplification. |
 | `claude-md-management` | productivity | Maintain and improve `CLAUDE.md` files — audit quality, capture session learnings, keep project memory current. |
 | `code-review` | productivity | Automated PR code review using specialized agents with confidence-based scoring to filter false positives. |
@@ -152,7 +153,7 @@ Remove the marketplace entirely:
 ## Categories at a Glance
 
 - **productivity** — `cc-toolkit`, `code-simplifier`, `claude-code-setup`, `hookify`, `pr-review-toolkit`, `claude-md-management`, `code-review`, `commit-commands`, `session-report`, `document-skills`, `vercel-labs`
-- **development** — `context7-cli`, `gh-community`, `skill-creator`, `plugin-dev`, `pyright-lsp`, `typescript-lsp`, `context7-plugin`, `chrome-devtools-mcp`, `langfuse`
+- **development** — `context7-cli`, `gh-community`, `skill-creator`, `plugin-dev`, `pyright-lsp`, `typescript-lsp`, `csharp-lsp`, `context7-plugin`, `chrome-devtools-mcp`, `langfuse`
 - **security** — `security-guidance`
 
 ## Versioning & Updates

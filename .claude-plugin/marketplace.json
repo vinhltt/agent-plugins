@@ -7,7 +7,7 @@
     "email": "vinhltt.dev@gmail.com"
   },
   "metadata": {
-    "version": "1.2.5"
+    "version": "1.2.6"
   },
   "plugins": [
     {
@@ -119,6 +119,22 @@
         "path": "plugins/typescript-lsp",
         "ref": "main"
       }
+    },
+    {
+      "name": "csharp-lsp",
+      "description": "C# language server (OmniSharp/Roslyn) for code intelligence in .NET projects.",
+      "author": {
+        "name": "Anthropic",
+        "email": "support@anthropic.com"
+      },
+      "category": "development",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/anthropics/claude-plugins-official.git",
+        "path": "plugins/csharp-lsp",
+        "ref": "main"
+      },
+      "homepage": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/csharp-lsp"
     },
     {
       "name": "pr-review-toolkit",
