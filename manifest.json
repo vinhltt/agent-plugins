@@ -1,9 +1,9 @@
 {
   "algorithm": "sha256",
-  "generated_at": "2026-05-21T06:23:25.155Z",
+  "generated_at": "2026-05-21T14:25:48.029Z",
   "marketplace": {
-    "version": "1.3.0",
-    "checksum": "0e335c72a5f40bfd862aed8c8936757cc3f9dcdf2cb3c1703f10f09e43b960ff"
+    "version": "1.3.1",
+    "checksum": "a5227a9fc3d22646080ae0f5f76d46671a4a1f94b3d1c0373a984b80e4e138c0"
   },
   "plugins": {
     "cc-toolkit": {
@@ -87,13 +87,13 @@
       }
     },
     "plugins-toolkit": {
-      "version": "1.2.7",
-      "checksum": "4d573f5886e936adb78afda90d7ad362aa1a6c232e6c8f698d1ef6c17d191514",
+      "version": "1.2.8",
+      "checksum": "8a9db9ff4b01dc54164b78381887ad485dfdc29f91736c123d7351bb0358f4d6",
       "components": {
         "skills": {
           "plugin-bump": {
-            "version": "1.2.7",
-            "checksum": "c318a5f21985d6c7f60f66b8af43fd03041ed0c3b4320d762a2ac9d6d15e0060"
+            "version": "1.2.8",
+            "checksum": "80208b13bc11523a76fb108c0318d39c7b60ca52bcd9a50808b8d8ef1253cc2a"
           }
         }
       }
@@ -129,7 +129,7 @@
   "components": {},
   "files": {
     ".agent-plugins.json": "4c1fefed64238aa27511d4f51a0a7efccbfa701e24ad87b7a3f153403f1a16da",
-    ".claude-plugin/marketplace.json": "0e335c72a5f40bfd862aed8c8936757cc3f9dcdf2cb3c1703f10f09e43b960ff",
+    ".claude-plugin/marketplace.json": "a5227a9fc3d22646080ae0f5f76d46671a4a1f94b3d1c0373a984b80e4e138c0",
     ".claude/settings.json": "0136ecc113f997e9b6dac9c90ae182a98a61ad99fab8c4ba571dc9d579a8575d",
     ".claude/skills/agent-plugins-changelog/SKILL.md": "59e23da97a0cffa39789734e271599671b4e72dfbf122516f3006fff325b016c",
     ".claude/skills/agent-plugins-changelog/changelog.md": "5251fd296a4b48bdfa287ca45a8abe6468070cb84b73ff16aecb4571ac6bf3fc",
@@ -167,7 +167,7 @@
     ".claude/skills/skill-bump/tests/integration.test.ts": "1818a9685d057837264af672863a0631791e693fc6359922aadb35bc85b549ce",
     ".claude/skills/skill-bump/tests/verify.test.ts": "626ad0d79a628e9f6b2b992db83f185cc420228c417f3223449421ac83c5f59d",
     ".gitignore": "b6b711ef6b253469f8f3c356036087be3c7bc7798af236b606ae195a7b4f8842",
-    "CHANGELOG.md": "1589f6362de47af9e64ea048de5489746d6846b8c965043af2f9c3c9c37d29b9",
+    "CHANGELOG.md": "c4c03ea2529bdd43b85125dca39cecbba7e4c26692db2744b62fb370904ac116",
     "LICENSE": "05c3275b3133245fb474c341f5e7c89b25df27124b41d2639773ec0de03c3430",
     "README.md": "c7be63c17b25c3d970089c36f860d98233f14c8a090c512af787c559660b3db5",
     "plugins/cc-toolkit/.claude-plugin/plugin.json": "7c329994d080bb4d203780d82256f7fbd169e0d922d02ddcc074e5ce7b3ddb0a",
@@ -219,11 +219,11 @@
     "plugins/gh-official/.claude-plugin/plugin.json": "eb6486b926453a4772cd6dcd55093c15630c383c9a983ff273a33bd719f4324d",
     "plugins/gh-official/.sync-manifest.json": "8bd147f86d8e7c8b2e108e8fa7dd1e6fc8fa7d4e7e6d002301c2b04d829f21ad",
     "plugins/gh-official/skills/gh-cli/SKILL.md": "936a4a0c1f1357a5778fa1d572b254bf5b35c15322f72a9056faff62e32220de",
-    "plugins/plugins-toolkit/.claude-plugin/plugin.json": "4d573f5886e936adb78afda90d7ad362aa1a6c232e6c8f698d1ef6c17d191514",
-    "plugins/plugins-toolkit/CHANGELOG.md": "c7fe51b5f778e078599f356d1dc8d3bfa8bd8abccf221c1507dfb4e331096914",
+    "plugins/plugins-toolkit/.claude-plugin/plugin.json": "8a9db9ff4b01dc54164b78381887ad485dfdc29f91736c123d7351bb0358f4d6",
+    "plugins/plugins-toolkit/CHANGELOG.md": "599bb73cc3a35250c0f624f9167e64491e2db0fb25fd32e90853894b1859ada0",
     "plugins/plugins-toolkit/README.md": "612e04eb3ce8ace94bb48103a3fee675ab5498dda80eaac6880c6fc9db45b436",
     "plugins/plugins-toolkit/skills/plugin-bump/CHANGELOG.md": "99edfa5fabe45502c3086655a9cba31721d1d226332aca9fd34626af48927063",
-    "plugins/plugins-toolkit/skills/plugin-bump/SKILL.md": "c318a5f21985d6c7f60f66b8af43fd03041ed0c3b4320d762a2ac9d6d15e0060",
+    "plugins/plugins-toolkit/skills/plugin-bump/SKILL.md": "80208b13bc11523a76fb108c0318d39c7b60ca52bcd9a50808b8d8ef1253cc2a",
     "plugins/plugins-toolkit/skills/plugin-bump/bun.lock": "26056c1cba9df69805efea87958fedd5d8701e2fb71b83df89ddf05315b9a69b",
     "plugins/plugins-toolkit/skills/plugin-bump/package.json": "e7c94d678043c887021a98b1a5733102eb7a6bc07932043e11cca7aabc124bc4",
     "plugins/plugins-toolkit/skills/plugin-bump/scripts/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",

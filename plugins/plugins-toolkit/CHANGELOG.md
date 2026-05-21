@@ -4,6 +4,11 @@ All notable changes to this plugin will be documented in this file.
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), Semver.
 
+## [1.2.8] - 2026-05-21
+
+### Changed
+- plugin-bump: remove per-skill version numbers from changelog bullet format rules
+
 ## [1.2.7] - 2026-05-19
 
 ### Changed
