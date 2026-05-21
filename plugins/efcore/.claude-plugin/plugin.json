@@ -1,0 +1,10 @@
+{
+  "name": "efcore",
+  "version": "0.1.0",
+  "description": "Entity Framework Core LINQ query best practices with lambda expressions. Progressive disclosure skill covering query patterns, performance, anti-patterns, change tracking, bulk operations for EF Core 8/9/10.",
+  "author": {
+    "name": "VinhLTT",
+    "email": "vinhltt.dev@gmail.com"
+  },
+  "homepage": "https://github.com/vinhltt/agent-plugins/tree/master/plugins/efcore"
+}

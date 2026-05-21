@@ -1,9 +1,9 @@
 {
   "algorithm": "sha256",
-  "generated_at": "2026-05-19T13:52:43.697Z",
+  "generated_at": "2026-05-21T06:23:25.155Z",
   "marketplace": {
-    "version": "1.2.6",
-    "checksum": "bacf01e3e35c99f470556c1d9c70f010e8a2b03463cc95c262432a5ba7aadaee"
+    "version": "1.3.0",
+    "checksum": "0e335c72a5f40bfd862aed8c8936757cc3f9dcdf2cb3c1703f10f09e43b960ff"
   },
   "plugins": {
     "cc-toolkit": {
@@ -42,6 +42,18 @@
           "xlsx-to-csv": {
             "version": "0.1.0",
             "checksum": "49f28cc1a5cb6458bed4307e3cc448cc665e6ed184adf6b253ad328a103da041"
+          }
+        }
+      }
+    },
+    "efcore": {
+      "version": "0.1.0",
+      "checksum": "c3c2a2a666ed28822ff0c490f66eb68b4c2743a8607250f8c11ef595c7b0a283",
+      "components": {
+        "skills": {
+          "linq-ef": {
+            "version": "0.1.0",
+            "checksum": "16be98657a7273aeae6352ae02615818e7d63b4d93d08040352b006721b8f0c1"
           }
         }
       }
@@ -117,7 +129,7 @@
   "components": {},
   "files": {
     ".agent-plugins.json": "4c1fefed64238aa27511d4f51a0a7efccbfa701e24ad87b7a3f153403f1a16da",
-    ".claude-plugin/marketplace.json": "bacf01e3e35c99f470556c1d9c70f010e8a2b03463cc95c262432a5ba7aadaee",
+    ".claude-plugin/marketplace.json": "0e335c72a5f40bfd862aed8c8936757cc3f9dcdf2cb3c1703f10f09e43b960ff",
     ".claude/settings.json": "0136ecc113f997e9b6dac9c90ae182a98a61ad99fab8c4ba571dc9d579a8575d",
     ".claude/skills/agent-plugins-changelog/SKILL.md": "59e23da97a0cffa39789734e271599671b4e72dfbf122516f3006fff325b016c",
     ".claude/skills/agent-plugins-changelog/changelog.md": "5251fd296a4b48bdfa287ca45a8abe6468070cb84b73ff16aecb4571ac6bf3fc",
@@ -155,7 +167,7 @@
     ".claude/skills/skill-bump/tests/integration.test.ts": "1818a9685d057837264af672863a0631791e693fc6359922aadb35bc85b549ce",
     ".claude/skills/skill-bump/tests/verify.test.ts": "626ad0d79a628e9f6b2b992db83f185cc420228c417f3223449421ac83c5f59d",
     ".gitignore": "b6b711ef6b253469f8f3c356036087be3c7bc7798af236b606ae195a7b4f8842",
-    "CHANGELOG.md": "7f2abb76b41c8e556c346d0db7e85d0c032ebd57020ffcdf7692875b4ada02bb",
+    "CHANGELOG.md": "1589f6362de47af9e64ea048de5489746d6846b8c965043af2f9c3c9c37d29b9",
     "LICENSE": "05c3275b3133245fb474c341f5e7c89b25df27124b41d2639773ec0de03c3430",
     "README.md": "c7be63c17b25c3d970089c36f860d98233f14c8a090c512af787c559660b3db5",
     "plugins/cc-toolkit/.claude-plugin/plugin.json": "7c329994d080bb4d203780d82256f7fbd169e0d922d02ddcc074e5ce7b3ddb0a",
@@ -174,6 +186,19 @@
     "plugins/document-converter/CHANGELOG.md": "676615f482fa2aed71e2f14eada8ec93f3ea5e5bb062ab8ae50fb4d713f45445",
     "plugins/document-converter/skills/xlsx-to-csv/SKILL.md": "49f28cc1a5cb6458bed4307e3cc448cc665e6ed184adf6b253ad328a103da041",
     "plugins/document-converter/skills/xlsx-to-csv/scripts/xlsx-to-csv-convert.py": "0055b75ac2c4a6f4145fbe38bec721b09d3cbd5cf8b20e89c66b3b6c8c818d75",
+    "plugins/efcore/.claude-plugin/plugin.json": "c3c2a2a666ed28822ff0c490f66eb68b4c2743a8607250f8c11ef595c7b0a283",
+    "plugins/efcore/CHANGELOG.md": "185813d27f5a986ac5980db2a0e8aeabfe5dbb42ee0d23b9fba8facba8d8b4c4",
+    "plugins/efcore/README.md": "283f1b13d3bb628b552b185fb9df0c65cf54b6993fc804ae23f7ff8e1e96efa5",
+    "plugins/efcore/skills/linq-ef/CHANGELOG.md": "642049a54e6396156079521412a449bf291703372b73604921ca68400481869b",
+    "plugins/efcore/skills/linq-ef/SKILL.md": "16be98657a7273aeae6352ae02615818e7d63b4d93d08040352b006721b8f0c1",
+    "plugins/efcore/skills/linq-ef/references/advanced-patterns.md": "2ab711f78e6f31f47eac0354460c7345df3075ca89da080a732183fc1c2c7889",
+    "plugins/efcore/skills/linq-ef/references/anti-patterns.md": "fcc83510231a6518b5d6b0079d35434980a0b9974f4623cb338c5d9e4eff216d",
+    "plugins/efcore/skills/linq-ef/references/bulk-operations.md": "3bad19658a24a6e4d42c6ee2fde575d387b3d70f90810dd68988d89087c77520",
+    "plugins/efcore/skills/linq-ef/references/change-tracking.md": "853908fd3995bedeb4c14414caf912a8e26a519cf993cf375ac443c80fc65c34",
+    "plugins/efcore/skills/linq-ef/references/performance.md": "d7b429795dee7811bcc12feb0807b43db0af49225c069580179eb492844a5136",
+    "plugins/efcore/skills/linq-ef/references/query-patterns.md": "4cbe8ce0495ff5eb5caa39bc7b3e7796852dcee12a8b2723ab96f59c2d8c3fd4",
+    "plugins/efcore/skills/linq-ef/references/query-translation.md": "6ef2e633e6644450fcff75a239250c0fb154658e113cddbc7b4a5a6afe3ee677",
+    "plugins/efcore/skills/linq-ef/references/testing.md": "f88e74133d9f61a149c06a5a46ed001d42b8f302175699e3c96dadf33f0b33d0",
     "plugins/gh-community/.claude-plugin/plugin.json": "fff53d940975b3ccc207d37a8f060e46aa3e653d9b4aca0ff7e2b7b41f1855fe",
     "plugins/gh-community/README.md": "9c11a980a6d20f0cae899b1af10a90f14c341d393837ed73ec6154b7ff3184c2",
     "plugins/gh-community/skills/create-issue/CHANGELOG.md": "e96242bd4c909ab8925bc3e50601214f62286cb658065ca6d8e68d4f2b10a950",
