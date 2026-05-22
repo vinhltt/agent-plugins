@@ -1,3 +1,15 @@
+## [1.3.0] - 2026-05-22
+
+### Added
+- Multi-format manifest support: auto-create .codex-plugin and .cursor-plugin from .claude-plugin anchor when missing, cascade same semver to all 3
+- manifest-targets unit + integration tests covering discovery, ensure (clone-from-anchor), extra-fields preservation, and dry-run plan output
+
+### Changed
+- Cascade version to every discovered manifest format (claude/codex/cursor) instead of only .claude-plugin; CascadeResult exposes manifestsUpdated
+- Extend verify check (a) to validate version across every discovered manifest with per-format failure reasons
+- run.ts: ensureManifests before cascade; dry-run JSON now reports per-format exists/willCreate; log manifests bumped
+- SKILL.md: document multi-format manifest behavior (anchor role, auto-create, version sync) and update What-gets-updated table
+
 ## [1.2.7] - 2026-05-19
 
 ### Changed

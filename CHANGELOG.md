@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.3] - 2026-05-22
+
+### Added
+
+- plugins-toolkit v1.3.0: plugin-bump skill v1.3.0 — multi-format manifest support, auto-create `.codex-plugin/` and `.cursor-plugin/` manifests from `.claude-plugin/` anchor when missing, cascade same semver across all 3 formats; verify check (a) now validates version across every discovered manifest with per-format failure reasons; cascade exposes `manifestsUpdated`; dry-run output and run logs surface per-manifest existence/willCreate/bumped formats
+
 ## [1.3.2] - 2026-05-22
 
 ### Changed

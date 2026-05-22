@@ -156,6 +156,75 @@ describe('cascadeVersion', () => {
     expect(text).toContain('body');
   });
 
+  test('plugin with .claude-plugin + .codex-plugin -> both get version bumped', async () => {
+    await Bun.write(`${TMP}/.codex-plugin/plugin.json`, JSON.stringify({ name: 'test-plugin', version: '0.1.0', interface: { type: 'chat' } }, null, 2) + '\n');
+
+    const result = await cascadeVersion({
+      pluginRoot: TMP,
+      newVersion: '0.2.0',
+      components: [],
+      diffPaths: new Set(),
+    });
+
+    expect(result.manifestsUpdated).toContain('claude');
+    expect(result.manifestsUpdated).toContain('codex');
+
+    const claudeJson = JSON.parse(await Bun.file(`${TMP}/.claude-plugin/plugin.json`).text());
+    const codexJson = JSON.parse(await Bun.file(`${TMP}/.codex-plugin/plugin.json`).text());
+    expect(claudeJson.version).toBe('0.2.0');
+    expect(codexJson.version).toBe('0.2.0');
+  });
+
+  test('plugin with all 3 manifests -> all 3 get version bumped', async () => {
+    await Bun.write(`${TMP}/.codex-plugin/plugin.json`, JSON.stringify({ name: 'test-plugin', version: '0.1.0' }, null, 2) + '\n');
+    await Bun.write(`${TMP}/.cursor-plugin/plugin.json`, JSON.stringify({ name: 'test-plugin', version: '0.1.0' }, null, 2) + '\n');
+
+    const result = await cascadeVersion({
+      pluginRoot: TMP,
+      newVersion: '0.3.0',
+      components: [],
+      diffPaths: new Set(),
+    });
+
+    expect(result.manifestsUpdated).toEqual(['claude', 'codex', 'cursor']);
+
+    for (const dir of ['.claude-plugin', '.codex-plugin', '.cursor-plugin']) {
+      const json = JSON.parse(await Bun.file(`${TMP}/${dir}/plugin.json`).text());
+      expect(json.version).toBe('0.3.0');
+    }
+  });
+
+  test('extra fields in .codex-plugin/plugin.json preserved after bump', async () => {
+    await Bun.write(`${TMP}/.codex-plugin/plugin.json`, JSON.stringify({
+      name: 'test-plugin', version: '0.1.0', interface: { type: 'chat' }, keywords: ['test'],
+    }, null, 2) + '\n');
+
+    await cascadeVersion({
+      pluginRoot: TMP,
+      newVersion: '0.2.0',
+      components: [],
+      diffPaths: new Set(),
+    });
+
+    const codexJson = JSON.parse(await Bun.file(`${TMP}/.codex-plugin/plugin.json`).text());
+    expect(codexJson.version).toBe('0.2.0');
+    expect(codexJson.interface).toEqual({ type: 'chat' });
+    expect(codexJson.keywords).toEqual(['test']);
+  });
+
+  test('plugin with only .claude-plugin -> codex/cursor untouched (dirs dont exist)', async () => {
+    const result = await cascadeVersion({
+      pluginRoot: TMP,
+      newVersion: '0.2.0',
+      components: [],
+      diffPaths: new Set(),
+    });
+
+    expect(result.manifestsUpdated).toEqual(['claude']);
+    expect(await Bun.file(`${TMP}/.codex-plugin/plugin.json`).exists()).toBe(false);
+    expect(await Bun.file(`${TMP}/.cursor-plugin/plugin.json`).exists()).toBe(false);
+  });
+
   test('componentsUpdated / componentsSkipped split correctly', async () => {
     const skillA = makeSkillComponent('skill-a', TMP);
     const skillB = makeSkillComponent('skill-b', TMP);

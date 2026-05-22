@@ -3,6 +3,7 @@
 
 import { writeFrontmatterVersion } from './lib/frontmatter';
 import type { DiscoveredComponent } from './lib/component-discovery';
+import { discoverManifests, type ManifestFormat } from './lib/manifest-targets';
 
 export interface CascadeInput {
   pluginRoot: string;
@@ -13,6 +14,7 @@ export interface CascadeInput {
 
 export interface CascadeResult {
   pluginJsonUpdated: true;
+  manifestsUpdated: ManifestFormat[];
   componentsUpdated: DiscoveredComponent[];
   componentsSkipped: DiscoveredComponent[];
 }
@@ -27,8 +29,8 @@ async function atomicWrite(path: string, content: string): Promise<void> {
   }
 }
 
-async function writePluginJson(pluginRoot: string, newVersion: string): Promise<void> {
-  const path = `${pluginRoot}/.claude-plugin/plugin.json`;
+async function writeManifestJson(pluginRoot: string, dir: string, newVersion: string): Promise<void> {
+  const path = `${pluginRoot}/${dir}/plugin.json`;
   const raw = await Bun.file(path).text();
   const parsed = JSON.parse(raw);
   parsed.version = newVersion;
@@ -86,8 +88,12 @@ async function writeHookVersion(absPath: string, newVersion: string): Promise<vo
 export async function cascadeVersion(input: CascadeInput): Promise<CascadeResult> {
   const { pluginRoot, newVersion, components, diffPaths } = input;
 
-  // plugin.json is always bumped
-  await writePluginJson(pluginRoot, newVersion);
+  const manifests = await discoverManifests(pluginRoot);
+  const manifestsUpdated: ManifestFormat[] = [];
+  for (const target of manifests) {
+    await writeManifestJson(pluginRoot, target.dir, newVersion);
+    manifestsUpdated.push(target.format);
+  }
 
   const componentsUpdated: DiscoveredComponent[] = [];
   const componentsSkipped: DiscoveredComponent[] = [];
@@ -100,7 +106,6 @@ export async function cascadeVersion(input: CascadeInput): Promise<CascadeResult
 
     switch (comp.kind) {
       case 'skill':
-        // Uses ported frontmatter writer (metadata.version block-style)
         await writeFrontmatterVersion(comp.absPath, newVersion);
         break;
       case 'agent':
@@ -114,5 +119,5 @@ export async function cascadeVersion(input: CascadeInput): Promise<CascadeResult
     componentsUpdated.push(comp);
   }
 
-  return { pluginJsonUpdated: true, componentsUpdated, componentsSkipped };
+  return { pluginJsonUpdated: true, manifestsUpdated, componentsUpdated, componentsSkipped };
 }

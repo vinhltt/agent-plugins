@@ -12,6 +12,7 @@ import { discoverComponents } from './lib/component-discovery';
 import { cascadeVersion } from './version-cascade';
 import { verify, captureHeadSnapshot } from './verify';
 import { KnownAbort } from './lib/known-abort';
+import { discoverManifests, ensureManifests, MANIFEST_TARGETS } from './lib/manifest-targets';
 
 // ── types ──
 
@@ -154,6 +155,7 @@ async function main(argv: string[]): Promise<number> {
     const { expanded: diffPaths, cascades } = expandSkillSubdirPaths(rawDiffPaths);
 
     if (args.dryRun) {
+      const existingManifests = await discoverManifests(args.target);
       console.log(JSON.stringify({
         mode: 'dry-run', since: diff.since,
         currentVer, newVer, bumpType,
@@ -162,6 +164,12 @@ async function main(argv: string[]): Promise<number> {
         willUpdate: components.filter(c => diffPaths.has(c.pluginRelPath)).map(c => c.pluginRelPath),
         willSkip: components.filter(c => !diffPaths.has(c.pluginRelPath)).map(c => c.pluginRelPath),
         subdirCascades: Object.fromEntries(cascades),
+        manifests: Object.fromEntries(
+          MANIFEST_TARGETS.map(t => [t.format, {
+            exists: existingManifests.some(m => m.format === t.format),
+            willCreate: !existingManifests.some(m => m.format === t.format) && !t.isAnchor,
+          }])
+        ),
       }, null, 2));
       return 0;
     }
@@ -171,9 +179,16 @@ async function main(argv: string[]): Promise<number> {
     // Capture HEAD snapshot for non-diff components BEFORE any writes
     const preRunSnapshot = await captureHeadSnapshot(components, args.target, cwd, diffPaths);
 
-    // Cascade version to plugin.json + changed components
-    await cascadeVersion({ pluginRoot: args.target, newVersion: newVer, components, diffPaths });
+    // Ensure all manifest formats exist (clone from claude if missing)
+    const ensureResult = await ensureManifests(args.target);
+    if (ensureResult.created.length > 0) {
+      console.log(`[plugin-bump] manifests: created ${ensureResult.created.join(', ')}`);
+    }
+
+    // Cascade version to all manifests + changed components
+    const cascadeResult = await cascadeVersion({ pluginRoot: args.target, newVersion: newVer, components, diffPaths });
     console.log(`[plugin-bump] cascade: done`);
+    console.log(`[plugin-bump] manifests: bumped ${cascadeResult.manifestsUpdated.join(', ')}`);
     for (const [skillPath, subPaths] of cascades) {
       const preview = subPaths.slice(0, 3).join(', ');
       const more = subPaths.length > 3 ? ` (+${subPaths.length - 3} more)` : '';

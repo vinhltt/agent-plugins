@@ -175,6 +175,102 @@ describe('verify', () => {
     expect(result.failures.find(f => f.check === 'c')).toBeDefined();
   });
 
+  test('happy path with 3 manifests -> all check (a) pass', async () => {
+    const comp = makeSkillComp('skill-a', PLUGIN);
+    await writeAndCommitPlugin(PLUGIN, REPO, '0.1.0', [comp]);
+
+    // Create codex + cursor manifests
+    await Bun.write(`${PLUGIN}/.codex-plugin/plugin.json`, JSON.stringify({ name: 'test', version: '0.1.0' }, null, 2) + '\n');
+    await Bun.write(`${PLUGIN}/.cursor-plugin/plugin.json`, JSON.stringify({ name: 'test', version: '0.1.0' }, null, 2) + '\n');
+    await commitAll(REPO, 'add codex+cursor manifests');
+
+    await Bun.write(comp.absPath, `---\nmetadata:\n  version: 0.1.0\n---\n\nmodified\n`);
+    await commitAll(REPO, 'modify skill');
+
+    const diffPaths = new Set([comp.pluginRelPath]);
+    const preRunSnapshot = await captureHeadSnapshot([comp], PLUGIN, REPO, diffPaths);
+
+    await cascadeVersion({ pluginRoot: PLUGIN, newVersion: '0.2.0', components: [comp], diffPaths });
+    await appendEntry(`${PLUGIN}/CHANGELOG.md`, {
+      version: '0.2.0', date: '2026-05-22',
+      added: [], changed: ['skill-a'], removed: [],
+    });
+
+    const result = await verify({
+      pluginRoot: PLUGIN, expectedVersion: '0.2.0',
+      components: [comp], diffPaths, preRunSnapshot,
+    });
+
+    expect(result.ok).toBe(true);
+    expect(result.failures).toHaveLength(0);
+  });
+
+  test('codex manifest has wrong version -> check (a) fails with format in reason', async () => {
+    const comp = makeSkillComp('skill-a', PLUGIN);
+    await writeAndCommitPlugin(PLUGIN, REPO, '0.1.0', [comp]);
+
+    await Bun.write(`${PLUGIN}/.codex-plugin/plugin.json`, JSON.stringify({ name: 'test', version: '0.1.0' }, null, 2) + '\n');
+    await commitAll(REPO, 'add codex manifest');
+
+    await Bun.write(comp.absPath, `---\nmetadata:\n  version: 0.1.0\n---\n\nmodified\n`);
+    await commitAll(REPO, 'modify skill');
+
+    const diffPaths = new Set([comp.pluginRelPath]);
+    const preRunSnapshot = await captureHeadSnapshot([comp], PLUGIN, REPO, diffPaths);
+
+    await cascadeVersion({ pluginRoot: PLUGIN, newVersion: '0.2.0', components: [comp], diffPaths });
+    await appendEntry(`${PLUGIN}/CHANGELOG.md`, {
+      version: '0.2.0', date: '2026-05-22',
+      added: [], changed: ['skill-a'], removed: [],
+    });
+
+    // Corrupt codex manifest
+    await Bun.write(`${PLUGIN}/.codex-plugin/plugin.json`, JSON.stringify({ name: 'test', version: '9.9.9' }, null, 2) + '\n');
+
+    const result = await verify({
+      pluginRoot: PLUGIN, expectedVersion: '0.2.0',
+      components: [comp], diffPaths, preRunSnapshot,
+    });
+
+    expect(result.ok).toBe(false);
+    const aFail = result.failures.find(f => f.check === 'a');
+    expect(aFail).toBeDefined();
+    expect(aFail!.reason).toContain('codex');
+  });
+
+  test('claude OK + cursor wrong -> check (a) fails', async () => {
+    const comp = makeSkillComp('skill-a', PLUGIN);
+    await writeAndCommitPlugin(PLUGIN, REPO, '0.1.0', [comp]);
+
+    await Bun.write(`${PLUGIN}/.cursor-plugin/plugin.json`, JSON.stringify({ name: 'test', version: '0.1.0' }, null, 2) + '\n');
+    await commitAll(REPO, 'add cursor manifest');
+
+    await Bun.write(comp.absPath, `---\nmetadata:\n  version: 0.1.0\n---\n\nmodified\n`);
+    await commitAll(REPO, 'modify skill');
+
+    const diffPaths = new Set([comp.pluginRelPath]);
+    const preRunSnapshot = await captureHeadSnapshot([comp], PLUGIN, REPO, diffPaths);
+
+    await cascadeVersion({ pluginRoot: PLUGIN, newVersion: '0.2.0', components: [comp], diffPaths });
+    await appendEntry(`${PLUGIN}/CHANGELOG.md`, {
+      version: '0.2.0', date: '2026-05-22',
+      added: [], changed: ['skill-a'], removed: [],
+    });
+
+    // Corrupt cursor manifest only
+    await Bun.write(`${PLUGIN}/.cursor-plugin/plugin.json`, JSON.stringify({ name: 'test', version: '0.0.1' }, null, 2) + '\n');
+
+    const result = await verify({
+      pluginRoot: PLUGIN, expectedVersion: '0.2.0',
+      components: [comp], diffPaths, preRunSnapshot,
+    });
+
+    expect(result.ok).toBe(false);
+    const aFails = result.failures.filter(f => f.check === 'a');
+    expect(aFails).toHaveLength(1);
+    expect(aFails[0]!.reason).toContain('cursor');
+  });
+
   test('component NOT in diff has version changed → check (d) fails', async () => {
     const skillA = makeSkillComp('skill-a', PLUGIN);
     const skillB = makeSkillComp('skill-b', PLUGIN);

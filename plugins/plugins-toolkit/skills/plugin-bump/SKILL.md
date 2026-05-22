@@ -2,7 +2,7 @@
 name: plugin-bump
 description: Per-plugin version bumper. Targets 1 plugin folder, auto-derives semver from git diff (max-wins D=major A=minor M/R/C=patch), cascades version to changed components only (skills/agents/commands/hooks), generates CHANGELOG.md, verifies via 4-check DoD.
 metadata:
-  version: 1.2.8
+  version: 1.3.0
   author: vinhltt
   scope: per-plugin
 ---
@@ -73,7 +73,9 @@ Max-wins across all changed files in the plugin diff. A single deleted file → 
 
 | File | Always? | Condition |
 |---|---|---|
-| `.claude-plugin/plugin.json` `.version` | Yes | Every run |
+| `.claude-plugin/plugin.json` `.version` | Yes | Every run (anchor) |
+| `.codex-plugin/plugin.json` `.version` | Yes | Auto-created if missing, then bumped |
+| `.cursor-plugin/plugin.json` `.version` | Yes | Auto-created if missing, then bumped |
 | `skills/<n>/SKILL.md` `metadata.version` | Only if in diff | Component in diff |
 | `agents/<n>.md` `version` | Only if in diff | Component in diff |
 | `commands/<n>.md` `version` | Only if in diff | Component in diff |
@@ -82,11 +84,23 @@ Max-wins across all changed files in the plugin diff. A single deleted file → 
 
 Components NOT in the diff are left byte-identical.
 
+## Multi-format manifests
+
+plugin-bump maintains 3 manifest formats per plugin:
+
+| Format | Directory | Role |
+|---|---|---|
+| Claude Code | `.claude-plugin/` | Anchor (required) |
+| Codex | `.codex-plugin/` | Auto-created from Claude if missing |
+| Cursor | `.cursor-plugin/` | Auto-created from Claude if missing |
+
+All 3 share the same semver. Only the `version` field is touched — other format-specific fields (e.g., Codex `interface` block) are preserved.
+
 ## Verify (4-check DoD)
 
 After every write, the skill auto-verifies:
 
-- **(a)** `plugin.json.version` matches the new expected version
+- **(a)** ALL existing manifest `.version` fields match expected version (claude + codex + cursor)
 - **(b)** `CHANGELOG.md` top entry version === expected version
 - **(c)** Every component in diff has new version
 - **(d)** Every component NOT in diff has version unchanged from HEAD snapshot
@@ -107,7 +121,12 @@ Any failure → exit 4 + detailed message per failing check.
 After a successful run (exit 0):
 
 1. **Check for placeholders**: `grep "TODO: describe" plugins/<plugin>/CHANGELOG.md` — if found, inspect the diff and replace each placeholder with a semantic bullet before staging.
-2. **Stage files**: `git add` only the files plugin-bump wrote (`plugin.json`, `CHANGELOG.md`, changed components). **NEVER run `git commit`** — leave that to the user.
+2. **Stage files**: `git add` the files plugin-bump wrote:
+   - `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`, `.cursor-plugin/plugin.json`
+   - `CHANGELOG.md`
+   - Changed component files
+   - **First run note**: if `.codex-plugin/` or `.cursor-plugin/` dirs are new, stage the entire dirs
+3. **NEVER run `git commit`** — leave that to the user.
 
 ## Self-bump
 

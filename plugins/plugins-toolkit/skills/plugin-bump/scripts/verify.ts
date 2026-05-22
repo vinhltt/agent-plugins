@@ -3,6 +3,7 @@
 
 import { gitShowHead, toRepoRelative } from './lib/git-helpers';
 import type { DiscoveredComponent } from './lib/component-discovery';
+import { discoverManifests } from './lib/manifest-targets';
 
 export type VerifyCheckId = 'a' | 'b' | 'c' | 'd';
 
@@ -94,15 +95,24 @@ export async function verify(input: VerifyInput): Promise<VerifyResult> {
   const { pluginRoot, expectedVersion, components, diffPaths, preRunSnapshot } = input;
   const failures: VerifyFailure[] = [];
 
-  // (a) plugin.json.version === expectedVersion
-  const pluginJsonPath = `${pluginRoot}/.claude-plugin/plugin.json`;
-  let pluginJsonVer: string | null = null;
-  try {
-    const raw = await Bun.file(pluginJsonPath).text();
-    pluginJsonVer = (JSON.parse(raw) as Record<string, unknown>).version as string ?? null;
-  } catch { /* fall through — null triggers failure below */ }
-  if (pluginJsonVer !== expectedVersion) {
-    failures.push({ check: 'a', reason: `plugin.json version=${pluginJsonVer} != expected ${expectedVersion}` });
+  // (a) All manifest versions must match
+  const manifests = await discoverManifests(pluginRoot);
+  if (manifests.length === 0) {
+    failures.push({ check: 'a', reason: 'no manifest directories found' });
+  }
+  for (const target of manifests) {
+    const manifestPath = `${pluginRoot}/${target.dir}/plugin.json`;
+    let ver: string | null = null;
+    try {
+      const raw = await Bun.file(manifestPath).text();
+      ver = (JSON.parse(raw) as Record<string, unknown>).version as string ?? null;
+    } catch { /* null -> failure below */ }
+    if (ver !== expectedVersion) {
+      failures.push({
+        check: 'a',
+        reason: `${target.format} manifest version=${ver} != expected ${expectedVersion}`,
+      });
+    }
   }
 
   // (b) CHANGELOG.md top header version === expectedVersion

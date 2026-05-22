@@ -4,6 +4,15 @@ All notable changes to this plugin will be documented in this file.
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), Semver.
 
+## [1.3.0] - 2026-05-22
+
+### Added
+- plugin-bump: multi-format manifest support — auto-create .codex-plugin and .cursor-plugin manifests from .claude-plugin anchor, cascade same semver across all 3
+
+### Changed
+- plugin-bump: verify (a) now validates version across every discovered manifest with per-format failure reasons; cascade emits manifestsUpdated list
+- plugin-bump: dry-run output and run logs surface per-manifest existence, willCreate, and bumped formats
+
 ## [1.2.8] - 2026-05-21
 
 ### Changed
