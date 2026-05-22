@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.2] - 2026-05-22
+
+### Changed
+
+- gh-community v0.8.0: create-issue skill v0.2.0 — add file-based input mode (parse .md brainstorm/phase/plan docs into structured issues), GitHub MCP detection with gh CLI fallback, repo auto-detect from input file's git context (handles nested repos), adaptive section mapping, priority/status frontmatter → labels, `--auto` and `--dry-run` flags; `--repo` flag now optional
+
 ## [1.3.1] - 2026-05-21
 
 ### Changed

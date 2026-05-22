@@ -1,9 +1,9 @@
 {
   "algorithm": "sha256",
-  "generated_at": "2026-05-21T14:25:48.029Z",
+  "generated_at": "2026-05-22T08:58:22.485Z",
   "marketplace": {
-    "version": "1.3.1",
-    "checksum": "a5227a9fc3d22646080ae0f5f76d46671a4a1f94b3d1c0373a984b80e4e138c0"
+    "version": "1.3.2",
+    "checksum": "91add0891eebbf8466796edade14d217bfca6fe7cd1e1c060941c14b3d6bcdb9"
   },
   "plugins": {
     "cc-toolkit": {
@@ -59,13 +59,13 @@
       }
     },
     "gh-community": {
-      "version": "0.7.0",
-      "checksum": "fff53d940975b3ccc207d37a8f060e46aa3e653d9b4aca0ff7e2b7b41f1855fe",
+      "version": "0.8.0",
+      "checksum": "e0d350150ce14ad2c147705c677f057271443f9315157293c0b8090121c924b2",
       "components": {
         "skills": {
           "create-issue": {
-            "version": "0.1.0",
-            "checksum": "091241eed5a60eb25962bd10360ad04b18c71c900975f817e68b6561c31f566f"
+            "version": "0.2.0",
+            "checksum": "f9af847c382168b1c2cce1efbf2a6484bb7c7df63a5723770e432cdd410dfc59"
           },
           "gh-cli": {
             "version": "0.1.0",
@@ -129,7 +129,7 @@
   "components": {},
   "files": {
     ".agent-plugins.json": "4c1fefed64238aa27511d4f51a0a7efccbfa701e24ad87b7a3f153403f1a16da",
-    ".claude-plugin/marketplace.json": "a5227a9fc3d22646080ae0f5f76d46671a4a1f94b3d1c0373a984b80e4e138c0",
+    ".claude-plugin/marketplace.json": "91add0891eebbf8466796edade14d217bfca6fe7cd1e1c060941c14b3d6bcdb9",
     ".claude/settings.json": "0136ecc113f997e9b6dac9c90ae182a98a61ad99fab8c4ba571dc9d579a8575d",
     ".claude/skills/agent-plugins-changelog/SKILL.md": "59e23da97a0cffa39789734e271599671b4e72dfbf122516f3006fff325b016c",
     ".claude/skills/agent-plugins-changelog/changelog.md": "5251fd296a4b48bdfa287ca45a8abe6468070cb84b73ff16aecb4571ac6bf3fc",
@@ -167,7 +167,7 @@
     ".claude/skills/skill-bump/tests/integration.test.ts": "1818a9685d057837264af672863a0631791e693fc6359922aadb35bc85b549ce",
     ".claude/skills/skill-bump/tests/verify.test.ts": "626ad0d79a628e9f6b2b992db83f185cc420228c417f3223449421ac83c5f59d",
     ".gitignore": "b6b711ef6b253469f8f3c356036087be3c7bc7798af236b606ae195a7b4f8842",
-    "CHANGELOG.md": "c4c03ea2529bdd43b85125dca39cecbba7e4c26692db2744b62fb370904ac116",
+    "CHANGELOG.md": "e41eeec3e7b91ef29e693cef759256f52523c8b77f8597012beceb8cd7d1bb4b",
     "LICENSE": "05c3275b3133245fb474c341f5e7c89b25df27124b41d2639773ec0de03c3430",
     "README.md": "c7be63c17b25c3d970089c36f860d98233f14c8a090c512af787c559660b3db5",
     "plugins/cc-toolkit/.claude-plugin/plugin.json": "7c329994d080bb4d203780d82256f7fbd169e0d922d02ddcc074e5ce7b3ddb0a",
@@ -199,11 +199,11 @@
     "plugins/efcore/skills/linq-ef/references/query-patterns.md": "4cbe8ce0495ff5eb5caa39bc7b3e7796852dcee12a8b2723ab96f59c2d8c3fd4",
     "plugins/efcore/skills/linq-ef/references/query-translation.md": "6ef2e633e6644450fcff75a239250c0fb154658e113cddbc7b4a5a6afe3ee677",
     "plugins/efcore/skills/linq-ef/references/testing.md": "f88e74133d9f61a149c06a5a46ed001d42b8f302175699e3c96dadf33f0b33d0",
-    "plugins/gh-community/.claude-plugin/plugin.json": "fff53d940975b3ccc207d37a8f060e46aa3e653d9b4aca0ff7e2b7b41f1855fe",
+    "plugins/gh-community/.claude-plugin/plugin.json": "e0d350150ce14ad2c147705c677f057271443f9315157293c0b8090121c924b2",
     "plugins/gh-community/README.md": "9c11a980a6d20f0cae899b1af10a90f14c341d393837ed73ec6154b7ff3184c2",
-    "plugins/gh-community/skills/create-issue/CHANGELOG.md": "e96242bd4c909ab8925bc3e50601214f62286cb658065ca6d8e68d4f2b10a950",
-    "plugins/gh-community/skills/create-issue/SKILL.md": "091241eed5a60eb25962bd10360ad04b18c71c900975f817e68b6561c31f566f",
-    "plugins/gh-community/skills/create-issue/manifest.json": "0e580d38827f028e8d6e3fa56a9d4b1fceff96cf8ed4ac6b83aa268358a4c21d",
+    "plugins/gh-community/skills/create-issue/CHANGELOG.md": "d4bf2b5c31b771993d494f623fcd3fde7173d0bc03369f0a2d616e2f38922210",
+    "plugins/gh-community/skills/create-issue/SKILL.md": "f9af847c382168b1c2cce1efbf2a6484bb7c7df63a5723770e432cdd410dfc59",
+    "plugins/gh-community/skills/create-issue/manifest.json": "8680110f40b13de37ebf2d0472e5c464665b2ad61fc1822aa698752192561645",
     "plugins/gh-community/skills/gh-cli/CHANGELOG.md": "31274806cb9af3db256bf74fd33ec366ed5ecdf4cbeeae2e05522c6d8ab231bd",
     "plugins/gh-community/skills/gh-cli/SKILL.md": "082683c4a00e2d0f2c9d34e346f73cf2566e2a6dd2172e2654435de7e743815d",
     "plugins/gh-community/skills/gh-cli/manifest.json": "10664389e34f6504ae54432e309e39c74b244cde31ed8b5fe8c36147529119a9",
