@@ -2,10 +2,22 @@
   "algorithm": "sha256",
   "generated_at": "2026-05-22T10:44:04.287Z",
   "marketplace": {
-    "version": "1.3.3",
-    "checksum": "bef91443c4562183bcf68f805c8a412dec372dbd09d0f42a73ca824e5c31e064"
+    "version": "1.4.0",
+    "checksum": "92fdb43afa98a46947cb5e85e7348014e4edbdc0bc7e238035dc89f7cc5878a4"
   },
   "plugins": {
+    "backlog-tools": {
+      "version": "0.1.0",
+      "checksum": "da4535ee29244d0d5bbaef595d976365b75504cf1d59db0cf3e573a3bb2f9b5f",
+      "components": {
+        "skills": {
+          "md-to-backlog": {
+            "version": "0.1.0",
+            "checksum": "0be60b34b5fe64bfc7ac8058f93b0ad09e4797222c2db8f636c30b9e98c8b098"
+          }
+        }
+      }
+    },
     "cc-toolkit": {
       "version": "0.1.0",
       "checksum": "7c329994d080bb4d203780d82256f7fbd169e0d922d02ddcc074e5ce7b3ddb0a",
@@ -170,6 +182,10 @@
     "CHANGELOG.md": "63a9fef19355e0a98d03ce6176b69d84ee8d6dfea92b232138614010f068a7a2",
     "LICENSE": "05c3275b3133245fb474c341f5e7c89b25df27124b41d2639773ec0de03c3430",
     "README.md": "c7be63c17b25c3d970089c36f860d98233f14c8a090c512af787c559660b3db5",
+    "plugins/backlog-tools/.claude-plugin/plugin.json": "da4535ee29244d0d5bbaef595d976365b75504cf1d59db0cf3e573a3bb2f9b5f",
+    "plugins/backlog-tools/CHANGELOG.md": "72bbee79dd21f64128b268012016da5c6637fe0b9bf465c2e5d4802a43b90bd5",
+    "plugins/backlog-tools/skills/md-to-backlog/SKILL.md": "0be60b34b5fe64bfc7ac8058f93b0ad09e4797222c2db8f636c30b9e98c8b098",
+    "plugins/backlog-tools/skills/md-to-backlog/scripts/md2backlog.py": "041c524c69a1e8d8b8c1dc1d70c3530dd493d49054362e547b6ca84ccb536ae0",
     "plugins/cc-toolkit/.claude-plugin/plugin.json": "7c329994d080bb4d203780d82256f7fbd169e0d922d02ddcc074e5ce7b3ddb0a",
     "plugins/cc-toolkit/README.md": "ee9bf8cc75e3c3fd290e0fafda8616d14aea6130d27fff7d44e059c5b28be715",
     "plugins/cc-toolkit/skills/cc-ask/CHANGELOG.md": "e8da7d0a2f2449c683b17c03792737060e30c95f1871bf60c582d827206dd879",

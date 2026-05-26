@@ -1,0 +1,7 @@
+{
+  "name": "backlog-tools",
+  "version": "0.1.0",
+  "description": "Backlog integration tools. Converts Markdown to Backlog wiki format.",
+  "author": { "name": "VinhLTT", "email": "vinhltt.dev@gmail.com" },
+  "homepage": "https://github.com/vinhltt/agent-plugins/tree/master/plugins/backlog-tools"
+}

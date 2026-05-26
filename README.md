@@ -43,12 +43,13 @@ Example:
 
 ## Available Plugins
 
-_Last synced: 2026-05-19 — source of truth: [`./.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json)_
+_Last synced: 2026-05-26 — source of truth: [`./.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json)_
 
 ### First-Party (built & maintained here)
 
 | Plugin | Category | Description |
 |---|---|---|
+| `backlog-tools` | productivity | Backlog integration tools. Converts Markdown to Backlog wiki format with regex-based pipeline. |
 | `cc-toolkit` | productivity | Claude Code utility toolkit. Bundles `cc-ask` to route Claude Code / Agent SDK / Anthropic API questions to the built-in `claude-code-guide` agent. |
 | `context7-cli` | development | Context7 CLI tooling — bundles `ctx7` CLI skill and `find-docs` skill for library documentation lookup without the MCP server. |
 | `gh-community` | development | Topic-organized refactor of `gh-cli` skill. Slim entry point + `references/` split by GitHub feature area (repos, PRs, issues, releases, Actions, secrets, gists). |
@@ -152,7 +153,7 @@ Remove the marketplace entirely:
 
 ## Categories at a Glance
 
-- **productivity** — `cc-toolkit`, `code-simplifier`, `claude-code-setup`, `hookify`, `pr-review-toolkit`, `claude-md-management`, `code-review`, `commit-commands`, `session-report`, `document-skills`, `vercel-labs`
+- **productivity** — `backlog-tools`, `cc-toolkit`, `code-simplifier`, `claude-code-setup`, `hookify`, `pr-review-toolkit`, `claude-md-management`, `code-review`, `commit-commands`, `session-report`, `document-skills`, `vercel-labs`
 - **development** — `context7-cli`, `gh-community`, `skill-creator`, `plugin-dev`, `pyright-lsp`, `typescript-lsp`, `csharp-lsp`, `context7-plugin`, `chrome-devtools-mcp`, `langfuse`
 - **security** — `security-guidance`
 
