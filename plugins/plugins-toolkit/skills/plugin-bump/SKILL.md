@@ -2,7 +2,7 @@
 name: plugin-bump
 description: Per-plugin version bumper. Targets 1 plugin folder, auto-derives semver from git diff (max-wins D=major A=minor M/R/C=patch), cascades version to changed components only (skills/agents/commands/hooks), generates CHANGELOG.md, verifies via 4-check DoD.
 metadata:
-  version: 1.3.0
+  version: 1.4.0
   author: vinhltt
   scope: per-plugin
 ---
@@ -77,7 +77,7 @@ Max-wins across all changed files in the plugin diff. A single deleted file → 
 | `.codex-plugin/plugin.json` `.version` | Yes | Auto-created if missing, then bumped |
 | `.cursor-plugin/plugin.json` `.version` | Yes | Auto-created if missing, then bumped |
 | `skills/<n>/SKILL.md` `metadata.version` | Only if in diff | Component in diff |
-| `agents/<n>.md` `version` | Only if in diff | Component in diff |
+| `agents/<n>.md` version | Only if in diff | Written to existing location (`metadata.version` or top-level); no duplicate field |
 | `commands/<n>.md` `version` | Only if in diff | Component in diff |
 | `hooks/<n>.json` `version` | Only if in diff | Component in diff |
 | `CHANGELOG.md` | Yes | Every run |
@@ -147,3 +147,4 @@ Step 2 uses `skill-bump` (different scope). Step 3 uses this skill. They don't r
 - Components must follow standard layout: `skills/<n>/SKILL.md`, `agents/<n>.md`, `commands/<n>.md`, `hooks/<n>.json`.
 - Skill folder = ownership unit. Any file change in `skills/<n>/` (scripts/, references/, tests/, etc.) cascades to `skills/<n>/SKILL.md metadata.version` automatically (subdir cascade).
 - Hooks `version` field: written to top-level JSON key. If Claude Code schema rejects it, fallback is checksum-only (see Limitations note in scripts/version-cascade.ts).
+- Agent/command version: written to the location that already exists (`metadata.version` preferred, else top-level). An agent carrying BOTH fields is consolidated to `metadata.version` (the stale top-level line is removed). Block-style only — flow-style `metadata: { version }` is not detected.

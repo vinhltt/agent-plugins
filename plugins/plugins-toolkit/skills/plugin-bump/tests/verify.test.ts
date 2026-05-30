@@ -43,6 +43,15 @@ function makeSkillComp(name: string, pluginRoot: string): DiscoveredComponent {
   };
 }
 
+function makeAgentComp(name: string, pluginRoot: string): DiscoveredComponent {
+  return {
+    kind: 'agent',
+    pluginRelPath: `agents/${name}.md`,
+    absPath: `${pluginRoot}/agents/${name}.md`,
+    versionTarget: { fmt: 'yaml-frontmatter', key: 'version' },
+  };
+}
+
 // Writes initial plugin state at version v and commits it.
 async function writeAndCommitPlugin(
   pluginRoot: string,
@@ -299,5 +308,56 @@ describe('verify', () => {
 
     expect(result.ok).toBe(false);
     expect(result.failures.find(f => f.check === 'd')).toBeDefined();
+  });
+
+  // These two are the only coverage of the agent (key='version') verify read path —
+  // every other test uses skills (key='metadata.version'), which takes a different branch.
+  test('check (c) passes for an agent whose version lives in metadata.version', async () => {
+    const agent = makeAgentComp('meta-agent', PLUGIN);
+
+    await Bun.write(`${PLUGIN}/.claude-plugin/plugin.json`, JSON.stringify({ name: 'test', version: '0.1.0' }, null, 2) + '\n');
+    await Bun.write(agent.absPath, `---\nname: meta-agent\nmetadata:\n  version: 0.1.0\n---\n\nbody\n`);
+    await appendEntry(`${PLUGIN}/CHANGELOG.md`, { version: '0.1.0', date: '2026-05-30', added: ['initial'], changed: [], removed: [] });
+    await commitAll(REPO, 'state v0.1.0');
+
+    await Bun.write(agent.absPath, `---\nname: meta-agent\nmetadata:\n  version: 0.1.0\n---\n\nbody modified\n`);
+    await commitAll(REPO, 'modify agent');
+
+    const diffPaths = new Set([agent.pluginRelPath]);
+    const preRunSnapshot = await captureHeadSnapshot([agent], PLUGIN, REPO, diffPaths);
+    await cascadeVersion({ pluginRoot: PLUGIN, newVersion: '0.2.0', components: [agent], diffPaths });
+    await appendEntry(`${PLUGIN}/CHANGELOG.md`, { version: '0.2.0', date: '2026-05-30', added: [], changed: ['meta-agent'], removed: [] });
+
+    const result = await verify({ pluginRoot: PLUGIN, expectedVersion: '0.2.0', components: [agent], diffPaths, preRunSnapshot });
+
+    expect(result.ok).toBe(true);
+    expect(result.failures.find(f => f.check === 'c')).toBeUndefined();
+  });
+
+  test('check (d) no false-positive for untouched agent carrying both fields at HEAD', async () => {
+    const skill = makeSkillComp('skill-a', PLUGIN);
+    const agent = makeAgentComp('both-agent', PLUGIN);
+    const components = [skill, agent];
+
+    await Bun.write(`${PLUGIN}/.claude-plugin/plugin.json`, JSON.stringify({ name: 'test', version: '0.1.0' }, null, 2) + '\n');
+    await Bun.write(skill.absPath, `---\nmetadata:\n  version: 0.1.0\n---\n\nbody\n`);
+    // Corrupted-state agent (both fields) committed at HEAD — must NOT trip check (d).
+    await Bun.write(agent.absPath, `---\nname: both-agent\nmetadata:\n  version: 0.1.0\nversion: 0.1.0\n---\n\nbody\n`);
+    await appendEntry(`${PLUGIN}/CHANGELOG.md`, { version: '0.1.0', date: '2026-05-30', added: ['initial'], changed: [], removed: [] });
+    await commitAll(REPO, 'state v0.1.0');
+
+    // Only the skill is modified; the agent stays untouched and out of the diff.
+    await Bun.write(skill.absPath, `---\nmetadata:\n  version: 0.1.0\n---\n\nbody modified\n`);
+    await commitAll(REPO, 'modify skill');
+
+    const diffPaths = new Set([skill.pluginRelPath]);
+    const preRunSnapshot = await captureHeadSnapshot(components, PLUGIN, REPO, diffPaths);
+    await cascadeVersion({ pluginRoot: PLUGIN, newVersion: '0.2.0', components, diffPaths });
+    await appendEntry(`${PLUGIN}/CHANGELOG.md`, { version: '0.2.0', date: '2026-05-30', added: [], changed: ['skill-a'], removed: [] });
+
+    const result = await verify({ pluginRoot: PLUGIN, expectedVersion: '0.2.0', components, diffPaths, preRunSnapshot });
+
+    expect(result.ok).toBe(true);
+    expect(result.failures.find(f => f.check === 'd')).toBeUndefined();
   });
 });

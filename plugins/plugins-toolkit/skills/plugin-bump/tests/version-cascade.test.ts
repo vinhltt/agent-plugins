@@ -156,6 +156,43 @@ describe('cascadeVersion', () => {
     expect(text).toContain('body');
   });
 
+  test('agent with metadata.version only → metadata bumped, no top-level field added', async () => {
+    const agentComp = makeAgentComponent('meta-agent', TMP);
+    await Bun.write(agentComp.absPath, `---\nname: meta-agent\nmetadata:\n  version: 0.1.0\n---\n\nbody\n`);
+
+    await cascadeVersion({
+      pluginRoot: TMP,
+      newVersion: '0.2.0',
+      components: [agentComp],
+      diffPaths: new Set([agentComp.pluginRelPath]),
+    });
+
+    const text = await Bun.file(agentComp.absPath).text();
+    expect(text).toContain('  version: 0.2.0'); // nested bumped
+    expect(text).not.toMatch(/^version:/m); // no top-level duplicate introduced
+    expect(text).toContain('body');
+  });
+
+  test('agent with BOTH fields → metadata bumped, top-level removed', async () => {
+    const agentComp = makeAgentComponent('dup-agent', TMP);
+    // The corrupted state the old writer produced: stale metadata + fresh top-level.
+    await Bun.write(agentComp.absPath, `---\nname: dup-agent\nmetadata:\n  version: 0.1.0\nversion: 0.1.5\n---\n\nbody\n`);
+
+    await cascadeVersion({
+      pluginRoot: TMP,
+      newVersion: '0.2.0',
+      components: [agentComp],
+      diffPaths: new Set([agentComp.pluginRelPath]),
+    });
+
+    const text = await Bun.file(agentComp.absPath).text();
+    expect(text).toContain('  version: 0.2.0'); // metadata holds fresh version
+    expect(text).not.toMatch(/^version:/m); // duplicate top-level line gone
+    expect(text).not.toContain('0.1.5'); // stale top-level value gone
+    expect(text.split('\n').filter(l => /version:/.test(l))).toHaveLength(1); // single field remains
+    expect(text).toContain('body');
+  });
+
   test('plugin with .claude-plugin + .codex-plugin -> both get version bumped', async () => {
     await Bun.write(`${TMP}/.codex-plugin/plugin.json`, JSON.stringify({ name: 'test-plugin', version: '0.1.0', interface: { type: 'chat' } }, null, 2) + '\n');
 

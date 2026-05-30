@@ -2,6 +2,7 @@
 // Called by run.ts AFTER cascade + changelog writes.
 
 import { gitShowHead, toRepoRelative } from './lib/git-helpers';
+import { readAgentVersion } from './lib/agent-frontmatter';
 import type { DiscoveredComponent } from './lib/component-discovery';
 import { discoverManifests } from './lib/manifest-targets';
 
@@ -43,25 +44,15 @@ function parseSkillVersion(content: string): string | null {
   return null;
 }
 
-function parseTopLevelVersion(content: string): string | null {
-  // Reads `version:` from frontmatter block (agents/commands)
-  const lines = content.split('\n');
-  if (lines[0]?.trim() !== '---') return null;
-  for (let i = 1; i < lines.length; i++) {
-    if (lines[i]?.trim() === '---') break;
-    const m = lines[i]!.match(/^version:\s*['"]?([^'"\s]+)['"]?/);
-    if (m) return m[1]!;
-  }
-  return null;
-}
-
 function parseComponentVersion(content: string, comp: DiscoveredComponent): string | null {
   if (comp.versionTarget.fmt === 'json-field') {
     try { return (JSON.parse(content) as Record<string, unknown>).version as string ?? null; }
     catch { return null; }
   }
   if (comp.versionTarget.key === 'metadata.version') return parseSkillVersion(content);
-  return parseTopLevelVersion(content);
+  // Agents/commands: metadata-first with top-level fallback. Shares reconcileAgentVersion's
+  // precedence (single source) so the read here can never drift from what the writer produced.
+  return readAgentVersion(content);
 }
 
 async function readOnDiskComponentVersion(comp: DiscoveredComponent): Promise<string | null> {

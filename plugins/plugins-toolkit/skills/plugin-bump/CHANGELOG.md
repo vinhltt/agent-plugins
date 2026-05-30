@@ -1,3 +1,13 @@
+## [1.4.0] - 2026-05-30
+
+### Added
+- agent-frontmatter: add lib/agent-frontmatter.ts with pure reconcileAgentVersion + readAgentVersion, extracted from the cascade writer so frontmatter version logic is unit-testable without a filesystem
+
+### Changed
+- Consolidate agent/command frontmatter to a single metadata-first version field, removing the stale top-level line plugin-bump previously injected
+- verify reads agent/command version through the shared reconcile precedence, so the verifier can never drift from what the writer produced
+- Annotate malformed/unterminated-frontmatter errors with the offending file path during multi-component bumps
+
 ## [1.3.0] - 2026-05-22
 
 ### Added

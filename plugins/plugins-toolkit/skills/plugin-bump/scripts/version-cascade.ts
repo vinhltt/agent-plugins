@@ -2,6 +2,7 @@
 // Components NOT in diffPaths are left byte-identical. Atomic writes via temp+rename.
 
 import { writeFrontmatterVersion } from './lib/frontmatter';
+import { reconcileAgentVersion } from './lib/agent-frontmatter';
 import type { DiscoveredComponent } from './lib/component-discovery';
 import { discoverManifests, type ManifestFormat } from './lib/manifest-targets';
 
@@ -37,41 +38,19 @@ async function writeManifestJson(pluginRoot: string, dir: string, newVersion: st
   await atomicWrite(path, JSON.stringify(parsed, null, 2) + '\n');
 }
 
-// Handles top-level `version:` field in agent/command frontmatter (NOT metadata.version).
+// Reconciles the agent/command frontmatter version to a single field (metadata-first),
+// removing the duplicate top-level line plugin-bump previously injected. Pure transform
+// (reconcileAgentVersion) separated from IO so it is unit-testable without a filesystem.
 async function writeAgentOrCommandVersion(absPath: string, newVersion: string): Promise<void> {
   const raw = await Bun.file(absPath).text();
-  const lines = raw.split('\n');
-
-  if (lines[0]?.trim() !== '---') {
-    // No frontmatter — prepend block for commands; agents should always have frontmatter
-    const block = `---\nversion: ${newVersion}\n---\n\n`;
-    await atomicWrite(absPath, block + raw);
-    return;
+  let reconciled: string;
+  try {
+    reconciled = reconcileAgentVersion(raw, newVersion);
+  } catch (e) {
+    // Annotate with the file path so a multi-component bump names the malformed file.
+    throw new Error(`${(e as Error).message} in ${absPath}`);
   }
-
-  // Find frontmatter end
-  let fmEnd = -1;
-  for (let i = 1; i < lines.length; i++) {
-    if (lines[i]?.trim() === '---') { fmEnd = i; break; }
-  }
-  if (fmEnd === -1) throw new Error(`Unterminated frontmatter in ${absPath}`);
-
-  // Patch existing `version:` or insert before closing `---`
-  let patched = false;
-  const out = lines.map((line, i) => {
-    if (i > 0 && i < fmEnd && /^version:\s*/.test(line)) {
-      patched = true;
-      return `version: ${newVersion}`;
-    }
-    return line;
-  });
-
-  if (!patched) {
-    // Insert `version: <v>` before closing ---
-    out.splice(fmEnd, 0, `version: ${newVersion}`);
-  }
-
-  await atomicWrite(absPath, out.join('\n'));
+  await atomicWrite(absPath, reconciled);
 }
 
 async function writeHookVersion(absPath: string, newVersion: string): Promise<void> {
