@@ -1,6 +1,6 @@
 {
   "name": "cc-toolkit",
-  "version": "0.1.0",
+  "version": "1.4.1",
   "description": "Claude Code utility toolkit. First skill: cc-ask — route Claude Code / Agent SDK / Anthropic API questions to the built-in claude-code-guide agent. Designed to grow with more CC-related skills (settings, hooks, MCP, etc.).",
   "author": { "name": "VinhLTT", "email": "vinhltt.dev@gmail.com" },
   "homepage": "https://github.com/vinhltt/agent-plugins"

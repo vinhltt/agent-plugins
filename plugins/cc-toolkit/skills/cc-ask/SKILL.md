@@ -1,8 +1,10 @@
 ---
 name: cc-ask
 description: Answer questions about Claude Code (the CLI tool), the Claude Agent SDK, and the Anthropic API by delegating to the built-in `claude-code-guide` agent. Trigger when the user asks about Claude Code features, hooks, slash commands, MCP servers, settings, IDE integrations, plugins, subagents, skills, the Agent SDK, or the Anthropic / Claude API (tool use, prompt caching, streaming, multimodal, batch). Skill is a thin router — it does not pre-process the question; it forwards verbatim to the agent and relays the response. Output language follows the user's language; the skill itself reasons in English.
+context: fork
+agent: claude-code-guide
 metadata:
-  version: "0.1.0"
+  version: "1.4.1"
   author: VinhLTT
 ---
 
@@ -38,8 +40,8 @@ language.
 ## When to skip
 
 - User wants to **write code** that uses the Anthropic SDK (use
-  `/ck:claude-api` skill instead — it's eval-driven and writes caching).
-- User wants to **build** a Claude Code plugin (use `/ck:plugin-dev`).
+  `/claude-api` skill instead — it's eval-driven and writes caching).
+- User wants to **build** a Claude Code plugin (use `/plugin-dev`).
 - General programming / debugging questions unrelated to Claude Code or
   Anthropic SDKs.
 

@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.1] - 2026-05-31
+
+### Changed
+
+- cc-toolkit: cc-ask skill now declares `context: fork` + `agent: claude-code-guide` frontmatter for direct agent routing;
+
+## [1.4.0] - 2026-05-30
+
+### Added
+
+- backlog-tools: new plugin — converts Markdown to Backlog wiki format with a regex-based pipeline
+- plugins-toolkit v1.4.0: add `lib/agent-frontmatter.ts` with pure `reconcileAgentVersion` + `readAgentVersion`, extracted from the cascade writer so frontmatter version logic is unit-testable without a filesystem
+
+### Changed
+
+- plugins-toolkit v1.4.0: consolidate agent/command frontmatter to a single metadata-first version field, removing the stale top-level line plugin-bump previously injected; verify now reads agent/command version through the shared reconcile precedence so the verifier can never drift from the writer; malformed/unterminated-frontmatter errors are annotated with the offending file path during multi-component bumps
+
 ## [1.3.3] - 2026-05-22
 
 ### Added
