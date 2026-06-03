@@ -1,0 +1,10 @@
+{
+  "name": "diagram-toolkit",
+  "version": "0.1.0",
+  "description": "Diagram creation toolkit. Ships Excalidraw workflow guidance, editable diagram JSON patterns, and a file-based PNG render helper.",
+  "author": {
+    "name": "VinhLTT",
+    "email": "vinhltt.dev@gmail.com"
+  },
+  "homepage": "https://github.com/vinhltt/agent-plugins/tree/master/plugins/diagram-toolkit"
+}

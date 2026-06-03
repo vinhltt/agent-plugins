@@ -1,9 +1,9 @@
 {
   "algorithm": "sha256",
-  "generated_at": "2026-05-31T15:09:45.445Z",
+  "generated_at": "2026-06-03T14:34:06.000Z",
   "marketplace": {
-    "version": "1.4.1",
-    "checksum": "006e4e8849af1213e1efcba0afdcf604cc474938166d8ea0774c81f448d0ecbd"
+    "version": "1.5.0",
+    "checksum": "3bad3fe38517f4ab7c8e988860b4772aa95d48ef71bc6043c995cd3a5c230f1c"
   },
   "plugins": {
     "backlog-tools": {
@@ -42,6 +42,18 @@
           "find-docs": {
             "version": "0.3.0",
             "checksum": "b3cddd0e1eae319c9a8fb7d6713a6ee45d5b908d47581cd355129c49630c01ed"
+          }
+        }
+      }
+    },
+    "diagram-toolkit": {
+      "version": "0.1.0",
+      "checksum": "4daf5b692377716e97c970b4773fb9173462eb573c7542f4a411afc5dc40eb97",
+      "components": {
+        "skills": {
+          "excalidraw": {
+            "version": "1.2.3",
+            "checksum": "cb47067b7cdd56bbffb4de917a1d10ebcbb3ad89f665edcf13ae6363e597856f"
           }
         }
       }
@@ -141,7 +153,7 @@
   "components": {},
   "files": {
     ".agent-plugins.json": "4c1fefed64238aa27511d4f51a0a7efccbfa701e24ad87b7a3f153403f1a16da",
-    ".claude-plugin/marketplace.json": "006e4e8849af1213e1efcba0afdcf604cc474938166d8ea0774c81f448d0ecbd",
+    ".claude-plugin/marketplace.json": "3bad3fe38517f4ab7c8e988860b4772aa95d48ef71bc6043c995cd3a5c230f1c",
     ".claude/settings.json": "0136ecc113f997e9b6dac9c90ae182a98a61ad99fab8c4ba571dc9d579a8575d",
     ".claude/skills/agent-plugins-changelog/SKILL.md": "59e23da97a0cffa39789734e271599671b4e72dfbf122516f3006fff325b016c",
     ".claude/skills/agent-plugins-changelog/changelog.md": "5251fd296a4b48bdfa287ca45a8abe6468070cb84b73ff16aecb4571ac6bf3fc",
@@ -179,9 +191,9 @@
     ".claude/skills/skill-bump/tests/integration.test.ts": "1818a9685d057837264af672863a0631791e693fc6359922aadb35bc85b549ce",
     ".claude/skills/skill-bump/tests/verify.test.ts": "626ad0d79a628e9f6b2b992db83f185cc420228c417f3223449421ac83c5f59d",
     ".gitignore": "77e4fd8624b2efa68610b374c5fcf5475bf854b0d2ba049f1646ad9108f32e8a",
-    "CHANGELOG.md": "d7b3e697460bf5abd4da149f53ce3d5d67b61f394444bad3ce12be6b6fc1a806",
+    "CHANGELOG.md": "d06465224ac57ec2439d707143cbe1086f54f54385c3a8da41cd0782c7fb3f20",
     "LICENSE": "05c3275b3133245fb474c341f5e7c89b25df27124b41d2639773ec0de03c3430",
-    "README.md": "ed235e40db5213849ab52ad4178cba1ff4189c9abf97abe113e18e9188435c4c",
+    "README.md": "e29388fb60f43b6621160a1bc8d15b226390e3809c096de920b2e9f0af047842",
     "plugins/backlog-tools/.claude-plugin/plugin.json": "da4535ee29244d0d5bbaef595d976365b75504cf1d59db0cf3e573a3bb2f9b5f",
     "plugins/backlog-tools/CHANGELOG.md": "72bbee79dd21f64128b268012016da5c6637fe0b9bf465c2e5d4802a43b90bd5",
     "plugins/backlog-tools/skills/md-to-backlog/SKILL.md": "0be60b34b5fe64bfc7ac8058f93b0ad09e4797222c2db8f636c30b9e98c8b098",
@@ -198,6 +210,23 @@
     "plugins/context7-cli/skills/context7-cli/references/setup.md": "79530eb571b56f9846fd714d3b5e2759f2102042e590347501e43bf22a56a6e0",
     "plugins/context7-cli/skills/context7-cli/references/skills.md": "a31c9c56044424e07e764de7522fb542ce58b327259b582a1ba18223d13b26b5",
     "plugins/context7-cli/skills/find-docs/SKILL.md": "b3cddd0e1eae319c9a8fb7d6713a6ee45d5b908d47581cd355129c49630c01ed",
+    "plugins/diagram-toolkit/.claude-plugin/plugin.json": "4daf5b692377716e97c970b4773fb9173462eb573c7542f4a411afc5dc40eb97",
+    "plugins/diagram-toolkit/CHANGELOG.md": "e19fe16010645daf1fcf15dae46b6d54bfb4dbe5b02c15bf16ae71f9f3c55dc2",
+    "plugins/diagram-toolkit/README.md": "10567f640bed4b631d089b11430f54c65990a939289dd00118058fd22ddbfcab",
+    "plugins/diagram-toolkit/skills/excalidraw/SKILL.md": "cb47067b7cdd56bbffb4de917a1d10ebcbb3ad89f665edcf13ae6363e597856f",
+    "plugins/diagram-toolkit/skills/excalidraw/references/auto-diagram-guide.md": "9ba27f616afef3a5811bd18ca5f8ec81c73a5bbd8fae8ac46a648e8c38755275",
+    "plugins/diagram-toolkit/skills/excalidraw/references/color-palette.md": "43b92a808cbe45c5f862ab8d50e36c11288136e2eeea8da4bcf7af85d85d0f49",
+    "plugins/diagram-toolkit/skills/excalidraw/references/design-methodology.md": "e9d21309b735b5c67e61a5e78faeb8f3d905adb7b088e8a14e71b4ddb8ebaf51",
+    "plugins/diagram-toolkit/skills/excalidraw/references/element-templates.md": "fdf2c4431aed3fd0232bb50cd849f4bd3fc8f4f88024348c2a7d1358c500f3f2",
+    "plugins/diagram-toolkit/skills/excalidraw/references/file-workflow.md": "fbd11987f9875867f2db9cc6ae38870b546e4f03b117e63b03d876534017de11",
+    "plugins/diagram-toolkit/skills/excalidraw/references/json-schema.md": "77b2d2becb201f7ccd25e7ad5c1130cff66ea1ff9a17adbed42cf963b96d316c",
+    "plugins/diagram-toolkit/skills/excalidraw/references/mcp-workflow.md": "1ac89af1877484b2c3d1b26bed13bc7178e4a93bbc605bf8ee3c07e54cc6d90e",
+    "plugins/diagram-toolkit/skills/excalidraw/references/pyproject.toml": "b68f2d373a50b623bb04f3f96e9ce12118d89b01d5ac7a538820f64e7fbdcdd0",
+    "plugins/diagram-toolkit/skills/excalidraw/references/render_excalidraw.py": "64416060609bd234825e04f2efce33582c2e6a4692ffca31b24b681bff7eec83",
+    "plugins/diagram-toolkit/skills/excalidraw/references/render_template.html": "4820b815dd0635db450f2b7a0b0375c61755bdc6827024a34bea77ba4e078db5",
+    "plugins/diagram-toolkit/skills/excalidraw/references/svg-layout-best-practices.md": "6af2cca037ff16c8d8a78edf6daeb8db933d7b73e4e30a594c911e30116b6de7",
+    "plugins/diagram-toolkit/skills/excalidraw/references/uv.lock": "e314f17fee6f25f8655cd2412bf5cdaa5474f4f4f3dcd15b708708b76484dc06",
+    "plugins/diagram-toolkit/skills/excalidraw/scripts/install.sh": "bf46d3a3f93ffeb0385e811c7895e8fa58bbe124f4edc3d5ae41783f3a063af2",
     "plugins/document-converter/.claude-plugin/plugin.json": "abb1532373af7587dbc3db8c46631e1911e3765b0e2c6a646ccdad0d7aedbed4",
     "plugins/document-converter/CHANGELOG.md": "676615f482fa2aed71e2f14eada8ec93f3ea5e5bb062ab8ae50fb4d713f45445",
     "plugins/document-converter/skills/xlsx-to-csv/SKILL.md": "49f28cc1a5cb6458bed4307e3cc448cc665e6ed184adf6b253ad328a103da041",

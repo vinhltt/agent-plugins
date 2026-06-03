@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-06-03
+
+### Added
+
+- diagram-toolkit: new plugin v0.1.0 shipping excalidraw skill v1.2.3 for Excalidraw diagrams, MCP canvas workflow, one-command file renderer setup, local SVG layout guidance, and file-based PNG rendering.
+- Marketplace: register `diagram-toolkit` plugin under `development` category.
+
 ## [1.4.1] - 2026-05-31
 
 ### Changed

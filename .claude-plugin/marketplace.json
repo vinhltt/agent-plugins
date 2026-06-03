@@ -7,7 +7,7 @@
     "email": "vinhltt.dev@gmail.com"
   },
   "metadata": {
-    "version": "1.4.1"
+    "version": "1.5.0"
   },
   "plugins": [
     {
@@ -402,6 +402,17 @@
       "category": "development",
       "source": "./plugins/efcore",
       "homepage": "https://github.com/vinhltt/agent-plugins/tree/master/plugins/efcore"
+    },
+    {
+      "name": "diagram-toolkit",
+      "description": "Diagram creation toolkit. Ships Excalidraw workflow guidance, editable diagram JSON patterns, and a file-based PNG render helper.",
+      "author": {
+        "name": "VinhLTT",
+        "email": "vinhltt.dev@gmail.com"
+      },
+      "category": "development",
+      "source": "./plugins/diagram-toolkit",
+      "homepage": "https://github.com/vinhltt/agent-plugins/tree/master/plugins/diagram-toolkit"
     }
   ]
 }
