@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2026-10-18
+
+### Added
+
+- tok-speed: new plugin v0.1.0 that logs one transcript line per main-loop model request (delta, input/output tokens, duration, TTFT, tok/s) and pins the latest tok/s with session token totals under the prompt.
+- Marketplace: register `tok-speed` plugin under `productivity` category.
+
+### Changed
+
+- Skills/agent-plugins-changelog: track the skill changelog as `CHANGELOG.md` in git so its filename casing matches the file on disk.
+
 ## [1.5.0] - 2026-06-03
 
 ### Added

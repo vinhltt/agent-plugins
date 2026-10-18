@@ -43,7 +43,7 @@ Example:
 
 ## Available Plugins
 
-_Last synced: 2026-06-03 — source of truth: [`./.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json)_
+_Last synced: 2026-10-18 — source of truth: [`./.claude-plugin/marketplace.json`](./.claude-plugin/marketplace.json)_
 
 ### First-Party (built & maintained here)
 
@@ -54,6 +54,7 @@ _Last synced: 2026-06-03 — source of truth: [`./.claude-plugin/marketplace.jso
 | `context7-cli` | development | Context7 CLI tooling — bundles `ctx7` CLI skill and `find-docs` skill for library documentation lookup without the MCP server. |
 | `diagram-toolkit` | development | Diagram creation toolkit. Ships Excalidraw workflow guidance, editable diagram JSON patterns, and a file-based PNG render helper. |
 | `gh-community` | development | Topic-organized refactor of `gh-cli` skill. Slim entry point + `references/` split by GitHub feature area (repos, PRs, issues, releases, Actions, secrets, gists). |
+| `tok-speed` | productivity | Live model output speed. Logs time, tokens, duration, TTFT and tok/s per model request to the transcript and pins the latest tok/s under the prompt. |
 
 ### Curated — Anthropic official (`anthropics/claude-plugins-official`)
 
@@ -154,7 +155,7 @@ Remove the marketplace entirely:
 
 ## Categories at a Glance
 
-- **productivity** — `backlog-tools`, `cc-toolkit`, `code-simplifier`, `claude-code-setup`, `hookify`, `pr-review-toolkit`, `claude-md-management`, `code-review`, `commit-commands`, `session-report`, `document-skills`, `vercel-labs`
+- **productivity** — `backlog-tools`, `cc-toolkit`, `code-simplifier`, `claude-code-setup`, `hookify`, `pr-review-toolkit`, `claude-md-management`, `code-review`, `commit-commands`, `session-report`, `document-skills`, `tok-speed`, `vercel-labs`
 - **development** — `context7-cli`, `diagram-toolkit`, `gh-community`, `skill-creator`, `plugin-dev`, `pyright-lsp`, `typescript-lsp`, `csharp-lsp`, `context7-plugin`, `chrome-devtools-mcp`, `langfuse`
 - **security** — `security-guidance`
 

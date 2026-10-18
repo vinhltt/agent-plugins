@@ -1,0 +1,10 @@
+{
+  "name": "tok-speed",
+  "version": "0.1.0",
+  "description": "Live model output speed for Claude Code. Logs one line per model request (time, delta, input/output tokens, duration, TTFT, tok/s) to the transcript and pins the latest tok/s with session token totals under the prompt.",
+  "author": {
+    "name": "VinhLTT",
+    "email": "vinhltt.dev@gmail.com"
+  },
+  "homepage": "https://github.com/vinhltt/agent-plugins/tree/master/plugins/tok-speed"
+}

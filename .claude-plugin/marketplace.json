@@ -7,7 +7,7 @@
     "email": "vinhltt.dev@gmail.com"
   },
   "metadata": {
-    "version": "1.5.0"
+    "version": "1.6.0"
   },
   "plugins": [
     {
@@ -413,6 +413,17 @@
       "category": "development",
       "source": "./plugins/diagram-toolkit",
       "homepage": "https://github.com/vinhltt/agent-plugins/tree/master/plugins/diagram-toolkit"
+    },
+    {
+      "name": "tok-speed",
+      "description": "Live model output speed for Claude Code. Logs one line per model request (time, delta, input/output tokens, duration, TTFT, tok/s) to the transcript and pins the latest tok/s with session token totals under the prompt.",
+      "author": {
+        "name": "VinhLTT",
+        "email": "vinhltt.dev@gmail.com"
+      },
+      "category": "productivity",
+      "source": "./plugins/tok-speed",
+      "homepage": "https://github.com/vinhltt/agent-plugins/tree/master/plugins/tok-speed"
     }
   ]
 }
