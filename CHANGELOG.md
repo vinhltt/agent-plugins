@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2026-10-22
+
+### Added
+
+- document-converter: xlsx-to-csv regression tests for auto-detect path mapping and CLI wiring (POSIX + Windows path math), runnable with stdlib Python.
+
+### Changed
+
+- document-converter v0.2.0: xlsx-to-csv auto-detect writes output beside the input folder (file input -> sibling `{parent}_CSV_AI`, directory input -> sibling `{dir}_CSV_AI`) instead of scanning from the filesystem root; inputs at a drive/filesystem root are rejected with a clear error.
+- document-converter: xlsx-to-csv `--target-dir` is honored without `--source-dir` and must be a single folder name; input paths are no longer resolved through symlinks; read/write failures are counted and the script exits 1 when any conversion failed.
+- document-converter: earlier xlsx-to-csv versions could write converted CSV copies under `<drive>:\_CSV_AI` (Windows) or `/_CSV_AI` (POSIX when run as root); delete those folders, they contain copies of your spreadsheet data.
+
 ## [1.6.0] - 2026-10-18
 
 ### Added
