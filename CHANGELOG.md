@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] - 2026-10-26
+
+### Added
+
+- tok-speed: status line shows one `<label> <tok/s>` segment per running subagent after the main readout (live while streaming, exact after each request), and each subagent run ends with one dim summary line in the main transcript (requests, tokens, wall-clock time, tok/s).
+
+### Changed
+
+- tok-speed v0.2.0: per-request measuring is shared between the main loop and subagents; the main log line and status text are unchanged, and a request that fails or is abandoned mid-stream no longer leaves a live estimate on the status line.
+- Marketplace + README: tok-speed description mentions subagent speed.
+
 ## [1.7.0] - 2026-10-22
 
 ### Added

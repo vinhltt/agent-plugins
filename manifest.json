@@ -1,9 +1,9 @@
 {
   "algorithm": "sha256",
-  "generated_at": "2026-10-22T06:36:03.538Z",
+  "generated_at": "2026-10-26T08:24:45.639Z",
   "marketplace": {
-    "version": "1.7.0",
-    "checksum": "f79db2e39d3bb38c8f6c4fb2bb256ed3c84cf656bd20e11c2137b2474eac8417"
+    "version": "1.8.0",
+    "checksum": "f44ecba5dfdfd002c9eb827f763edb1dbd1ff88ba6b79c645bbb6db0231947df"
   },
   "plugins": {
     "backlog-tools": {
@@ -150,8 +150,8 @@
       }
     },
     "tok-speed": {
-      "version": "0.1.0",
-      "checksum": "c59e88c38247b919db087929ba8cd277912b18458037813d0ec3f415d17f8b6b",
+      "version": "0.2.0",
+      "checksum": "c4f9a5f581b845e85ad60b3bee8f97956fb597312c64f56b98a98e9aa5d35e54",
       "components": {
         "hooks": {
           "hooks": {
@@ -164,7 +164,7 @@
   "components": {},
   "files": {
     ".agent-plugins.json": "4c1fefed64238aa27511d4f51a0a7efccbfa701e24ad87b7a3f153403f1a16da",
-    ".claude-plugin/marketplace.json": "f79db2e39d3bb38c8f6c4fb2bb256ed3c84cf656bd20e11c2137b2474eac8417",
+    ".claude-plugin/marketplace.json": "f44ecba5dfdfd002c9eb827f763edb1dbd1ff88ba6b79c645bbb6db0231947df",
     ".claude/settings.json": "821a3cd5712932c1d917b9f42317be03286f24b68643a0dcd4506e20d3e593b4",
     ".claude/skills/agent-plugins-changelog/CHANGELOG.md": "5251fd296a4b48bdfa287ca45a8abe6468070cb84b73ff16aecb4571ac6bf3fc",
     ".claude/skills/agent-plugins-changelog/SKILL.md": "59e23da97a0cffa39789734e271599671b4e72dfbf122516f3006fff325b016c",
@@ -202,9 +202,9 @@
     ".claude/skills/skill-bump/tests/integration.test.ts": "1818a9685d057837264af672863a0631791e693fc6359922aadb35bc85b549ce",
     ".claude/skills/skill-bump/tests/verify.test.ts": "626ad0d79a628e9f6b2b992db83f185cc420228c417f3223449421ac83c5f59d",
     ".gitignore": "77e4fd8624b2efa68610b374c5fcf5475bf854b0d2ba049f1646ad9108f32e8a",
-    "CHANGELOG.md": "0c940fa13c45201db028217cd2331cf5fd828629c40a2836c11961ec6c80668c",
+    "CHANGELOG.md": "69a978de0c1ecab90e2f31e8a4496d567bdf7ceca71e5436456f2541f1a1cba4",
     "LICENSE": "05c3275b3133245fb474c341f5e7c89b25df27124b41d2639773ec0de03c3430",
-    "README.md": "bf738e3977a6765b468aa5f8473f9948ac73516083f1961f4a92b1a257ac7826",
+    "README.md": "17fcba5da4bce438e72101d13001c92522e7d6298d779a92d01299236eef8f6d",
     "plugins/backlog-tools/.claude-plugin/plugin.json": "da4535ee29244d0d5bbaef595d976365b75504cf1d59db0cf3e573a3bb2f9b5f",
     "plugins/backlog-tools/CHANGELOG.md": "72bbee79dd21f64128b268012016da5c6637fe0b9bf465c2e5d4802a43b90bd5",
     "plugins/backlog-tools/skills/md-to-backlog/SKILL.md": "0be60b34b5fe64bfc7ac8058f93b0ad09e4797222c2db8f636c30b9e98c8b098",
@@ -328,12 +328,17 @@
     "plugins/research-toolkit/skills/research/CHANGELOG.md": "de4b3559bad1eed688ff1252d8fbee6309b8b0c7f433c854566242e162bea986",
     "plugins/research-toolkit/skills/research/SKILL.md": "7041efffcefe4fd160ccdc1aafecd1817eaa5ca8b97d280ec1cb5f184f8a9cda",
     "plugins/research-toolkit/skills/research/manifest.json": "b1160105de46d29bd71630c5471d91a23f40d97029879691c6a00af0c783e4ae",
-    "plugins/tok-speed/.claude-plugin/plugin.json": "c59e88c38247b919db087929ba8cd277912b18458037813d0ec3f415d17f8b6b",
-    "plugins/tok-speed/CHANGELOG.md": "e40f947dacf6ea906c585a7a019b302c9d9a531e3f71735466a9450c6796d3f3",
-    "plugins/tok-speed/README.md": "029ce2b1f9709954a2cee83cd08cf3eec0989d3547e624942d87faba88932229",
+    "plugins/tok-speed/.claude-plugin/plugin.json": "c4f9a5f581b845e85ad60b3bee8f97956fb597312c64f56b98a98e9aa5d35e54",
+    "plugins/tok-speed/.codex-plugin/plugin.json": "c4f9a5f581b845e85ad60b3bee8f97956fb597312c64f56b98a98e9aa5d35e54",
+    "plugins/tok-speed/.cursor-plugin/plugin.json": "c4f9a5f581b845e85ad60b3bee8f97956fb597312c64f56b98a98e9aa5d35e54",
+    "plugins/tok-speed/CHANGELOG.md": "63f5827a7d48cdb753a0526ce5daf10884b844ed31f5e8bb5611cdcdd464d6aa",
+    "plugins/tok-speed/README.md": "d3d84f5e97f28341a52ebee6e416d8674dd7bc00d2a2b66e826f0afb19a6ccf6",
+    "plugins/tok-speed/hooks/format.ts": "b591ac8bba54c5a8898e2a9583cea4f017d681b1ad0ebb4e73f1c0e351610f25",
     "plugins/tok-speed/hooks/hooks.json": "c835c92d8e1159d20a40ca78ad654da7433942c3694ffeda0b376b0c4dfd52cf",
-    "plugins/tok-speed/hooks/register.test.ts": "083e83f96e15bb935e504158fd0272ece79d2a79012f9b8a81379b2fb109b2cc",
-    "plugins/tok-speed/hooks/register.ts": "3de93d59df4fb2ec619ca8973256c145746a8aa27a97b80a4036f30d1306cc4c",
+    "plugins/tok-speed/hooks/meter.test.ts": "ccb99591ff6c0c491a98a0fc685697aa335b2307607c3b7c5c6328e6755748b8",
+    "plugins/tok-speed/hooks/meter.ts": "3f8a02ce7a617bad86a0ae7f403d2e585601cb4d9186b31728c6371d0c5a3214",
+    "plugins/tok-speed/hooks/register.test.ts": "b45dac92db6dfb850fbc62acd31ec26433306b646c124c420ce3aaef5987af55",
+    "plugins/tok-speed/hooks/register.ts": "965635dbf0cba95d4ecdc1bfa1833affcea87d283dcc23352d39d72502b24fb0",
     "plugins/tok-speed/tsconfig.json": "4087cf0ba92fde503ed0e7c56f37bcb26ad0c085873f10219d0336c0f19b5a8f",
     "scripts/ts/README.md": "83d35556c008dbaad9adfe661633c84fcb5b1bb1cfa3bce130dce319342c1d93",
     "scripts/ts/sync.config.json": "8ee65f6cba85699953016bc919594e46678e9b2aa1a9de6a460bd11eb96bb15e",

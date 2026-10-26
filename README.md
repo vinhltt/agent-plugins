@@ -54,7 +54,7 @@ _Last synced: 2026-10-18 — source of truth: [`./.claude-plugin/marketplace.jso
 | `context7-cli` | development | Context7 CLI tooling — bundles `ctx7` CLI skill and `find-docs` skill for library documentation lookup without the MCP server. |
 | `diagram-toolkit` | development | Diagram creation toolkit. Ships Excalidraw workflow guidance, editable diagram JSON patterns, and a file-based PNG render helper. |
 | `gh-community` | development | Topic-organized refactor of `gh-cli` skill. Slim entry point + `references/` split by GitHub feature area (repos, PRs, issues, releases, Actions, secrets, gists). |
-| `tok-speed` | productivity | Live model output speed. Logs time, tokens, duration, TTFT and tok/s per model request to the transcript and pins the latest tok/s under the prompt. |
+| `tok-speed` | productivity | Live model output speed. Logs time, tokens, duration, TTFT and tok/s per model request to the transcript, pins the latest tok/s under the prompt, and shows each running subagent's tok/s beside it. |
 
 ### Curated — Anthropic official (`anthropics/claude-plugins-official`)
 

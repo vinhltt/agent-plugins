@@ -1,27 +1,47 @@
-import type { On, TurnStepChunk, TurnStepInput, TurnStepResult } from 'claude-code'
+import type { AgentInfo, On, TurnStepChunk, TurnStepInput, TurnStepResult, TurnUsage } from 'claude-code'
 import { expect, test } from 'claude-code/testing'
 
 const usage = { input_tokens: 1000, output_tokens: 300, cache_creation_input_tokens: 0, cache_read_input_tokens: 85000, model: 'claude-test' }
 
 const step = (agentId?: string): TurnStepInput => ({ turnId: 't1', index: 0, model: 'claude-test', messageCount: 3, ...(agentId ? { agentId } : {}) })
 
+interface EngineOptions {
+  // What $.agent.list() answers.
+  agents?: AgentInfo[]
+  // Overrides `agents` per call (0-based); throwing rejects that call.
+  list?: (call: number) => AgentInfo[]
+  // The n-th step throws after this many text chunks.
+  failAt?: (n: number) => number | undefined
+  // The stop chunk's usage for the n-th step the engine runs (0-based); null sends a stop without usage.
+  usageFor?: (e: TurnStepInput, n: number) => TurnUsage | null
+}
+
 // Stands in for the engine and its clock: time is scripted, so every figure is exact.
 // 1s to first token, 40 chunks 75ms apart, the stop chunk 75ms after the last one.
-const fakeEngine = (on: On) => {
+const fakeEngine = (on: On, opts: EngineOptions = {}) => {
   let now = 1_000_000
+  let steps = 0
+  let listCalls = 0
   // A hook standing at the bottom answers with { value }, as the engine would.
   on('clock.now', () => ({ value: now }) as never)
+  on('agent.list', () => ({ value: opts.list ? opts.list(listCalls++) : (listCalls++, opts.agents ?? []) }) as never)
   on('turn.start', (_$, e) => ({ turnId: e.turnId }))
-  on('turn.step', async function* (): AsyncGenerator<TurnStepChunk, TurnStepResult> {
+  on('turn.complete', () => ({ text: '' }))
+  on('turn.step', async function* (_$, e): AsyncGenerator<TurnStepChunk, TurnStepResult> {
+    const n = steps++
+    const u = opts.usageFor ? opts.usageFor(e, n) : usage
+    const failAt = opts.failAt?.(n)
     now += 1000
     for (let i = 0; i < 40; i++) {
+      if (i === failAt) throw new Error('request failed')
       if (i > 0) now += 75
       yield { kind: 'text', index: 0, text: 'abcd' }
     }
     now += 75
-    yield { kind: 'stop', stopReason: 'end_turn', usage }
+    yield { kind: 'stop', stopReason: 'end_turn', usage: u }
     return { turnId: 't1', index: 0, answer: 'abcd'.repeat(40), toolUses: [], stopReason: 'end_turn', usage }
   })
+  return { listCalls: () => listCalls }
 }
 
 const capture = (on: On) => {
@@ -41,6 +61,22 @@ const drain = async (stream: AsyncGenerator<TurnStepChunk, TurnStepResult>) => {
   }
 }
 
+// Reads n chunks of a step, leaving it mid-stream.
+const advance = async (stream: AsyncGenerator<TurnStepChunk, TurnStepResult>, n: number) => {
+  for (let i = 0; i < n; i++) await stream.next()
+}
+
+// The label lookup is left un-awaited by design; let it land before reading the status.
+const settle = async () => {
+  for (let i = 0; i < 50; i++) await Promise.resolve()
+}
+
+const agent = (id: string, description: string, extra: Partial<AgentInfo> = {}): AgentInfo =>
+  ({ id, description, type: 'general-purpose', status: 'running', ...extra })
+
+const complete = (agentId: string, durationMs = 9500) =>
+  ({ answer: '', durationMs, isAborted: false, turnId: 't1', agentId, reason: 'answer' as const })
+
 test('logs one omp-style line per main-loop request, tok/s over the whole request', async ($, on) => {
   fakeEngine(on)
   const { logs, statuses } = capture(on)
@@ -56,14 +92,232 @@ test('logs one omp-style line per main-loop request, tok/s over the whole reques
   expect(statuses.at(-1)).toBe('tok/s: 75.0 · in: 86K · out: 300')
 })
 
-test('ignores subagent requests', async ($, on) => {
+test('a stop chunk without usage after live samples falls back to the last exact figure', async ($, on) => {
+  fakeEngine(on, { usageFor: (_e, n) => (n === 0 ? usage : null) })
+  const { logs, statuses } = capture(on)
+
+  await drain($.turn.step(step()))
+  const before = statuses.length
+  await drain($.turn.step(step()))
+
+  expect(logs.length).toBe(1)
+  expect(statuses.slice(before).some(s => s?.includes('(live)'))).toBe(true)
+  expect(statuses.at(-1)).toBe('tok/s: 75.0 · in: 86K · out: 300')
+})
+
+test('a listed subagent shows as a segment, with no per-request log line', async ($, on) => {
+  fakeEngine(on, { agents: [agent('agent-1', 'scout-auth')] })
+  const { logs, statuses } = capture(on)
+
+  await $.turn.start({ text: 'go', turnId: 't1', agentId: 'agent-1' })
+  const { kinds, result } = await drain($.turn.step(step('agent-1')))
+  await settle()
+
+  expect(kinds.length).toBe(41)                 // subagent chunks pass through untouched too
+  expect(result.answer).toBe('abcd'.repeat(40))
+  expect(logs).toEqual([])
+  expect(statuses.some(s => s?.includes('(live)'))).toBe(true)
+  // No main figure yet: the segment stands alone, without a leading separator.
+  expect(statuses.at(-1)).toBe('scout-auth 75.0')
+})
+
+test('an id $.agent.list() does not name shows nothing and logs nothing', async ($, on) => {
   fakeEngine(on)
   const { logs, statuses } = capture(on)
 
-  const { result } = await drain($.turn.step(step('agent-1')))
+  await $.turn.start({ text: 'go', turnId: 't1', agentId: 'agent-x' })
+  await drain($.turn.step(step('agent-x')))
+  await settle()
+  await $.turn.complete(complete('agent-x'))
 
-  expect(result.answer).toBe('abcd'.repeat(40))
+  expect(statuses).toEqual([])
+  expect(logs).toEqual([])
+})
+
+test('teammates show nothing and log nothing', async ($, on) => {
+  fakeEngine(on, { agents: [agent('tm-1', 'helper', { type: 'teammate' }), agent('tm-2', 'reviewer', { teammateId: 'rev@team' })] })
+  const { logs, statuses } = capture(on)
+
+  for (const id of ['tm-1', 'tm-2']) {
+    await $.turn.start({ text: 'go', turnId: 't1', agentId: id })
+    await drain($.turn.step(step(id)))
+    await settle()
+    await $.turn.complete(complete(id))
+  }
+
+  expect(statuses).toEqual([])
+  expect(logs).toEqual([])
+})
+
+test('concurrent subagents each keep their own figure, live beside exact', async ($, on) => {
+  fakeEngine(on, {
+    agents: [agent('agent-a', 'scout-auth'), agent('agent-b', 'review-pr')],
+    usageFor: e => (e.agentId === 'agent-b' ? { ...usage, output_tokens: 600 } : usage),
+  })
+  const { statuses } = capture(on)
+
+  const a = $.turn.step(step('agent-a'))
+  const b = $.turn.step(step('agent-b'))
+  // Interleave the 40 text chunks of both streams, then a's stop chunk while b still streams.
+  for (let i = 0; i < 40; i++) {
+    await a.next()
+    await b.next()
+    await settle()
+  }
+  await a.next()
+  await settle()
+  expect(statuses.at(-1)).toMatch(/^scout-auth \d+\.\d · review-pr ~\d+ \(live\)$/)
+
+  await drain(b)
+  await settle()
+  // One shared clock: a spans 7.925s for 300 tokens, b (sent 1s later, finished 75ms after a) 7.0s for 600.
+  expect(statuses.at(-1)).toBe('scout-auth 37.9 · review-pr 85.7')
+})
+
+test('a subagent stop does not overwrite the main live estimate', async ($, on) => {
+  fakeEngine(on, { agents: [agent('agent-1', 'scout-auth')] })
+  const { statuses } = capture(on)
+
+  const main = $.turn.step(step())
+  await advance(main, 20)                       // past the first live sample
+  await drain($.turn.step(step('agent-1')))
+  await settle()
+
+  expect(statuses.at(-1)).toMatch(/^tok\/s: ~\d+ \(live\) · in: 0 · out: 0 │ scout-auth \d+\.\d$/)
+  await drain(main)
+})
+
+test('turn.complete removes the segment and logs one summary line for the run', async ($, on) => {
+  fakeEngine(on, { agents: [agent('agent-1', 'scout-auth')] })
+  const { logs, statuses } = capture(on)
+
+  await drain($.turn.step(step()))
+  await $.turn.start({ text: 'go', turnId: 't1', agentId: 'agent-1' })
+  await drain($.turn.step(step('agent-1')))
+  await drain($.turn.step(step('agent-1')))
+  await settle()
+  expect(statuses.at(-1)).toBe('tok/s: 75.0 · in: 86K · out: 300 │ scout-auth 75.0')
+
+  await $.turn.complete(complete('agent-1'))
+
+  expect(logs.at(-1)).toBe('agent scout-auth  reqs: 2  in: 172K  out: 600  t: 9.5s  tok/s: 75.0/s')
+  expect(statuses.at(-1)).toBe('tok/s: 75.0 · in: 86K · out: 300')
+  expect(statuses.at(-1)).not.toContain('│')
+})
+
+test('a second agent with the same description is told apart by its id, long labels are cut', async ($, on) => {
+  fakeEngine(on, {
+    agents: [agent('agent-aaaa1111', 'review-pr'), agent('agent-bbbb2222', 'review-pr'), agent('agent-c', 'a much longer task description')],
+  })
+  const { statuses } = capture(on)
+
+  for (const id of ['agent-aaaa1111', 'agent-bbbb2222', 'agent-c']) {
+    await drain($.turn.step(step(id)))
+    await settle()
+  }
+
+  expect(statuses.at(-1)).toBe('review-pr 75.0 · review-pr-2222 75.0 · a much longer task… 75.0')
+})
+
+test('a description is kept to one line, and an empty one falls back to the agent type', async ($, on) => {
+  fakeEngine(on, { agents: [agent('agent-1', ' fix\n  auth '), agent('agent-2', '  ', { type: 'Explore' })] })
+  const { statuses } = capture(on)
+
+  for (const id of ['agent-1', 'agent-2']) {
+    await drain($.turn.step(step(id)))
+    await settle()
+  }
+
+  expect(statuses.at(-1)).toBe('fix auth 75.0 · Explore 75.0')
+})
+
+test('an agent listed only by its second request shows from then on, one lookup per request', async ($, on) => {
+  const engine = fakeEngine(on, { list: call => (call === 0 ? [] : [agent('agent-1', 'scout-auth')]) })
+  const { logs, statuses } = capture(on)
+
+  await $.turn.start({ text: 'go', turnId: 't1', agentId: 'agent-1' })
+  await drain($.turn.step(step('agent-1')))
+  await settle()
+  expect(statuses).toEqual([])
+  expect(engine.listCalls()).toBe(1)
+
+  await drain($.turn.step(step('agent-1')))
+  await settle()
+  expect(statuses.at(-1)).toBe('scout-auth 75.0')
+  expect(engine.listCalls()).toBe(2)
+
+  await $.turn.complete(complete('agent-1'))
+  expect(engine.listCalls()).toBe(2)            // named already: no lookup at the end
+  expect(logs.at(-1)).toMatch(/^agent scout-auth {2}reqs: 2 /)
+})
+
+test('a failed lookup is retried and never hides the agent for good', async ($, on) => {
+  // Every lookup of the first run fails, the end-of-run one included; the second run's succeeds.
+  fakeEngine(on, { list: call => { if (call < 2) throw new Error('list failed'); return [agent('agent-1', 'scout-auth')] } })
+  const { logs, statuses } = capture(on)
+
+  await $.turn.start({ text: 'go', turnId: 't1', agentId: 'agent-1' })
+  await drain($.turn.step(step('agent-1')))
+  await settle()
+  await $.turn.complete(complete('agent-1'))
+  expect(statuses).toEqual([])
+  expect(logs).toEqual([])
+
+  await $.turn.start({ text: 'wake', turnId: 't2', agentId: 'agent-1' })
+  await drain($.turn.step(step('agent-1')))
+  await settle()
+  expect(statuses.at(-1)).toBe('scout-auth 75.0')
+})
+
+test('a new run starts its counters over and keeps its label', async ($, on) => {
+  const engine = fakeEngine(on, { agents: [agent('agent-1', 'scout-auth')] })
+  const { logs, statuses } = capture(on)
+
+  await $.turn.start({ text: 'go', turnId: 't1', agentId: 'agent-1' })
+  await drain($.turn.step(step('agent-1')))
+  await drain($.turn.step(step('agent-1')))
+  await settle()
+  await $.turn.complete(complete('agent-1'))
+
+  await $.turn.start({ text: 'wake', turnId: 't2', agentId: 'agent-1' })
+  expect(statuses.at(-1)).toBeUndefined()       // hidden again until the new run's first figure
+  await drain($.turn.step(step('agent-1')))
+  await $.turn.complete(complete('agent-1', 4000))
+
+  expect(engine.listCalls()).toBe(1)
+  expect(logs).toEqual([
+    'agent scout-auth  reqs: 2  in: 172K  out: 600  t: 9.5s  tok/s: 75.0/s',
+    'agent scout-auth  reqs: 1  in: 86K  out: 300  t: 4.0s  tok/s: 75.0/s',
+  ])
+})
+
+test('a run whose requests reported no usage logs no summary line', async ($, on) => {
+  fakeEngine(on, { agents: [agent('agent-1', 'scout-auth')], usageFor: () => null })
+  const { logs } = capture(on)
+
+  await $.turn.start({ text: 'go', turnId: 't1', agentId: 'agent-1' })
+  await drain($.turn.step(step('agent-1')))
+  await settle()
+  await $.turn.complete(complete('agent-1'))
 
   expect(logs).toEqual([])
-  expect(statuses).toEqual([])
+})
+
+test('a subagent request that fails mid-stream leaves no live estimate standing', async ($, on) => {
+  fakeEngine(on, { agents: [agent('agent-1', 'scout-auth')], failAt: n => (n === 1 ? 20 : undefined) })
+  const { statuses } = capture(on)
+
+  await drain($.turn.step(step('agent-1')))
+  await settle()
+  let failed = false
+  try {
+    await drain($.turn.step(step('agent-1')))
+  } catch {
+    failed = true
+  }
+  await settle()
+
+  expect(failed).toBe(true)
+  expect(statuses.some(s => s?.includes('(live)'))).toBe(true)
+  expect(statuses.at(-1)).toBe('scout-auth 75.0')
 })
