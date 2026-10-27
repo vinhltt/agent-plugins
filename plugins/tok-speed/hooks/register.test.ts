@@ -1,9 +1,10 @@
 import type { AgentInfo, On, TurnStepChunk, TurnStepInput, TurnStepResult, TurnUsage } from 'claude-code'
 import { expect, test } from 'claude-code/testing'
 
-const usage = { input_tokens: 1000, output_tokens: 300, cache_creation_input_tokens: 0, cache_read_input_tokens: 85000, model: 'claude-test' }
+const usage = { input_tokens: 1000, output_tokens: 300, cache_creation_input_tokens: 0, cache_read_input_tokens: 85000, model: 'claude-opus-5-5' }
 
-const step = (agentId?: string): TurnStepInput => ({ turnId: 't1', index: 0, model: 'claude-test', messageCount: 3, ...(agentId ? { agentId } : {}) })
+const step = (agentId?: string, model = 'claude-opus-5-5'): TurnStepInput =>
+  ({ turnId: 't1', index: 0, model, messageCount: 3, ...(agentId ? { agentId } : {}) })
 
 interface EngineOptions {
   // What $.agent.list() answers.
@@ -89,7 +90,7 @@ test('logs one omp-style line per main-loop request, tok/s over the whole reques
   expect(logs.length).toBe(1)
   expect(logs[0]).toMatch(/Δ 4\.0s {2}in: 86K {2}out: 300 {2}t: 4\.0s {2}ttft: 1\.0s {2}tok\/s: 75\.0\/s$/)
   expect(statuses.some(s => s?.includes('(live)'))).toBe(true)
-  expect(statuses.at(-1)).toBe('tok/s: 75.0 · in: 86K · out: 300')
+  expect(statuses.at(-1)).toBe('tok/s: 75.0 [opus-5.5] · in: 86K · out: 300')
 })
 
 test('a stop chunk without usage after live samples falls back to the last exact figure', async ($, on) => {
@@ -102,7 +103,7 @@ test('a stop chunk without usage after live samples falls back to the last exact
 
   expect(logs.length).toBe(1)
   expect(statuses.slice(before).some(s => s?.includes('(live)'))).toBe(true)
-  expect(statuses.at(-1)).toBe('tok/s: 75.0 · in: 86K · out: 300')
+  expect(statuses.at(-1)).toBe('tok/s: 75.0 [opus-5.5] · in: 86K · out: 300')
 })
 
 test('a listed subagent shows as a segment, with no per-request log line', async ($, on) => {
@@ -118,7 +119,7 @@ test('a listed subagent shows as a segment, with no per-request log line', async
   expect(logs).toEqual([])
   expect(statuses.some(s => s?.includes('(live)'))).toBe(true)
   // No main figure yet: the segment stands alone, without a leading separator.
-  expect(statuses.at(-1)).toBe('scout-auth 75.0')
+  expect(statuses.at(-1)).toBe('scout-auth [opus-5.5] 75.0')
 })
 
 test('an id $.agent.list() does not name shows nothing and logs nothing', async ($, on) => {
@@ -166,12 +167,12 @@ test('concurrent subagents each keep their own figure, live beside exact', async
   }
   await a.next()
   await settle()
-  expect(statuses.at(-1)).toMatch(/^scout-auth \d+\.\d · review-pr ~\d+ \(live\)$/)
+  expect(statuses.at(-1)).toMatch(/^scout-auth \[opus-5\.5\] \d+\.\d · review-pr \[opus-5\.5\] ~\d+ \(live\)$/)
 
   await drain(b)
   await settle()
   // One shared clock: a spans 7.925s for 300 tokens, b (sent 1s later, finished 75ms after a) 7.0s for 600.
-  expect(statuses.at(-1)).toBe('scout-auth 37.9 · review-pr 85.7')
+  expect(statuses.at(-1)).toBe('scout-auth [opus-5.5] 37.9 · review-pr [opus-5.5] 85.7')
 })
 
 test('a subagent stop does not overwrite the main live estimate', async ($, on) => {
@@ -183,7 +184,7 @@ test('a subagent stop does not overwrite the main live estimate', async ($, on) 
   await drain($.turn.step(step('agent-1')))
   await settle()
 
-  expect(statuses.at(-1)).toMatch(/^tok\/s: ~\d+ \(live\) · in: 0 · out: 0 │ scout-auth \d+\.\d$/)
+  expect(statuses.at(-1)).toMatch(/^tok\/s: ~\d+ \(live\) \[opus-5\.5\] · in: 0 · out: 0 │ scout-auth \[opus-5\.5\] \d+\.\d$/)
   await drain(main)
 })
 
@@ -196,12 +197,12 @@ test('turn.complete removes the segment and logs one summary line for the run', 
   await drain($.turn.step(step('agent-1')))
   await drain($.turn.step(step('agent-1')))
   await settle()
-  expect(statuses.at(-1)).toBe('tok/s: 75.0 · in: 86K · out: 300 │ scout-auth 75.0')
+  expect(statuses.at(-1)).toBe('tok/s: 75.0 [opus-5.5] · in: 86K · out: 300 │ scout-auth [opus-5.5] 75.0')
 
   await $.turn.complete(complete('agent-1'))
 
   expect(logs.at(-1)).toBe('agent scout-auth  reqs: 2  in: 172K  out: 600  t: 9.5s  tok/s: 75.0/s')
-  expect(statuses.at(-1)).toBe('tok/s: 75.0 · in: 86K · out: 300')
+  expect(statuses.at(-1)).toBe('tok/s: 75.0 [opus-5.5] · in: 86K · out: 300')
   expect(statuses.at(-1)).not.toContain('│')
 })
 
@@ -216,7 +217,7 @@ test('a second agent with the same description is told apart by its id, long lab
     await settle()
   }
 
-  expect(statuses.at(-1)).toBe('review-pr 75.0 · review-pr-2222 75.0 · a much longer task… 75.0')
+  expect(statuses.at(-1)).toBe('review-pr [opus-5.5] 75.0 · review-pr-2222 [opus-5.5] 75.0 · a much longer task… [opus-5.5] 75.0')
 })
 
 test('a description is kept to one line, and an empty one falls back to the agent type', async ($, on) => {
@@ -228,7 +229,7 @@ test('a description is kept to one line, and an empty one falls back to the agen
     await settle()
   }
 
-  expect(statuses.at(-1)).toBe('fix auth 75.0 · Explore 75.0')
+  expect(statuses.at(-1)).toBe('fix auth [opus-5.5] 75.0 · Explore [opus-5.5] 75.0')
 })
 
 test('an agent listed only by its second request shows from then on, one lookup per request', async ($, on) => {
@@ -243,7 +244,7 @@ test('an agent listed only by its second request shows from then on, one lookup 
 
   await drain($.turn.step(step('agent-1')))
   await settle()
-  expect(statuses.at(-1)).toBe('scout-auth 75.0')
+  expect(statuses.at(-1)).toBe('scout-auth [opus-5.5] 75.0')
   expect(engine.listCalls()).toBe(2)
 
   await $.turn.complete(complete('agent-1'))
@@ -266,7 +267,7 @@ test('a failed lookup is retried and never hides the agent for good', async ($, 
   await $.turn.start({ text: 'wake', turnId: 't2', agentId: 'agent-1' })
   await drain($.turn.step(step('agent-1')))
   await settle()
-  expect(statuses.at(-1)).toBe('scout-auth 75.0')
+  expect(statuses.at(-1)).toBe('scout-auth [opus-5.5] 75.0')
 })
 
 test('a new run starts its counters over and keeps its label', async ($, on) => {
@@ -319,5 +320,106 @@ test('a subagent request that fails mid-stream leaves no live estimate standing'
 
   expect(failed).toBe(true)
   expect(statuses.some(s => s?.includes('(live)'))).toBe(true)
-  expect(statuses.at(-1)).toBe('scout-auth 75.0')
+  expect(statuses.at(-1)).toBe('scout-auth [opus-5.5] 75.0')
+})
+
+// The fake engine answers with the model the request named, unless a test says otherwise.
+const answeredBy = (e: TurnStepInput): TurnUsage => ({ ...usage, model: e.model })
+
+test('a new model shows only with its own figure, never beside the previous one', async ($, on) => {
+  fakeEngine(on, { agents: [agent('agent-1', 'scout-auth')], usageFor: answeredBy })
+  const { statuses } = capture(on)
+
+  await drain($.turn.step(step()))
+  const main = $.turn.step(step(undefined, 'claude-sonnet-5-5'))
+  await advance(main, 5)                        // sent, but before its first live sample
+  await drain($.turn.step(step('agent-1', 'claude-haiku-5-5')))
+  await settle()
+  expect(statuses.at(-1)).toBe('tok/s: 75.0 [opus-5.5] · in: 86K · out: 300 │ scout-auth [haiku-5.5] 75.0')
+
+  await advance(main, 15)                       // past the first live sample
+  expect(statuses.at(-1)).toMatch(/^tok\/s: ~\d+ \(live\) \[sonnet-5\.5\] · /)
+  await drain(main)
+  // One shared clock: the second main request also spans the subagent's 4s, so 300 tokens over 8s.
+  expect(statuses.at(-1)).toBe('tok/s: 37.5 [sonnet-5.5] · in: 172K · out: 600 │ scout-auth [haiku-5.5] 75.0')
+})
+
+test('the live estimate is tagged with the model named, the exact figure with the model that answered', async ($, on) => {
+  fakeEngine(on, { usageFor: () => ({ ...usage, model: 'claude-haiku-5-5' }) })
+  const { statuses } = capture(on)
+
+  await drain($.turn.step(step(undefined, 'claude-sonnet-5-5')))
+
+  expect(statuses.some(s => /^tok\/s: ~\d+ \(live\) \[sonnet-5\.5\] · /.test(s ?? ''))).toBe(true)
+  expect(statuses.at(-1)).toBe('tok/s: 75.0 [haiku-5.5] · in: 86K · out: 300')
+})
+
+test('a main request that fails mid-stream restores the last figure together with its model', async ($, on) => {
+  fakeEngine(on, { usageFor: answeredBy, failAt: n => (n === 1 ? 20 : undefined) })
+  const { statuses } = capture(on)
+
+  await drain($.turn.step(step()))
+  const before = statuses.length
+  let failed = false
+  try {
+    await drain($.turn.step(step(undefined, 'claude-sonnet-5-5')))
+  } catch {
+    failed = true
+  }
+
+  expect(failed).toBe(true)
+  expect(statuses.slice(before).some(s => s?.includes('(live) [sonnet-5.5]'))).toBe(true)
+  expect(statuses.at(-1)).toBe('tok/s: 75.0 [opus-5.5] · in: 86K · out: 300')
+})
+
+test('a subagent request on another model that fails mid-stream keeps the earlier figure and its model', async ($, on) => {
+  fakeEngine(on, { agents: [agent('agent-1', 'scout-auth')], usageFor: answeredBy, failAt: n => (n === 1 ? 20 : undefined) })
+  const { statuses } = capture(on)
+
+  await drain($.turn.step(step('agent-1', 'claude-haiku-5-5')))
+  await settle()
+  let failed = false
+  try {
+    await drain($.turn.step(step('agent-1', 'claude-sonnet-5-5')))
+  } catch {
+    failed = true
+  }
+  await settle()
+
+  expect(failed).toBe(true)
+  expect(statuses.some(s => s?.includes('scout-auth [sonnet-5.5] ~'))).toBe(true)
+  expect(statuses.at(-1)).toBe('scout-auth [haiku-5.5] 75.0')
+})
+
+test('a subagent segment carries its own model, apart from the main one', async ($, on) => {
+  fakeEngine(on, { agents: [agent('agent-1', 'scout-auth')], usageFor: answeredBy })
+  const { statuses } = capture(on)
+
+  await drain($.turn.step(step()))
+  await drain($.turn.step(step('agent-1', 'claude-haiku-5-5')))
+  await settle()
+
+  expect(statuses.at(-1)).toBe('tok/s: 75.0 [opus-5.5] · in: 86K · out: 300 │ scout-auth [haiku-5.5] 75.0')
+})
+
+test('a subagent figure, like the main one, is tagged with the model that answered', async ($, on) => {
+  fakeEngine(on, { agents: [agent('agent-1', 'scout-auth')], usageFor: () => ({ ...usage, model: 'claude-haiku-5-5' }) })
+  const { statuses } = capture(on)
+
+  await drain($.turn.step(step('agent-1', 'claude-sonnet-5-5')))
+  await settle()
+
+  expect(statuses.some(s => /^scout-auth \[sonnet-5\.5\] ~\d+ \(live\)$/.test(s ?? ''))).toBe(true)
+  expect(statuses.at(-1)).toBe('scout-auth [haiku-5.5] 75.0')
+})
+
+test('a stop chunk that names no model keeps the model the request named', async ($, on) => {
+  fakeEngine(on, { agents: [agent('agent-1', 'scout-auth')], usageFor: () => ({ ...usage, model: '' }) })
+  const { statuses } = capture(on)
+
+  await drain($.turn.step(step(undefined, 'claude-sonnet-5-5')))
+  await drain($.turn.step(step('agent-1', 'claude-haiku-5-5')))
+  await settle()
+
+  expect(statuses.at(-1)).toBe('tok/s: 75.0 [sonnet-5.5] · in: 86K · out: 300 │ scout-auth [haiku-5.5] 75.0')
 })

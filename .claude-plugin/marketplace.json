@@ -7,7 +7,7 @@
     "email": "vinhltt.dev@gmail.com"
   },
   "metadata": {
-    "version": "1.8.0"
+    "version": "1.9.0"
   },
   "plugins": [
     {
@@ -416,7 +416,7 @@
     },
     {
       "name": "tok-speed",
-      "description": "Live model output speed for Claude Code. Logs one line per main-loop model request (time, delta, input/output tokens, duration, TTFT, tok/s) to the transcript, pins the latest tok/s with session token totals under the prompt, and shows each running subagent's tok/s beside it with one summary line per subagent run.",
+      "description": "Live model output speed for Claude Code. Logs one line per main-loop model request (time, delta, input/output tokens, duration, TTFT, tok/s) to the transcript, pins the latest tok/s, tagged with the model that produced it, with session token totals under the prompt, and shows each running subagent's tok/s and model beside it with one summary line per subagent run.",
       "author": {
         "name": "VinhLTT",
         "email": "vinhltt.dev@gmail.com"

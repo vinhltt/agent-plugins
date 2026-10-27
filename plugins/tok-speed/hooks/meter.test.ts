@@ -2,7 +2,7 @@ import type { TurnStepChunk, TurnStepResult } from 'claude-code'
 import { expect, test } from 'claude-code/testing'
 import { meter, type MeterEvents, type RequestFigure } from './meter.ts'
 
-const usage = { input_tokens: 1000, output_tokens: 300, cache_creation_input_tokens: 0, cache_read_input_tokens: 85000, model: 'claude-test' }
+const usage = { input_tokens: 1000, output_tokens: 300, cache_creation_input_tokens: 0, cache_read_input_tokens: 85000, model: 'claude-opus-5-5' }
 const result: TurnStepResult = { turnId: 't1', index: 0, answer: 'abcd'.repeat(40), toolUses: [], stopReason: 'end_turn', usage }
 
 // No host involved: the meter only sees a stream and a clock, both scripted here.
@@ -80,7 +80,7 @@ test('stop figure is exact over the whole request, with time to first token', as
   const { clock, stream } = script()
   const { ev, stops, events } = record()
   await drain(meter(stream(), clock, ev))
-  expect(stops).toEqual([{ sentAt: 0, endAt: 4000, firstAt: 1000, usage: { inTok: 86000, outTok: 300, tps: 75 } }])
+  expect(stops).toEqual([{ sentAt: 0, endAt: 4000, firstAt: 1000, usage: { inTok: 86000, outTok: 300, tps: 75, model: 'claude-opus-5-5' } }])
   expect(events.filter(e => e === 'end').length).toBe(1)
   expect(events.at(-1)).toBe('end')
 })

@@ -12,7 +12,7 @@ export interface RequestFigure {
   endAt: number
   firstAt?: number
   // Absent when the stop chunk carries no usage; the caller still sees the stop, as v0.1.0 did.
-  usage?: { inTok: number; outTok: number; tps: number }
+  usage?: { inTok: number; outTok: number; tps: number; model: string }
 }
 
 export interface MeterEvents {
@@ -64,7 +64,13 @@ export async function* meter(
           endAt,
           firstAt,
           usage: u
-            ? { inTok: inputTokens(u), outTok: u.output_tokens, tps: totalMs > 0 ? u.output_tokens / (totalMs / 1000) : 0 }
+            ? {
+                inTok: inputTokens(u),
+                outTok: u.output_tokens,
+                tps: totalMs > 0 ? u.output_tokens / (totalMs / 1000) : 0,
+                // The id the API reports for the answer, which labels this figure on the status line.
+                model: u.model,
+              }
             : undefined,
         })
       } else if (chunk.kind !== 'engine') {

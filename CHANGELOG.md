@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.0] - 2026-10-27
+
+### Added
+
+- tok-speed: the status line tags each figure with the model that produced it, `[<family>-<version>]` (e.g. `[opus-5.5]`), on the main readout and on every running subagent segment; ids from the direct API, Vertex and Bedrock are shortened by one generic rule.
+
+### Changed
+
+- tok-speed v0.3.0: the exact figure is tagged with the model the API reports (`usage.model`), a live estimate with the model the request names; a request that fails mid-stream restores the previous figure together with its tag. Transcript log lines are unchanged.
+- Marketplace + README: tok-speed description mentions the model tag.
+
 ## [1.8.0] - 2026-10-26
 
 ### Added

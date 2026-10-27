@@ -4,6 +4,14 @@ All notable changes to this plugin will be documented in this file.
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), Semver.
 
+## [0.3.0] - 2026-10-27
+
+### Added
+- Status line: tag each figure with the model that produced it, [<family>-<version>] (e.g. [opus-5.5]), on the main readout and on every running subagent segment
+
+### Changed
+- The exact figure is tagged with the model the API reports in usage.model; a live estimate with the model the request names; a failed request restores the previous figure together with its tag
+
 ## [0.2.0] - 2026-10-26
 
 ### Added

@@ -1,6 +1,6 @@
 import type { EngineInterface, Register } from 'claude-code'
-import { compact, secs, stamp } from './format.ts'
-import { meter } from './meter.ts'
+import { compact, modelTag, secs, stamp } from './format.ts'
+import { meter, type RequestFigure } from './meter.ts'
 
 const LABEL_MAX = 20
 
@@ -17,6 +17,9 @@ interface AgentRecord {
   reqMs: number
   tps?: number
   live?: number
+  // One tag per figure: an aborted request clears `live` but leaves an earlier request's `tps`.
+  tpsModel?: string
+  liveModel?: string
 }
 
 // What one lookup learned: only 'absent' is proof the id is not an agent we show; 'error' says nothing.
@@ -30,8 +33,10 @@ interface State {
   totalIn: number
   totalOut: number
   lastTps?: number
+  lastModel?: string // tags lastTps
   // The main loop's figure as shown: '75.0' or '~72 (live)'.
   mainTps?: string
+  mainModel?: string // tags mainTps
   // Last text sent, so an unchanged line costs no host call.
   shown?: string
   agents: Map<string, AgentRecord>
@@ -45,10 +50,15 @@ const ensure = (s: State, id: string) => {
   return rec
 }
 
-const summary = (s: State, tps: string) => `tok/s: ${tps} · in: ${compact(s.totalIn)} · out: ${compact(s.totalOut)}`
+const tagged = (tag?: string) => (tag ? ` [${tag}]` : '')
+
+const summary = (s: State, tps: string) =>
+  `tok/s: ${tps}${tagged(s.mainModel)} · in: ${compact(s.totalIn)} · out: ${compact(s.totalOut)}`
 
 const segment = (r: AgentRecord) =>
-  r.live !== undefined ? `${r.label} ~${r.live.toFixed(0)} (live)` : `${r.label} ${r.tps!.toFixed(1)}`
+  r.live !== undefined
+    ? `${r.label}${tagged(r.liveModel)} ~${r.live.toFixed(0)} (live)`
+    : `${r.label}${tagged(r.tpsModel)} ${r.tps!.toFixed(1)}`
 
 // The one place the status line is composed: every event writes state, then renders.
 // A subagent shows from its first figure until its run ends, and only once it has a label.
@@ -128,7 +138,7 @@ export const register: Register = on => {
     else {
       // Hidden until its first figure; the label found in an earlier run is kept.
       const rec = ensure(s, e.agentId)
-      Object.assign(rec, { reqs: 0, inTok: 0, outTok: 0, reqMs: 0, tps: undefined, live: undefined })
+      Object.assign(rec, { reqs: 0, inTok: 0, outTok: 0, reqMs: 0, tps: undefined, live: undefined, tpsModel: undefined, liveModel: undefined })
       s.running.add(e.agentId)
     }
     return next(e)
@@ -136,6 +146,11 @@ export const register: Register = on => {
 
   on('turn.step', async function* ($, e, next) {
     const id = e.agentId
+    // A tag is set only beside the figure it labels, so the line never pairs one request's
+    // figure with another's model. The live estimate has only the model the request named;
+    // the exact figure takes the one the API says answered.
+    const liveTag = modelTag(e.model)
+    const stopTag = (f: RequestFigure) => (f.usage?.model ? modelTag(f.usage.model) : liveTag)
     if (id !== undefined) {
       const rec = ensure(s, id)
       // Its start may be unheard (spawned inside a hook of ours, or a hot reload mid-run).
@@ -151,6 +166,7 @@ export const register: Register = on => {
         live: n => {
           want()
           rec.live = n
+          rec.liveModel = liveTag
           render($, s)
         },
         // Subagents log one summary line per run, at turn.complete, not one per request.
@@ -162,13 +178,14 @@ export const register: Register = on => {
             rec.outTok += f.usage.outTok
             rec.reqMs += f.endAt - f.sentAt
             rec.tps = f.usage.tps
+            rec.tpsModel = stopTag(f)
           }
-          rec.live = undefined
+          rec.live = rec.liveModel = undefined
           render($, s)
         },
         end: () => {
           want()
-          rec.live = undefined
+          rec.live = rec.liveModel = undefined
           render($, s)
         },
       })
@@ -177,6 +194,7 @@ export const register: Register = on => {
     return yield* meter(next(e), () => $.clock.now(), {
       live: n => {
         s.mainTps = `~${n.toFixed(0)} (live)`
+        s.mainModel = liveTag
         render($, s)
       },
       stop: f => {
@@ -185,12 +203,14 @@ export const register: Register = on => {
           s.totalIn += inTok
           s.totalOut += outTok
           s.lastTps = tps
+          s.lastModel = stopTag(f)
           const delta = s.lastMark === undefined ? '' : `  Δ ${secs(f.endAt - s.lastMark)}`
           const ttft = f.firstAt === undefined ? '' : `  ttft: ${secs(f.firstAt - f.sentAt)}`
           $.ui.log(
             `${stamp(f.endAt)}${delta}  in: ${compact(inTok)}  out: ${compact(outTok)}  t: ${secs(f.endAt - f.sentAt)}${ttft}  tok/s: ${tps.toFixed(1)}/s`,
           )
           s.mainTps = tps.toFixed(1)
+          s.mainModel = s.lastModel
           render($, s)
         }
         s.lastMark = f.endAt
@@ -200,6 +220,7 @@ export const register: Register = on => {
       end: () => {
         if (s.lastTps === undefined) return
         s.mainTps = s.lastTps.toFixed(1)
+        s.mainModel = s.lastModel
         render($, s)
       },
     })
